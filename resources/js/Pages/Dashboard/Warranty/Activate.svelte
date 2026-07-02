@@ -4,4 +4,4 @@
     export let auth = { user: null };
 </script>
 
-<DashboardShell title="داشبورد" {auth} />
+<DashboardShell title="فعال سازی گارانتی" {auth} />

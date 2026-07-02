@@ -37,6 +37,32 @@ Route::middleware('guest')->group(function () {
         ->name('login.otp.verify');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/Index');
-})->middleware('auth')->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard/Index');
+    })->name('dashboard');
+
+    Route::prefix('warranties')->name('warranties.')->group(function () {
+        Route::get('/activate', function () {
+            return Inertia::render('Dashboard/Warranty/Activate');
+        })->name('activate');
+
+        Route::get('/mine', function () {
+            return Inertia::render('Dashboard/Warranty/MyWarranties');
+        })->name('mine');
+    });
+
+    Route::middleware('role:general_manager')->group(function () {
+        Route::get('/warranties', function () {
+            return Inertia::render('Dashboard/Warranty/List');
+        })->name('admin.warranties.index');
+
+        Route::get('/users', function () {
+            return Inertia::render('Dashboard/Users/Index');
+        })->name('admin.users.index');
+
+        Route::get('/roles', function () {
+            return Inertia::render('Dashboard/Roles/Index');
+        })->name('admin.roles.index');
+    });
+});
