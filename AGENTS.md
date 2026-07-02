@@ -79,6 +79,21 @@ MySQL/MariaDB
 Redis for queue/cache if needed
 ```
 
+## Engineering Quality
+
+This project should feel like it is maintained by a professional engineering team under clear software architecture leadership. Prefer consistency, clear boundaries, and incremental growth so future features require less refactoring.
+
+Engineering rules:
+
+- Prefer the simplest sufficient solution. Refactor or add dependencies only when there is a clear need.
+- Keep classes, functions, modules, and services focused on one responsibility.
+- Keep implementation decisions consistent across the project so new features do not introduce competing patterns.
+- Before creating a new file, find the closest existing example in the project and follow its namespace, naming, structure, and style.
+- Use `spatie/laravel-permission` for roles and permissions. Do not implement custom role/permission systems.
+- Use `spatie/laravel-medialibrary` for media/file handling. Do not implement custom media management unless a specific requirement proves the package is insufficient.
+- Keep external integrations behind interfaces or focused service classes so domain logic does not couple directly to vendor clients.
+- If a project decision, workflow, technology, or implementation direction changes, update this `AGENTS.md` in the same change.
+
 ## Local Development Database
 
 The local development database is MySQL/MariaDB:
@@ -121,6 +136,21 @@ Inertia + Svelte 5 + Tailwind CSS v4 + shadcn-svelte
 Do not install Vue, React, Ionic, PrimeVue, shadcn-vue, daisyUI, Metronic, or another UI framework unless the user explicitly changes this direction.
 
 Frontend production assets are built locally and committed under `public/build` before deployment. The production server is not expected to run `npm install` or `npm run build`.
+
+## Frontend / UI Quality
+
+The UI should stay consistent with the existing project design, not drift into page-by-page styles.
+
+Frontend rules:
+
+- UI must follow the existing project patterns. Do not give each page its own unrelated visual style.
+- Before building a new page, find the closest existing page or component and use it as the template for structure, naming, layout, and interaction patterns.
+- Forms, actions, feedback, and navigation must be designed for operational use: clear, low-error, touch-friendly, and easy to scan.
+- Responsive behavior must be intentional and polished across mobile, tablet, and desktop, not merely non-broken.
+- For list pages, prefer a datatable pattern with server-side pagination, sorting, and filtering.
+- Table columns should be short, useful, and scan-friendly. Prefer identifiers, titles, statuses, owner/operator fields, dates, and compact summary values.
+- Keep action buttons and state feedback consistent across pages.
+- If frontend files change, build frontend assets locally and commit the updated `public/build` output with the same change.
 
 ## SMS / OTP
 
