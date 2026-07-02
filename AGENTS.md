@@ -54,6 +54,7 @@ Warranty
 - Use Svelte 5 as the Inertia frontend adapter.
 - Use Tailwind CSS v4 for styling.
 - Use `shadcn-svelte` as the UI component base, with local/customized components rather than a heavy fixed UI kit.
+- The official `shadcn/ui` agent skill is installed under `.agents/skills/shadcn` for reference when working with shadcn-style components, registries, and composition rules. This project is `shadcn-svelte`, so treat React/TSX examples from that skill as conceptual guidance only. Do not introduce React-specific APIs, `lucide-react`, Radix React assumptions, or `npx shadcn@latest` generated React components into this Svelte project. Prefer `shadcn-svelte` documentation/CLI and the local `components.json` aliases for actual implementation.
 - Do not install Livewire.
 - Use MySQL or MariaDB unless a later requirement justifies another database.
 - Tests are not required for now unless the user explicitly asks for them.
