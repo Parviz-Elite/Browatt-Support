@@ -96,6 +96,12 @@ Engineering rules:
 
 ## Local Development Database
 
+The local Herd URL is:
+
+```text
+http://Browatt-Support.test
+```
+
 The local development database is MySQL/MariaDB:
 
 ```text
