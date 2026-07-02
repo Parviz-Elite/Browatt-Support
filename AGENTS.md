@@ -179,7 +179,8 @@ POST https://api.iranpayamak.com/ws/v1/sms/pattern
 
 OTP implementation rules:
 
-- Store only hashed OTP codes.
+- In production, store only hashed OTP codes.
+- In non-production environments, do not send real SMS by default. Store the generated OTP in `otp_codes.debug_code` only for local/debug use so developers can read it from the database. In production, `OTP_SEND_SMS` must be true and `OTP_STORE_DEBUG_CODE` must be false so only `code_hash` is stored.
 - Keep OTP lifetime short, for example 2 minutes.
 - Limit resend frequency.
 - Limit failed verification attempts.
@@ -294,6 +295,7 @@ otp_codes
 - id
 - mobile
 - code_hash
+- debug_code nullable, local/debug only
 - expires_at
 - used_at nullable
 - attempts

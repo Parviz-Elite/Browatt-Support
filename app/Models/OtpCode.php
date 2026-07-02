@@ -12,6 +12,7 @@ class OtpCode extends Model
     protected $fillable = [
         'mobile',
         'code_hash',
+        'debug_code',
         'expires_at',
         'used_at',
         'attempts',

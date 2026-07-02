@@ -42,7 +42,9 @@ class RequestLoginOtp
         }
 
         return response()->json([
-            'message' => 'کد تایید برای شماره موبایل شما ارسال شد.',
+            'message' => config('otp.send_sms')
+                ? 'کد تایید برای شماره موبایل شما ارسال شد.'
+                : 'کد تایید ایجاد شد. در محیط توسعه، کد از دیتابیس قابل خواندن است.',
             'resend_after' => (int) config('otp.resend_seconds', 60),
             'expires_in' => (int) config('otp.ttl_minutes', 2) * 60,
         ]);

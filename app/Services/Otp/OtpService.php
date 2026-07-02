@@ -30,10 +30,15 @@ class OtpService
         $otp = OtpCode::query()->create([
             'mobile' => $mobile,
             'code_hash' => Hash::make($code),
+            'debug_code' => $this->shouldStoreDebugCode() ? $code : null,
             'expires_at' => now()->addMinutes((int) config('otp.ttl_minutes', 2)),
             'ip_address' => $ipAddress,
             'user_agent' => $userAgent,
         ]);
+
+        if (! $this->shouldSendSms()) {
+            return;
+        }
 
         try {
             $this->smsProvider->sendOtp($mobile, $code);
@@ -220,6 +225,16 @@ class OtpService
         $max = (10 ** $length) - 1;
 
         return str_pad((string) random_int(0, $max), $length, '0', STR_PAD_LEFT);
+    }
+
+    private function shouldSendSms(): bool
+    {
+        return (bool) config('otp.send_sms', app()->isProduction());
+    }
+
+    private function shouldStoreDebugCode(): bool
+    {
+        return ! $this->shouldSendSms() && (bool) config('otp.store_debug_code', ! app()->isProduction());
     }
 
     private function normalizeDigits(string $value): string

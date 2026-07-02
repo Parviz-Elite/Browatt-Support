@@ -7,6 +7,8 @@ return [
     'ttl_minutes' => (int) env('OTP_TTL_MINUTES', 2),
     'max_attempts' => (int) env('OTP_MAX_ATTEMPTS', 5),
     'resend_seconds' => (int) env('OTP_RESEND_SECONDS', 60),
+    'send_sms' => filter_var(env('OTP_SEND_SMS', env('APP_ENV') === 'production'), FILTER_VALIDATE_BOOL),
+    'store_debug_code' => filter_var(env('OTP_STORE_DEBUG_CODE', env('APP_ENV') !== 'production'), FILTER_VALIDATE_BOOL),
 
     'rate_limits' => [
         'mobile' => [

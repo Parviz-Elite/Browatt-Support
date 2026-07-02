@@ -33,12 +33,12 @@
     "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-SemiBold.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CmvOQWVX.js",
+    "file": "assets/app-BLR_Rpo0.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-TyfZmTwR.css"
+      "assets/app-CzVVajQ-.css"
     ],
     "assets": [
       "assets/YekanBakhFaNum-Light-CBwjV35v.woff2",

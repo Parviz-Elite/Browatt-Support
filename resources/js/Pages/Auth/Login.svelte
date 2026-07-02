@@ -3,12 +3,10 @@
     import {
         AlertCircle,
         ArrowLeft,
-        AtSign,
         CheckCircle2,
         Clock3,
         Globe2,
         Mail,
-        MessageCircle,
         Phone,
         RefreshCw,
         ShieldCheck,
@@ -210,6 +208,10 @@
         <span></span>
         <span></span>
     </div>
+    <div class="brand-motion" aria-hidden="true">
+        <span></span>
+        <span></span>
+    </div>
 
     <section class="relative z-10 grid min-h-screen lg:grid-cols-[1.04fr_0.96fr]">
         <aside class="relative hidden overflow-hidden bg-[#17275d] text-white lg:block">
@@ -228,9 +230,6 @@
                     <h1 class="text-4xl font-black leading-[1.45] xl:text-5xl">
                         فعال‌سازی گارانتی، پیگیری خدمات و پشتیبانی در یک حساب امن
                     </h1>
-                    <p class="mt-6 max-w-lg text-lg leading-9 text-white/74">
-                        ورود با پیامک انجام می‌شود و کد تایید فقط چند دقیقه اعتبار دارد. این مسیر برای کاربران موبایلی سریع، امن و بدون نیاز به رمز عبور طراحی شده است.
-                    </p>
                 </div>
 
                 <div class="grid grid-cols-3 gap-3 text-sm text-white/72">
@@ -268,10 +267,6 @@
                 <div class="w-full max-w-[440px]">
                     <div class="mb-7 text-center lg:text-right">
                         <BrandLogo className="mx-auto mb-8 hidden w-48 lg:mx-0 lg:block" />
-                        <p class="mb-3 inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 text-sm font-bold text-sky-700">
-                            <MessageCircle size={16} />
-                            ورود بدون رمز عبور
-                        </p>
                         <h2 class="text-3xl font-black tracking-normal text-slate-950 sm:text-4xl">
                             ورود به حساب کاربری
                         </h2>
@@ -416,7 +411,11 @@
                             {contact.email}
                         </a>
                         <a href={`https://instagram.com/${contact.instagram}`} class="inline-flex items-center justify-center gap-2 rounded-2xl bg-white/70 px-4 py-3 transition hover:bg-white hover:text-slate-800">
-                            <AtSign size={16} />
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <rect width="15.5" height="15.5" x="4.25" y="4.25" rx="4.25" stroke="currentColor" stroke-width="1.8" />
+                                <circle cx="12" cy="12" r="3.35" stroke="currentColor" stroke-width="1.8" />
+                                <circle cx="16.55" cy="7.45" r="1" fill="currentColor" />
+                            </svg>
                             {contact.instagram}
                         </a>
                     </div>
@@ -448,9 +447,9 @@
         position: absolute;
         width: 42rem;
         height: 18rem;
-        border: 1px solid rgba(27, 167, 224, 0.12);
+        border: 1px solid rgba(27, 167, 224, 0.2);
         border-right-color: transparent;
-        border-bottom-color: rgba(236, 34, 40, 0.08);
+        border-bottom-color: rgba(236, 34, 40, 0.14);
         border-radius: 999px;
         transform: rotate(-18deg);
         animation: airflow 15s ease-in-out infinite;
@@ -473,6 +472,32 @@
         top: 46%;
         animation-delay: -9s;
         animation-duration: 21s;
+    }
+
+    .brand-motion span {
+        position: fixed;
+        width: 18rem;
+        height: 18rem;
+        border-radius: 999px;
+        pointer-events: none;
+        mix-blend-mode: multiply;
+        filter: blur(10px);
+        opacity: 0.28;
+        animation: brand-drift 13s ease-in-out infinite;
+    }
+
+    .brand-motion span:first-child {
+        right: 10%;
+        top: 10%;
+        background: radial-gradient(circle, rgba(27, 167, 224, 0.45), transparent 68%);
+    }
+
+    .brand-motion span:last-child {
+        left: 4%;
+        bottom: 8%;
+        background: radial-gradient(circle, rgba(236, 34, 40, 0.26), transparent 70%);
+        animation-delay: -6s;
+        animation-duration: 16s;
     }
 
     .panel-pattern {
@@ -508,6 +533,17 @@
         to {
             transform: translateY(0);
             opacity: 1;
+        }
+    }
+
+    @keyframes brand-drift {
+        0%,
+        100% {
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        50% {
+            transform: translate3d(1.25rem, -1rem, 0) scale(1.08);
         }
     }
 
