@@ -2,7 +2,9 @@
 
 use App\Actions\Auth\RequestLoginOtp;
 use App\Actions\Auth\VerifyLoginOtp;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -39,7 +41,23 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard/Index');
+        $activeWarrantiesCount = 0;
+
+        if (Schema::hasTable('warranties')) {
+            $query = DB::table('warranties')->whereNull('deleted_at');
+
+            if (! auth()->user()->hasRole('general_manager')) {
+                $query->where('user_id', auth()->id());
+            }
+
+            $activeWarrantiesCount = $query->count();
+        }
+
+        return Inertia::render('Dashboard/Index', [
+            'stats' => [
+                'activeWarrantiesCount' => $activeWarrantiesCount,
+            ],
+        ]);
     })->name('dashboard');
 
     Route::prefix('warranties')->name('warranties.')->group(function () {
