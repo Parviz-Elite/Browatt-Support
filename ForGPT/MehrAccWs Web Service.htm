@@ -1,0 +1,1060 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><link rel="alternate" type="text/xml" href="https://www.mehrsofts.com/webservice/mehraccws.asmx?disco">
+
+    <style type="text/css">
+    
+		BODY { color: #000000; background-color: white; font-family: Verdana; margin-left: 0px; margin-top: 0px; }
+		#content { margin-left: 30px; font-size: .70em; padding-bottom: 2em; }
+		A:link { color: #336699; font-weight: bold; text-decoration: underline; }
+		A:visited { color: #6699cc; font-weight: bold; text-decoration: underline; }
+		A:active { color: #336699; font-weight: bold; text-decoration: underline; }
+		A:hover { color: cc3300; font-weight: bold; text-decoration: underline; }
+		P { color: #000000; margin-top: 0px; margin-bottom: 12px; font-family: Verdana; }
+		pre { background-color: #e5e5cc; padding: 5px; font-family: Courier New; font-size: x-small; margin-top: -5px; border: 1px #f0f0e0 solid; }
+		td { color: #000000; font-family: Verdana; font-size: .7em; }
+		h2 { font-size: 1.5em; font-weight: bold; margin-top: 25px; margin-bottom: 10px; border-top: 1px solid #003366; margin-left: -15px; color: #003366; }
+		h3 { font-size: 1.1em; color: #000000; margin-left: -15px; margin-top: 10px; margin-bottom: 10px; }
+		ul { margin-top: 10px; margin-left: 20px; }
+		ol { margin-top: 10px; margin-left: 20px; }
+		li { margin-top: 10px; color: #000000; }
+		font.value { color: darkblue; font: bold; }
+		font.key { color: darkgreen; font: bold; }
+		font.error { color: darkred; font: bold; }
+		.heading1 { color: #ffffff; font-family: Tahoma; font-size: 26px; font-weight: normal; background-color: #003366; margin-top: 0px; margin-bottom: 0px; margin-left: -30px; padding-top: 10px; padding-bottom: 3px; padding-left: 15px; width: 105%; }
+		.button { background-color: #dcdcdc; font-family: Verdana; font-size: 1em; border-top: #cccccc 1px solid; border-bottom: #666666 1px solid; border-left: #cccccc 1px solid; border-right: #666666 1px solid; }
+		.frmheader { color: #000000; background: #dcdcdc; font-family: Verdana; font-size: .7em; font-weight: normal; border-bottom: 1px solid #dcdcdc; padding-top: 2px; padding-bottom: 2px; }
+		.frmtext { font-family: Verdana; font-size: .7em; margin-top: 8px; margin-bottom: 0px; margin-left: 32px; }
+		.frmInput { font-family: Verdana; font-size: 1em; }
+		.intro { margin-left: -15px; }
+           
+    </style>
+
+    <title>
+	MehrAccWs Web Service
+</title></head>
+
+  <body>
+
+    <div id="content">
+
+      <p class="heading1">MehrAccWs</p><br>
+
+      
+
+      <span>
+
+          <p class="intro">The following operations are supported.  For a formal definition, please review the <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?WSDL">Service Description</a>. </p>
+          
+          
+              <ul>
+            
+              <li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_GetAssRequest">AfterSales_GetAssRequest</a>
+                
+                <span>
+                  <br><b>دریافت لیست درخواست‌های خدمات پس از فروش که هنوز به برگه خدمات پس از فروش تبدیل نشده‌اند و به سرویس‌کار ارجاع شده‌اند</b><br><ul><li><b>sessionId:</b> شناسه فعالیت دریافت‌شده از متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل پارامترهای ورودی. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "TafsilId": "",
+  "State": ""
+}</div><br><b>توضیحات پارامترهای JSON:</b><br><ul><li><b>TafsilId:</b> شناسه حساب تفصیلی سرویس‌کار</li><li><b>State:</b> وضعیت برگه</li><li>&nbsp;&nbsp;&nbsp;&nbsp;خالی: تمامی درخواست‌های تاییدشده و تاییدنشده</li><li>&nbsp;&nbsp;&nbsp;&nbsp;0: فقط درخواست‌های تاییدنشده</li><li>&nbsp;&nbsp;&nbsp;&nbsp;1: فقط درخواست‌های تاییدشده</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_GetProductStatusBySerial">AfterSales_GetProductStatusBySerial</a>
+                
+                <span>
+                  <br><b>استعلام وضعیت محصول براساس سریال</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "Serial": ""
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>Serial:</b>شماره سریال محصول</li></ul><hr><b>ساختار خروجی (JSON):</b><br><div style="background-color:#eef; padding:10px; border:1px solid #ccc; font-family:monospace; font-size:11px;">{  <br> "AfterSaleService": [ { (اطلاعات گارانتی زمانی  وجود خواهد داشت که محصول قبلا نصب و راه اندازی شده باشد) <b>اطلاعات گارانتی</b> } ],  <br> "ProductDetails": [ { (در صورتی که ویژگی های محصول به هنگام تولید ثبت شده باشد) <b>اطلاعات ویژگی های نهایی محصول</b> ],  <br> "ProductInfo": [ { (در صورتی که محصول نصب نشده و ویژگی های نهایی محصول وجود نداشته باشد اطلاعات محصول برگشت داده خواهد شد) <b>کد، نام و تاریخ تولید محصول</b> } ]  <br>}</div>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_GetServiceHistory">AfterSales_GetServiceHistory</a>
+                
+                <span>
+                  <br><b>دریافت فهرست خدمات پس از فروش انجام‌شده</b><br><ul><li><b>sessionId:</b> شناسه نشست دریافت‌شده از متد Login</li><li><b>jsonParams:</b> رشته JSON شامل پارامترهای ورودی. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "TafsilId": "",
+  "DateFrom": "",
+  "DateTo": "",
+  "GoodFullCode": "",
+  "ProductSerial": "",
+  "ProductId": "",
+  "ProductInstallationDateFrom": "",
+  "ProductInstallationDateTo": "",
+  "CustomerName": "",
+  "CustomerNationalCode": ""
+}</div><br><b>توضیحات پارامترهای JSON:</b><br><ul><li><b>TafsilId:</b> شناسه حساب تفصیلی سرویس‌کار</li><li><b>DateFrom:</b> تاریخ ارائه خدمات از</li><li><b>DateTo:</b> تاریخ ارائه خدمات تا</li><li><b>GoodFullCode:</b> کد خدمات یا مواد مصرفی</li><li><b>ProductSerial:</b> شماره سریال محصول</li><li><b>ProductId:</b> شناسه محصول</li><li><b>ProductInstallationDateFrom:</b> تاریخ نصب محصول از</li><li><b>ProductInstallationDateTo:</b> تاریخ نصب محصول تا</li><li><b>CustomerName:</b> نام خریدار</li><li><b>CustomerNationalCode:</b> کد ملی خریدار</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_GetTechnicianAccountStatement">AfterSales_GetTechnicianAccountStatement</a>
+                
+                <span>
+                  <br><b>گرفتن گردش مالی حساب سرویس‌کار</b><br><ul><li><b>sessionId:</b> شناسه فعالیت دریافت‌شده از متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل پارامترهای ورودی. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "TafsilId": "",
+  "DateFrom": "",
+  "DateTo": "",
+  "MoeinId": "",
+  "GsIds": ""
+}</div><br><b>توضیحات پارامترهای JSON:</b><br><ul><li><b>TafsilId:</b> شناسه حساب تفصیلی سرویس‌کار</li><li><b>DateFrom:</b> تاریخ صورتحساب از</li><li><b>DateTo:</b> تاریخ صورتحساب تا</li><li><b>MoeinId:</b>
+ شناسه حساب معین مرتبط با حساب سرویس کار، در صورتی که بخواهید گردش های 
+مالی سرویس کار در تمامی معین ها نمایش داده شود خالی ارسال گردد</li><li><b>GsIds:</b> انبار سرویس کار، جهت نمایش گردش کالایی به همراه نمایش مانده کالاها</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_GetWarrantyMonths">AfterSales_GetWarrantyMonths</a>
+                
+                <span>
+                  <br><b>استعلام مدت گارانتی کالا</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "WarrantyType": "",
+  "GoodFullCode": ""
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>WarrantyType:</b>کد نوع گارانتی، برای مثال 1 = گارانتی (نرمال)، 2=گارانتی (برنزی)، 3=گارانتی (نقره ای)، 4=گارانتی (طلایی)</li><li><b>GoodFullCode:</b>کد کالای محصول</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_GetWarrantySettings">AfterSales_GetWarrantySettings</a>
+                
+                <span>
+                  <br><b>گرفتن عناوین نوع گارانتی ها به همراه مدت گارانتی ماه به صورت لیست که شامل کالا، گروه کالایی و یا به صورت کلی می باشد</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=AfterSales_Save">AfterSales_Save</a>
+                
+                <span>
+                  <br><b>ذخیره برگه های خدمات پس از فروش</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل اطلاعات برگه</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "ActionType": "Insert",
+  "EntityType": "StrAfterSalesServices",
+  "No": "",
+  "FixNo": "",
+  "Date": "",
+  "Time": "",
+  "Desc": "",
+  "Flag": "",
+  "Kol": "",
+  "Moein": "",
+  "Tafsil": "",
+  "Tafsil2": "",
+  "Tafsil3": "",
+  "TypeTitle": "",
+  "AfterSales": {
+    "GoodSerial": "",
+    "GoodFullCode": "",
+    "ProductionDate": "",
+    "WarrantyType": "",
+    "WarrantyPeriodMonth": "",
+    "CustType": "0",
+    "CustSex": "1",
+    "CustFirstName": "",
+    "CustLastName": "",
+    "CustName": "",
+    "CustNationalCode": "",
+    "CustState": "",
+    "CustCity": "",
+    "CustAddress": "",
+    "CustPhone": "",
+    "AfterSalesDesc": ""
+  },
+  "Details": [
+    {
+      "StdGsId": "",
+      "GoodFullCode": "",
+      "StdCount": "",
+      "StdPrice": "",
+      "StdPaidWithCustomer": "",
+      "StdDesc": "",
+      "StdRequestStNo": ""
+    }
+  ]
+}</div><br><b>توضیحات پارامترهای JSON:</b><br><ul><li><b>ActionType:</b> نوع فعالیت</li><li>&nbsp;&nbsp;&nbsp;&nbsp;Insert (ایجاد)</li><li>&nbsp;&nbsp;&nbsp;&nbsp;Update (ویرایش)</li><li><b>EntityType:</b> نوع موجودیت</li><li>&nbsp;&nbsp;&nbsp;&nbsp;StrAssRequest (درخواست خدمات پس از فروش)</li><li>&nbsp;&nbsp;&nbsp;&nbsp;StrAfterSalesServices (خدمات پس از فروش)</li><li>&nbsp;&nbsp;&nbsp;&nbsp;StrAssMaterialRequest (درخواست قطعه (سرویس کار))</li><li><b>No:</b> شماره برگه (در صورتی که بخواهید شماره توسط سیستم اختصاص داده شود خالی یا صفر ارسال شود)</li><li><b>FixNo:</b> شماره ثابت برگه</li><li><b>Date:</b> تاریخ، مثال 13950306</li><li><b>Time:</b> ساعت، مثال 142501</li><li><b>Desc:</b> شرح برگه</li><li><b>Flag:</b> وضعیت برگه -&gt; 0 (تایید نشده) و 1 (تایید شده)</li><li><b>Kol:</b> کد حساب سرویس کار کل</li><li><b>Moein:</b> کد حساب سرویس کار معین</li><li><b>Tafsil:</b> کد حساب سرویس کار تفصیلی</li><li><b>Tafsil2:</b> کد حساب سرویس کار تفصیلی 2</li><li><b>Tafsil3:</b> کد حساب سرویس کار تفصیلی 3</li><li><b>TypeTitle:</b> نوع (عنوان نوع های تعریف شده برای موجودیت خواسته شده)</li><li><b>AfterSales:</b> اطلاعات خدمات پس از فروش (در فرم درخواست قطعه نیازی به ارسال اطلاعات فوق نمی باشد)</li><li><b>&nbsp;&nbsp;&nbsp;&nbsp;GoodSerial:</b> شماره سریال محصول</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>GoodFullCode:</b> کد کالای محصول</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>ProductionDate:</b> تاریخ تولید محصول</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>WarrantyType:</b> نوع گارانتی محصول</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>WarrantyPeriodMonth:</b> مدت گارانتی به ماه</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustType:</b> نوع مشتری (0=حقیقی ، 1=حقوقی)</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustSex:</b> جنسیت (0=خانم ، 1=آقا)</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustFirstName:</b> نام مشتری</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustLastName:</b> نام خانوادگی مشتری</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustName:</b> نام شرکت یا سازمان در صورت حقوقی بودن</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustNationalCode:</b> کد ملی یا شناسه ملی</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustState:</b> کد استان</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustCity:</b> کد شهر</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustAddress:</b> آدرس مشتری</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>CustPhone:</b> تلفن تماس مشتری</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>AfterSalesDesc:</b> توضیحات خدمات پس از فروش</li><li><b>Details:</b> لیست ردیف های برگه</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>StdGsId:</b> کد انبار</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>GoodFullCode:</b> کد کالا</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>StdCount:</b> تعداد</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>StdPrice:</b> قیمت واحد، بدون جداکننده مبلغ. مثال: 1250000</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>StdPaidWithCustomer:</b> پرداخت شده توسط مشتری (0=خیر ، 1=بله)</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>StdDesc:</b> شرح ردیف</li><li>&nbsp;&nbsp;&nbsp;&nbsp;<b>StdRequestStNo:</b>شماره درخواست در صورت ثبت خدمات پس از فروش از روی درخواست خدمات پس از فروش قبلی ثبت شده، در غیر این صورت خالی ارسال شود</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=App_GetServerInfo">App_GetServerInfo</a>
+                
+                <span>
+                  <br>اطلاعات سرور مشتری<ul><li><b>customerSerial:</b>شماره سریال مشتری (قابل نمایش در نرم افزار مشتری)</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=App_Login">App_Login</a>
+                
+                <span>
+                  <br>جهت ورود به سیستم و گرفتن شناسه فعالیت ( کاربر سیستم سفارشات )<br>fuCode : کد سال مالی <br>userCellphone : (شماره همراه) نام کاربری <br>password : رمز کاربری <br>confirmCode : کد تایید ورود (ارسال شده از طریق اس ام اس) در صورت فعال بودن تنظمات ورود دو مرحله ای <br>لازم به توضیح می باشد که برای دریافت نام و رمز کاربری باید از سیستم سفارشات آنلاین اقدام نمایید <br>کد سال مالی را می توانید با استفاده از تابع GetFinancialUnits بدست آورید
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ChangeTafsilCode">ChangeTafsilCode</a>
+                
+                <span>
+                  <br>تعویص کد حساب تفصیلی<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>oldTgCode : کد سرگروه تفصیلی نیاز به تعویض کد <br>oldTafsilCode : کد حساب تفصیلی خواسته شده جهت تعویض کد<br>newTgCode : کد سرگروه تفصیلی که می خواهید کد جدید به آن انتقال داده شود <br>newTafsilCode : کد تفصیلی که می خواهید با کد قبلی تعویض گردد <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=DeleteSegmentByCode">DeleteSegmentByCode</a>
+                
+                <span>
+                  <br>حذف مرکز بر اساس کد مرکز<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>segmentCode : کد مرکز <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=DeleteTafsilAccount">DeleteTafsilAccount</a>
+                
+                <span>
+                  <br>حذف حساب تفصیلی <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accTgCode : کد سرگروه تفصیلی <br>accTafsilCode : کد حساب تفصیلی<br>accTafsil2Code : کد حساب تفصیلی 2 (در صورت حساب تفصیلی سطح یک خالی ارسال شود) <br>accTafsil2Code : کد حساب تفصیلی 2 (در صورت حساب تفصیلی سطح دو خالی ارسال شود) <br>removeChildAccounts : به همراه حذف زیرحسابها (در صورت داشتن زیر حساب و نیاز به حذف حساب خواسته شده باید مقدار true ارسال شود) <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=FindTafsilAccountBy">FindTafsilAccountBy</a>
+                
+                <span>
+                  <br>جستجوی حسابهای تفصیلی<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accDNationalCode : کد ملی <br>accDEconomicNo : کد اقتصادی <br>accDPersonCode : کد پرسنلی <br>accName : نام <br>accTgCode : کد سرگروه تفصیلی <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=FindTafsilAccountByKolAndMoeinCode">FindTafsilAccountByKolAndMoeinCode</a>
+                
+                <span>
+                  <br>جستجوی حسابهای تفصیلی تخصیص داده شده برای کل و معین خاص<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>kolCode : کد کل <br>moeinCode : کد معین <br>accDNationalCode : کد ملی <br>accName : نام <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=FindTafsilAccountLimitFieldBy">FindTafsilAccountLimitFieldBy</a>
+                
+                <span>
+                  <br>جستجوی حسابهای تفصیلی - نتیجه جستجو فیلدهای محدود کد تفصیلی، نام تفصیلی، کد ملی، کد پرسنلی، شماره و شناسه حساب تفصیبلی <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accDNationalCode : کد ملی <br>accDPersonCode : کد پرسنلی <br>accName : نام <br>accTgCode : کدهای سرگروه تفصیلی - در صورت درخواست بیش از یک سرگروه تفصیلی با کاما از هم جدا شوند <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetAccCities">GetAccCities</a>
+                
+                <span>
+                  <br>فهرست تمامی استانها و شهرستان ها در سیستم به صورت پدر فرزندی<br>sessionId : شناسه فعالیت گرفته شده در متد Login
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetAccLocations">GetAccLocations</a>
+                
+                <span>
+                  <br>فهرست تمامی موقعیت های جغرافیایی تعریف شده در سیستم به صورت پدر فرزندی<br>sessionId : شناسه فعالیت گرفته شده در متد Login
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetAccountByCodeAndLevel">GetAccountByCodeAndLevel</a>
+                
+                <span>
+                  <br>گرفتن حساب بر اساس کد حساب و سطح حساب<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accCode : کد حساب <br>accLevel : سطح حساب <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetAccountReport">GetAccountReport</a>
+                
+                <span>
+                  <br>گرفتن گزارش گردش حساب<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accKol : کد حساب کل<br>accMoein : کد حساب معین<br>accTafsil : کد حساب تفصیلی<br>accTafsil2 : کد حساب تفصیلی 2<br>accTafsil3 : کد حساب تفصیلی 3<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetAllAccounts">GetAllAccounts</a>
+                
+                <span>
+                  <br>فهرست تمامی حسابهای تعریف شده در سیستم<br>sessionId : شناسه فعالیت گرفته شده در متد Login
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetCustomerStatus">GetCustomerStatus</a>
+                
+                <span>
+                  <br>گرفتن وضعیت مالی حساب<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accKol : کد حساب کل<br>accMoein : کد حساب معین<br>accTafsil : کد حساب تفصیلی<br>accTafsil2 : کد حساب تفصیلی 2<br>accTafsil3 : کد حساب تفصیلی 3<br>date : وضعیت حساب تا تاریخ، مثال 13950306 <br>time : ساعت، مثال 130120 <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetFinancialUnits">GetFinancialUnits</a>
+                
+                <span>
+                  <br>لیست سال های مالی تعریف شده و قابل رویت در سیستم
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetGoodsCountByStoreWithQcAndSalePrice">GetGoodsCountByStoreWithQcAndSalePrice</a>
+                
+                <span>
+                  <br>گرفتن موجودی کالا <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>goodStoreIds
+ : شناسه انبارها [در صورت چندین انبار شناسه انبارها با کارکتر (,) از هم 
+جدا شوند برای مثال 1,2 و در صورت درخواست موجودی تمامی انبارها خالی ارسال
+ شود] <br>goodIds : شناسه کالاها [در صورت چندین کالا شناسه کالاها با 
+کارکتر (,) از هم جدا شوند برای مثال 1,2 و در صورت درخواست موجودی تمامی 
+کالاها خالی ارسال شود] <br>toDate : تا تاریخ [مثال 13990720 در صورتی که بخواهید محدودیت تاریخ اعمال نشود عدد صفر را ارسال کنید] <br>toTime : تا ساعت [مثال 132005 در صورتی که بخواهید محدودیت تاریخ اعمال نشود عدد صفر را ارسال کنید] <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetKolAccounts">GetKolAccounts</a>
+                
+                <span>
+                  <br>فهرست حسابهای کل تعریف شده در سیستم<br>sessionId : شناسه فعالیت گرفته شده در متد Login
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetMoeinAccounts">GetMoeinAccounts</a>
+                
+                <span>
+                  <br>فهرست حسابهای معین تعریف شده برای کل خواسته شده در سیستم<br>sessionId : شناسه فعالیت گرفته شده در متد Login<br>kolCode : کد حساب کل
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetSegmentByCode">GetSegmentByCode</a>
+                
+                <span>
+                  <br>گرفتن مرکز بر اساس کد مرکز<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>segmentCode : کد مرکز <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetStockAccNameByStNo">GetStockAccNameByStNo</a>
+                
+                <span>
+                  <br>گرفتن شناسه برگه بر اساس شماره<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع برگه <br>stNo : شماره <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=GetUserGroupAndUserList">GetUserGroupAndUserList</a>
+                
+                <span>
+                  <br>گرفتن لیست گروه های کاربران و لیست کاربران<br>sessionId : شناسه فعالیت گرفته شده در متد Login
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=Login">Login</a>
+                
+                <span>
+                  <br>جهت ورود به سیستم و گرفتن شناسه فعالیت <br>fuCode : کد سال مالی <br>userName : نام کاربری <br>password : رمز کاربری <br>لازم به توضیح می باشد که برای دریافت نام و رمز کاربری باید از سیستم حسابداری اقدام نمایید <br>کد سال مالی را می توانید با استفاده از تابع GetFinancialUnits بدست آورید
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=Logout">Logout</a>
+                
+                <span>
+                  <br>جهت خروج کاربر از سیستم<br>sessionId : شناسه فعالیت گرفته شده در متد Login
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ManualVoucherChangeState">ManualVoucherChangeState</a>
+                
+                <span>
+                  <br>تغییر وضعیت سند دستی / قرارداد <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>mvFixNo : شماره ثابت <br>mvFlag : وضعیت 0 : تایید نشده 1 : تایید شده <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ManualVoucherDelete">ManualVoucherDelete</a>
+                
+                <span>
+                  <br>حذف سند دستی / قرارداد <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>mvFixNo : شماره ثابت، ویرایش سند متناظر با شماره ثابت فوق
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ManualVoucherGetByFixNo">ManualVoucherGetByFixNo</a>
+                
+                <span>
+                  <br>گرفتن اطلاعات سند دستی / قرارداد <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>mvFixNo : شماره ثابت <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ManualVoucherGetNewFixNo">ManualVoucherGetNewFixNo</a>
+                
+                <span>
+                  <br>گرفتن شماره ثابت جدید <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ManualVoucherInsert">ManualVoucherInsert</a>
+                
+                <span>
+                  <br><b>ذخیره سند دستی / قرارداد</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>mvFixNo:</b>
+ شماره ثابت جهت ذخیره. این شماره توسط سیستم استفاده‌کننده جهت پیگیری 
+وضعیت ذخیره در مواقع قطع ارتباط یا عدم پاسخ سرور استفاده می‌شود. <b>اجباری</b> و <b>غیرتکراری</b> است.</li><li><b>mvSegmentCode:</b> کد مرکز هزینه یا پروژه (شماره قرارداد)</li><li><b>mvDate:</b> تاریخ سند (مثال: 13950306)</li><li><b>mvDesc:</b> شرح سند</li><li><b>mvMoeinId:</b> شناسه حساب معین</li><li><b>mvTafsilId:</b> شناسه حساب تفصیلی</li><li><b>mvDetails:</b> آرایه‌ای از ردیف‌های سند به فرمت زیر:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">[
+  {
+    "MvdCurrencyPrice": "نرخ ارز",
+    "MvdCurrencyBes": "مبلغ بستانکاری ارز",
+    "MvdCurrencyBed": "مبلغ بدهکاری ارز",
+    "MvdCurrencyId": "شناسه نوع ارز",
+    "MvdPriceBes": "مبلغ بستانکاری ریالی",
+    "MvdPriceBed": "مبلغ بدهکاری ریالی",
+    "MvdDesc": "شرح",
+    "MvdMoeinId": "شناسه حساب معین",
+    "MvdTafsilId": "شناسه حساب تفصیلی",
+    "VdKol": "کد حساب کل",
+    "VdMoein": "کد حساب معین",
+    "VdTafsil": "کد حساب تفصیلی",
+    "VdTafsil2": "کد حساب تفصیلی 2",
+    "VdTafsil3": "کد حساب تفصیلی 3",
+    "MvdTrackingNo": "شماره پیگیری"
+  }
+]</div><br><b>توضیحات تکمیلی:</b><br><ul><li>فرمت ردیف‌ها مطابق نمونه بالا بوده و برای سایر ردیف‌ها تکرار می‌شود.</li><li>در صورت ثبت کد حساب‌ها، نیازی به ثبت شناسه حساب معین و تفصیلی نیست.</li><li>مبالغ باید به‌صورت عددی و بدون جداساز ثبت شوند (مثال: 1250000 ریال)</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=ManualVoucherUpdate">ManualVoucherUpdate</a>
+                
+                <span>
+                  <br><b>ویرایش سند دستی / قرارداد</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>mvFixNo:</b> شماره ثابت سند. برای ویرایش سندی که با این شماره ذخیره شده استفاده می‌شود. <b>اجباری</b> و <b>غیرتکراری</b> است.</li><li><b>mvSegmentCode:</b> کد مرکز هزینه یا پروژه (شماره قرارداد)</li><li><b>mvDate:</b> تاریخ سند (مثال: 13950306)</li><li><b>mvDesc:</b> شرح سند</li><li><b>mvMoeinId:</b> شناسه حساب معین</li><li><b>mvTafsilId:</b> شناسه حساب تفصیلی</li><li><b>mvDetails:</b> آرایه‌ای از ردیف‌های سند به فرمت زیر:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">[
+  {
+    "MvdCurrencyPrice": "نرخ ارز",
+    "MvdCurrencyBes": "مبلغ بستانکاری ارز",
+    "MvdCurrencyBed": "مبلغ بدهکاری ارز",
+    "MvdCurrencyId": "شناسه نوع ارز",
+    "MvdPriceBes": "مبلغ بستانکاری ریالی",
+    "MvdPriceBed": "مبلغ بدهکاری ریالی",
+    "MvdDesc": "شرح",
+    "MvdMoeinId": "شناسه حساب معین",
+    "MvdTafsilId": "شناسه حساب تفصیلی",
+    "VdKol": "کد حساب کل",
+    "VdMoein": "کد حساب معین",
+    "VdTafsil": "کد حساب تفصیلی",
+    "VdTafsil2": "کد حساب تفصیلی 2",
+    "VdTafsil3": "کد حساب تفصیلی 3"
+    "MvdTrackingNo": "شماره پیگیری"
+  }
+]</div><br><b>توضیحات تکمیلی:</b><br><ul><li>فرمت ردیف‌ها مطابق نمونه بالا بوده و برای سایر ردیف‌ها تکرار می‌شود.</li><li>در صورت ثبت کد حساب‌ها، نیازی به ثبت شناسه حساب معین و تفصیلی نیست.</li><li>مبالغ باید به‌صورت عددی و بدون جداساز ثبت شوند (مثال: 1250000 ریال)</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=PdaStockInsert">PdaStockInsert</a>
+                
+                <span>
+                  <br>ذخیره رسید / حواله <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>entity : نوع موجودیت سند<br>details : جزئیات <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=RpRuleGetByNo">RpRuleGetByNo</a>
+                
+                <span>
+                  <br>گرفتن اطلاعات دستور دریافت / پرداخت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>rpEntityType : نوع موجودیت خواسته شده ، 1 دستور دریافت ، 2 دستور پرداخت<br>rpNo : شماره<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=RpRuleGetNewNo">RpRuleGetNewNo</a>
+                
+                <span>
+                  <br>گرفتن شماره جدید برای دستور دریافت / پرداخت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>rpEntityType : نوع موجودیت خواسته شده ، 1 دستور دریافت ، 2 دستور پرداخت<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=RpRuleSave">RpRuleSave</a>
+                
+                <span>
+                  <br>ذخیره دستور دریافت / پرداخت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>rpEntityType : نوع موجودیت خواسته شده ، 1 دستور دریافت ، 2 دستور پرداخت<br>rpNo : شماره دستور - در صورتی که خالی یا صفر ارسال شود سیستم به صورت خودکار شماره جدید به دستور انتصاب خواهد داد) <br>rpSegmentCode : کد مرکز هزینه یا پروژه -(شماره قرارداد) <br>rpDate : تاریخ، مثال 13950306 <br>rpDesc : شرح <br>rpMoeinId : شناسه حساب معین<br>rpTafsilId : شناسه حساب تفصیلی<br>rpFlag : وضعیت تایید شده دستور -&gt; 0 تایید نشده ، 1 تایید شده<br>mvDetails
+ : [{"RpRdType":"نوع دریافت -&gt; 1:نقدی - 2:چک - 3: تخفیف - 4:واگذاری 
+چک های دریافتی","RpRdPrice":"مبلغ","RpRdDate":"تاریخ 
+سررسید","RpRdDesc":"شرح"}] <br>فرمت ردیف های دستور دریافت / پرداخت به شکل بالا بوده و برای سایر ردیف ها تکرار خواهد شد <br>فرمت مبلغ ها به صورت عدد می باشد و از جداساز مبلغ استفاده نشود، مثال 1250000 ریال <br>فرمت تاریخ سررسید، مثال 13950306
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=SaveOutSerials">SaveOutSerials</a>
+                
+                <span>
+                  <br>ذخیره سریال های خروجی بر اساس شماره حواله<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stNo : شماره <br>dtSerials : لیست سریال های خروجی<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=SaveSegment">SaveSegment</a>
+                
+                <span>
+                  <br>ایجاد و یا ویرایش مراکز هزینه و پروژه - (شماره قرارداد) <br>پس از ایجاد و یا ویرایش، در صورت موفق بودن عملیات شناسه مرکز برگشت داده خواهد شد <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accId : شناسه مرکز <br>accId : کد مرکز <br>accName : عنوان مرکز <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=SaveTafsilAccount">SaveTafsilAccount</a>
+                
+                <span>
+                  <br>ایجاد و یا ویرایش حساب تفصیلی <br>پس از ایجاد و یا ویرایش حساب تفصیلی، در صورت موفق بودن عملیات شناسه حساب#کد حساب تفصیلی برگشت داده خواهد شد <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accParentId : شناسه حساب پدر (در صورت نبودن شناسه حساب پدر عدد صفر ارسال شود) <br>accId : شناسه حساب (در صورت حساب جدید باید عدد صفر ارسال شود) <br>accName : عنوان حساب <br>accFirstName : نام<br>accLastName : نام خانوادگی<br>accFatherName : نام پدر <br>accAddress : آدرس <br>accPhone : تلفن <br>accCellPhone : همراه <br>accPersonCode : کد پرسنلی <br>accDescription : شرح <br>accEconomicNo : شماره اقتصادی <br>accBirthDate : تاریخ تولد مثال 13610315 <br>accNationalCode : کد ملی <br>accBirthCity : شهر تولد <br>accIdNo : شماره شناسنامه <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=SaveTafsilAccountL4">SaveTafsilAccountL4</a>
+                
+                <span>
+                  <br>ایجاد و یا ویرایش حساب تفصیلی سطح اول <br>پس از ایجاد و یا ویرایش حساب تفصیلی، در صورت موفق بودن عملیات شناسه حساب#کد حساب تفصیلی برگشت داده خواهد شد <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>accTgCode : کد سرگروه تفصیلی <br>accCode : کد حساب (در صورت حساب جدید خالی ارسال شود) <br>accName : عنوان حساب <br>accFirstName : نام<br>accLastName : نام خانوادگی<br>accDSex : جنسیت در صورت حقیقی بودن حساب (آقا / خانم)<br>accFatherName : نام پدر <br>accAddress : آدرس <br>accPhone : تلفن <br>accCellPhone : همراه <br>accPersonCode : کد پرسنلی <br>accDescription : شرح <br>accEconomicNo : شماره اقتصادی <br>accBirthDate : تاریخ تولد مثال 13610315 <br>accNationalCode : کد ملی <br>accBirthCity : شهر تولد <br>accIdNo : شماره شناسنامه <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockCountGetGood">StockCountGetGood</a>
+                
+                <span>
+                  <br><b>برگشت ردیف شمارش موجودی کالا براساس انبار و کد کالا جهت ثبت موجودی شمارش واقعی کالا در انبار</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "stNo": 
+  "goodFullCode": "" 
+  "goodBarcode": "" 
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>stNo:</b> شماره برگه شمارش موجودی انبار</li><li><b>goodFullCode:</b>کد کالا</li><li><b>goodBarcode:</b>بارکد کالا</li><li>توجه
+ داشته باشید که در صورت ورود کد کالا نیازی به بارکد نیست و جستجو براساس 
+کد انجام خواهد شد، و یا در صورتی که کد کالا مشخص نباشد می توانید کالای 
+مورود نظر را براساس بارکد جستجو کنید در این صورت امکان این وجود دارد که 
+لیست بازگشتی چند ردیف باشد، در صورت ثبت تکراری بارکد کالا</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockCountGetList">StockCountGetList</a>
+                
+                <span>
+                  <br><b>گرفتن لیست برگه های شمارش موجودی انبار</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "justUnConfirmed": true
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>justUnConfirmed:</b> برگشت فقط لیست برگه های تایید نشده و قابل ویرایش، در صورتی که بخواهید همه برگه های شامل لیست باشند مقدار را false ارسال کنید</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockCountSave">StockCountSave</a>
+                
+                <span>
+                  <br><b>ذخیره مقدار شمارش شده در انبار در شمارش موجودی ذکر شده</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParamsArray:</b> رشته‌ای از نوع آرایه JSON شامل  فیلدها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">[{
+  "stNo": 
+  "goodFullCode": "" 
+  "TempCount": 
+  "TempCount2": null 
+}]</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>goodFullCode:</b>کد کالا</li><li><b>TempCount:</b>مقدار شمارش اول</li><li><b>TempCount2:</b>مقدار شمارش دوم</li><li>توجه داشته باشید در صورت عدم شمارش دوم مقدار آن را null ارسال نمایید</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockDeleteByFixNo">StockDeleteByFixNo</a>
+                
+                <span>
+                  <br>حذف برگه های انبارداری / بازرگانی بر اساس شماره ثابت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInStock (رسید انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleProforma (پیش فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrOutStock (حواله انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stFixNo : شماره ثابت، حذف سند متناظر با شماره ثابت فوق
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockDeleteByNo">StockDeleteByNo</a>
+                
+                <span>
+                  <br>حذف برگه های انبارداری / بازرگانی بر اساس شماره <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInStock (رسید انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleProforma (پیش فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrOutStock (حواله انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stNo : شماره، حذف سند متناظر با شماره فوق
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockExistByFixNo">StockExistByFixNo</a>
+                
+                <span>
+                  <br>چک کردن موجود بودن برگه های انبارداری / بازرگانی بر اساس شماره ثابت <br>در صورت موجود بودن مقدار برگشتی True و در صورت عدم موجود بودن مقدار برگشتی برابر False خواهد بود <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInStock (رسید انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleProforma (پیش فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrOutStock (حواله انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stFixNo : شماره ثابت
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockFindGoodBy">StockFindGoodBy</a>
+                
+                <span>
+                  <br><b>گرفتن اطلاعات کالا به همراه موجودی و قیمت های فروش</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "goodBarcode": ,
+  "goodFullCode": ,
+  "goodTechnicalCode": ,
+  "goodName": ,
+  "generalSearch": ,
+  "resultLimit": 50 ,
+  "toDate": }</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>goodBarcode:</b> بارکد کالا</li><li><b>goodFullCode:</b> کد کالا</li><li><b>goodTechnicalCode:</b> کدفنی کالا</li><li><b>goodName:</b> نام کالا</li><li><b>generalSearch:</b> جستجو و برگشت نسبت به موجود بودن براساس بارکد، کد کالا، کد فنی و در نهایت نام</li><li><b>resultLimit:</b> محدودیت تعداد آیتم های برگشتی در صورت جستجو بر اساس نام</li><li><b>toDate:</b> تا تاریخ، جهت استخراج موجودی. در صورت خالی شرط تاریخ اعمال نخواهد شد</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetBasicInfo">StockGetBasicInfo</a>
+                
+                <span>
+                  <br>گرفتن اطلاعات پایه انبارداری و بازرگانی<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>containGoods : شامل فهرست کالا [true or false] <br>containGoodGroups : شامل گروه بندی کالا ها [true or false] <br>containStores : شامل انبارها [true or false] <br>containPriceTitles : شامل عنوان نوع قیمت های فروش [true or false] <br>containFactorOperatives : شامل عوامل فاکتور [true or false] <br>containGoodPackingPrice : شامل قیمت های فروش کالا [true or false] <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetByNo">StockGetByNo</a>
+                
+                <span>
+                  <br>گرفتن اطلاعات فاکتور بازرگانی بر اساس شماره<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت درخواست فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stNo : شماره
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetFactorReport">StockGetFactorReport</a>
+                
+                <span>
+                  <br><b>گزارش فاکتورها</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "stEntityType": "StrSaleFactor",
+  "stNoFrom": "",
+  "stNoTo": "",
+  "stFixNoFrom": "",
+  "stFixNoTo": "",
+  "stDateFrom": "",
+  "stDateTo": "",
+  "stDesc": "",
+  "tgCodes": "",
+  "tafsilCodes": "",
+  "usersIds": "",
+  "stState": "",
+  "kol": "",
+  "moein": "",
+  "tafsil": "",
+  "tafsil2": "",
+  "tafsil3": "",
+  "acclocationIds": "",
+  "stGroupBy": "",
+  "stOrder": "1"
+}</div><br><b>توضیحات کامل پارامترهای ارسالی در فرمت JSON:</b><br><ul><li><b>stEntityType:</b> نوع موجودیت، یکی از موارد زیر:<ul><li>StrBuyFactor (فاکتور خرید)</li><li>StrBuyReturnFactor (برگشت از خرید)</li><li>StrInStock (رسید انبار متفرقه)</li><li>StrSaleProforma (پیش فاکتور فروش)</li><li>StrSaleOrder (سفارش فروش)</li><li>StrSaleFactor (فاکتور فروش)</li><li>StrSaleReturnFactor (برگشت از فروش)</li><li>StrOutStock (حواله انبار متفرقه)</li></ul>مثال: برای فاکتور فروش مقدار ارسالی باید برابر <code>StrSaleFactor</code> باشد</li><li><b>stNoFrom / stNoTo:</b> محدوده شماره برگه</li><li><b>stFixNoFrom / stFixNoTo:</b> محدوده شماره ثابت</li><li><b>stDateFrom / stDateTo:</b> محدوده تاریخ (مثال: 13950306)</li><li><b>stDesc:</b> قسمتی از شرح اصلی برگه</li><li><b>tgCodes / tafsilCodes / usersIds:</b> کدهای تفصیلی یا کاربران، جدا شده با کاما (،)</li><li><b>stState:</b> وضعیت برگه:<ul><li> : همه</li><li>0: تایید نشده‌ها</li><li>1: تایید شده‌ها</li></ul></li><li><b>kol / moein / tafsil / tafsil2 / tafsil3:</b> کد حساب</li><li><b>acclocationIds:</b> شناسه موقعیت‌های جغرافیایی، جدا شده با کاما</li><li><b>stGroupBy:</b> گروه‌بندی بر اساس:<ul><li>1: روز</li><li>2: ماه</li><li>3: فصل</li><li>4: سال</li><li>5: نوع موجودیت</li><li>6: مشتری</li><li>8: کاربر ایجادکننده</li></ul></li><li><b>stOrder:</b> ترتیب نمایش:<ul><li>1: شماره</li><li>2: کد حساب</li><li>3: تاریخ</li><li>5: کد نام حساب</li></ul></li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetGoodBy">StockGetGoodBy</a>
+                
+                <span>
+                  <br>گرفتن اطلاعات کالا بر اساس کد<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>goodFullCode : کد کامل کالا <br>goodTechnicalCode : کد فنی کالا <br> در صورتی که بخواهید کالا را بر اساس کد فنی جستجو کنید کد کامل کالا را خالی ارسال کنید یا برعکس
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetGoodCount">StockGetGoodCount</a>
+                
+                <span>
+                  <br>گرفتن موجودی کالا <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>goodStoreIds
+ : شناسه انبارها [در صورت چندین انبار شناسه انبارها با کارکتر (,) از هم 
+جدا شوند برای مثال 1,2 و در صورت درخواست موجودی تمامی انبارها خالی ارسال
+ شود] <br>goodIds : شناسه کالاها [در صورت چندین کالا شناسه کالاها با 
+کارکتر (,) از هم جدا شوند برای مثال 1,2 و در صورت درخواست موجودی تمامی 
+کالاها خالی ارسال شود] <br>toDate : تا تاریخ [مثال 13990720 در صورتی که بخواهید محدودیت تاریخ اعمال نشود عدد صفر را ارسال کنید] <br>toTime : تا ساعت [مثال 132005 در صورتی که بخواهید محدودیت تاریخ اعمال نشود عدد صفر را ارسال کنید] <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetGoodCountWithQc">StockGetGoodCountWithQc</a>
+                
+                <span>
+                  <br>گرفتن موجودی کالا <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>goodStoreIds
+ : شناسه انبارها [در صورت چندین انبار شناسه انبارها با کارکتر (,) از هم 
+جدا شوند برای مثال 1,2 و در صورت درخواست موجودی تمامی انبارها خالی ارسال
+ شود] <br>goodIds : شناسه کالاها [در صورت چندین کالا شناسه کالاها با 
+کارکتر (,) از هم جدا شوند برای مثال 1,2 و در صورت درخواست موجودی تمامی 
+کالاها خالی ارسال شود] <br>toDate : تا تاریخ [مثال 13990720 در صورتی که بخواهید محدودیت تاریخ اعمال نشود عدد صفر را ارسال کنید] <br>toTime : تا ساعت [مثال 132005 در صورتی که بخواهید محدودیت تاریخ اعمال نشود عدد صفر را ارسال کنید] <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetGoodReport">StockGetGoodReport</a>
+                
+                <span>
+                  <br><b>گزارش مقداری و ریالی کالا (عوامل فاکتور)</b><br>
+<ul>
+  <li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li>
+  <li><b>stEntityType:</b> نوع موجودیت، یکی از موارد زیر:
+    <ul>
+      <li>StrBuyFactor (فاکتور خرید)</li>
+      <li>StrBuyReturnFactor (برگشت از خرید)</li>
+      <li>StrInStock (رسید انبار متفرقه)</li>
+      <li>StrSaleProforma (پیش فاکتور فروش)</li>
+      <li>StrSaleOrder (سفارش فروش)</li>
+      <li>StrSaleFactor (فاکتور فروش)</li>
+      <li>StrSaleReturnFactor (برگشت از فروش)</li>
+      <li>StrOutStock (حواله انبار متفرقه)</li>
+    </ul>
+    مثال: برای فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد
+  </li>
+  <li><b>stdGsIds:</b> کد انبارها، جدا شده با کاما (مثال: 1,2)</li>
+  <li><b>stDateFrom:</b> از تاریخ (مثال: 13950306)</li>
+  <li><b>stDateTo:</b> تا تاریخ (مثال: 13950306)</li>
+  <li><b>goodFullCodeFrom:</b> از کد کالا</li>
+  <li><b>goodFullCodeTo:</b> تا کد کالا</li>
+  <li><b>goodName:</b> نام کالا</li>
+  <li><b>kolFrom / moeinFrom / tafsilFrom:</b> از حساب‌ها</li>
+  <li><b>kolTo / moeinTo / tafsilTo:</b> تا حساب‌ها</li>
+  <li><b>groupBy:</b> گروه‌بندی بر اساس:
+    <ul>
+      <li>1: روز</li>
+      <li>2: ماه</li>
+      <li>3: فصل</li>
+      <li>4: سال</li>
+      <li>12: حساب</li>
+      <li>21: حساب معین</li>
+      <li>13: کاربر ایجادکننده</li>
+      <li>14: کالا</li>
+      <li>15: گروه کالا</li>
+      <li>16: انبار</li>
+    </ul>
+  </li>
+  <li><b>operativeGroupType:</b> گروه‌بندی عوامل:
+    <ul>
+      <li>1: بر اساس نوع عوامل</li>
+      <li>0: بر اساس عوامل</li>
+    </ul>
+  </li>
+</ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetGoods">StockGetGoods</a>
+                
+                <span>
+                  <br>گرفتن اطلاعات اصلی کالا به همراه مانده موجودی و قیمت های فروش<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>hasRemCount : فقط کالاهای دارای مانده [true or false] <br>goodFullCodeStartWith : کالاهای شروع شده با کد فوق <br>withGoodPackingPrice : به همراه قیمت های فروش [true or false]<br>goodCreateDateFrom : کالاهای ایجاد شده از تاریخ - مثال 14030301<br>goodCreateDateTo : کالاهای ایجاد شده تا تاریخ - مثال 14030310<br>goodUpdateDateFrom : کالاهای ویرایش شده از تاریخ - مثال 14030301<br>goodUpdateDateTo : کالاهای ویرایش شده تا تاریخ - مثال 14030310
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetNewFixNo">StockGetNewFixNo</a>
+                
+                <span>
+                  <br>چک کردن موجود بودن برگه های انبارداری / بازرگانی بر اساس شماره ثابت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInStock (رسید انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleProforma (پیش فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrOutStock (حواله انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGetOrderControlReport">StockGetOrderControlReport</a>
+                
+                <span>
+                  <br><b>گزارش کنترل سفارش‌ فروش</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. ساختار:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "stDateFrom": "",
+  "stDateTo": "",
+  "stNoFrom": "",
+  "stNoTo": "",
+  "controlType": "0",
+  "kol": "",
+  "moein": "",
+  "tafsil": "",
+  "tafsil2": "",
+  "tafsil3": "",
+  "usersIds": "",
+  "showByRemind": "",
+  "includeClosed": "",
+  "stState": ""
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>stDateFrom / stDateTo:</b> محدوده تاریخ سفارش‌ها (فرمت: yyyy/MM/dd)</li><li><b>stNoFrom / stNoTo:</b> محدوده شماره سفارش</li><li><b>controlType:</b> نوع کنترل سفارش:<ul><li>0: مقایسه سفارش با <b>فاکتور فروش</b></li><li>1: مقایسه سفارش با <b>حواله فروش</b></li></ul></li><li><b>kol / moein / tafsil / tafsil2 / tafsil3:</b> کد حساب مالی مرتبط با سفارش</li><li><b>usersIds:</b> شناسه کاربران ثبت‌کننده سفارش، جدا شده با کاما (مثال: 1,2)</li><li><b>showByRemind:</b> فقط سفارش‌هایی که <b>دارای مانده</b> هستند نمایش داده شوند (true/false)</li><li><b>includeClosed:</b> آیا سفارش‌های <b>بسته‌شده</b> نیز در گزارش لحاظ شوند؟ (true/false)</li><li><b>stState:</b> وضعیت سفارش:<ul><li> : همه</li><li>0: تایید نشده</li><li>1: تایید شده</li><li>2: بسته شده</li><li>3: بسته شده (تایید شده)</li><li>4: بسته شده (تایید نشده)</li></ul></li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGoodSave">StockGoodSave</a>
+                
+                <span>
+                  <br>ذخیره اطلاعات کالا<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>actionType : نوع فعالیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insert (ایجاد)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Update (ویرایش)<br>goodType : نوع کالا <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : سایر کالاها<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 : مواد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 : ملزومات و قطعات<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3 : کالای در جریان ساخت<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4 : محصول<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5 : ضایعات<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6 : خدمات<br>goodComment : توضیحات کالا <br>goodFullcode : کد کامل کالا <br>goodGroupFullcode : کد کامل گروه کالا <br>goodTechnicalCode : کد فنی کالا<br>goodName : نام کالا <br>goodTaxCode : کد مالیاتی کالا<br>goodTaxName : نام مالیاتی کالا<br>goodStockControl : کنترل شدن موجودی کالا <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 : کنترل شدن موجودی<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : کنترل نشدن موجودی<br>goodIsActive : فعال بودن کالا <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 : فعال<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : غیرفعال<br>goodTaxPercent : درصد مالیات بر ارزش افزوده کالا <br>goodEnableSerial : سریال پذیر بودن کالا<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : سریال پذیر نمی باشد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 : سریال پذیر می باشد<br>goodEnableQc : کنترل کمی پذیر بودن کالا<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : کنترل کمی پذیر نمی باشد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 : کنترل کمی پذیر می باشد<br>goodIndependSubUnits : فعال بودن واحد فرعی مستقل<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : واحد فرعی مستقل فعال نمی باشد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 : واحد فرعی مستقل فعال می باشد<br>goodCustomerPrice : قیمت مصرف کننده<br>goodBarcodes : بارکد های کالا : مثال بارکد اول، بارکد دوم <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای جداسازی بارکد ها از کارکتر (،) استفاده گردد<br>goodUnitName : نام واحد اصلی کالا<br>goodUnitWeight : وزن خالص واحد اصلی کالا (گرم)<br>goodUnitPackingWeight : وزن به همراه بسته بندی واحد اصلی کالا (گرم)<br>goodSalePrice : قیمت های فروش کالا کالا<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : نوع قیمت فروش:مبلغ قیمت فروش،نوع قیمت فروش:مبلغ قیمت فروش<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : مثال نقدی:125000،نسیه:135000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 : برای قیمت های بعدی نیز همین ساختار رعایت شود<br>goodOtherUnitAndPrice : واحدهای ثانویه کالا<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;در
+ صورتی که بخواهید برای کالای فوق بیش از یک واحد، قیمت و وزن های مختلف 
+برای هر یک از واحدهای ذکر شده ثبت نمایید از این گزینه با فرمت ذکر شده 
+استفاده نمایید<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;جهت جداسازی واحدها : ##<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;واحد
+ کالا|معادل در واحد اصلی|وزن خالص گرم|وزن ناخالص گرم|نوع قیمت فروش:مبلغ 
+قیمت فروش،نوع قیمت فروش:مبلغ قیمت فروش : فرمت<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;توجه
+ داشته باشید که از فرمت بالا واحد کالا و معادل در واحد اصلی اجباری می 
+باشد، در صورتی که کالا قیمت فروش داشته اما اطلاعات وزن را نداشته باشیم 
+باید فرمت ذکر شده رعایت شده و جای وزن را خالی یا صفر بگذارید<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;مثال : بسته|3|0|0|نقدی:125000،نسیه:135000##کارتن|12|0|0|نقدی:150000،نسیه:1620000<br>goodStoreIds
+ : کد انبارهای مرتبط با کالای فوق&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;در صورتی 
+که بخواهید کالای فوق در انبارهای خاصی گردش داشته باشد می توانید کد 
+انبارها را به صورت متن و جداساز کاما ارسال کنید<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;در صورتی که بخواهید کالا در تمامی انبارها گردش داشته باشد گزینه فوق را خالی ارسال نمایید<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;برای
+ مثال در صورتی که بخواهیم کالای فوق فقط در انبار 2 و 10 گردش داشته باشد 
+مقدار فوق را ارسال می کنیم : 2,10<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockGoodSaveV2">StockGoodSaveV2</a>
+                
+                <span>
+                  <br><b>ذخیره / ویرایش اطلاعات کالا</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده از متد Login</li><li><b>jsonParams:</b> رشته JSON شامل اطلاعات کامل کالا</li></ul><br><b>نمونه JSON:</b><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "actionType": "Insert",
+  "goodType": "1",
+  "goodFullcode": "1001",
+  "goodGroupFullcode": "10",
+  "goodTechnicalCode": "",
+  "goodName": "کالای تست",
+  "goodComment": "توضیحات",
+  "goodTaxCode": "123",
+  "goodTaxName": "نام مالیاتی کالا",
+  "goodStockControl": "1",
+  "goodIsActive": "1",
+  "goodTaxPercent": "10",
+  "goodEnableSerial": "0",
+  "goodEnableQc": "0",
+  "goodIndependSubUnits": "0",
+  "goodCustomerPrice": "0",
+  "goodBarcodes": "12345،67890",
+  "goodUnitName": "عدد",
+  "goodUnitWeight": "0",
+  "goodUnitPackingWeight": "0",
+  "goodSalePrice": "نقدی:125000،نسیه:135000",
+  "goodOtherUnitAndPrice": "بسته|3|0|0|نقدی:125000،نسیه:135000##کارتن|12|0|0|نقدی:150000،نسیه:162000",
+  "goodStoreIds": "2,10",
+  "goodPackingNames": ""
+}</div><br><b>توضیحات پارامترها:</b><br><ul><li><b>actionType:</b> نوع عملیات<br>&nbsp;&nbsp;Insert : ایجاد<br>&nbsp;&nbsp;Update : ویرایش</li><li><b>goodType:</b> نوع کالا<br>&nbsp;&nbsp;0 : سایر کالاها<br>&nbsp;&nbsp;1 : مواد<br>&nbsp;&nbsp;2 : ملزومات و قطعات<br>&nbsp;&nbsp;3 : کالای در جریان ساخت<br>&nbsp;&nbsp;4 : محصول<br>&nbsp;&nbsp;5 : ضایعات<br>&nbsp;&nbsp;6 : خدمات</li><li><b>goodFullcode:</b> کد کامل کالا</li><li><b>goodGroupFullcode:</b> کد کامل گروه کالا</li><li><b>goodTechnicalCode:</b> کد فنی کالا (در صورت عدم استفاده مقدار 0 ارسال شود)</li><li><b>goodName:</b> نام کالا</li><li><b>goodComment:</b> توضیحات کالا</li><li><b>goodTaxCode:</b> کد مالیاتی</li><li><b>goodTaxName:</b> نام مالیاتی</li><li><b>goodTaxPercent:</b> درصد مالیات</li><li><b>goodStockControl:</b><br>&nbsp;&nbsp;1 : کنترل موجودی<br>&nbsp;&nbsp;0 : عدم کنترل موجودی</li><li><b>goodIsActive:</b><br>&nbsp;&nbsp;1 : فعال<br>&nbsp;&nbsp;0 : غیرفعال</li><li><b>goodEnableSerial:</b><br>&nbsp;&nbsp;1 : سریال پذیر<br>&nbsp;&nbsp;0 : غیر سریال پذیر</li><li><b>goodEnableQc:</b><br>&nbsp;&nbsp;1 : دارای کنترل کمی<br>&nbsp;&nbsp;0 : بدون کنترل کمی</li><li><b>goodIndependSubUnits:</b><br>&nbsp;&nbsp;1 : دارای واحد فرعی مستقل<br>&nbsp;&nbsp;0 : ندارد</li><li><b>goodCustomerPrice:</b> قیمت مصرف‌کننده</li><li><b>goodBarcodes:</b> بارکدها (با جداکننده '،')</li><li><b>goodUnitName:</b> نام واحد اصلی</li><li><b>goodUnitWeight:</b> وزن خالص (گرم)</li><li><b>goodUnitPackingWeight:</b> وزن با بسته‌بندی (گرم)</li><li><b>goodSalePrice:</b><br>&nbsp;&nbsp;قیمت های فروش کالا<br>&nbsp;&nbsp;فرمت: نوع قیمت فروش:مبلغ قیمت فروش،نوع قیمت فروش:مبلغ قیمت فروش<br>&nbsp;&nbsp;مثال: نقدی:125000،نسیه:135000</li><li><b>goodOtherUnitAndPrice:</b><br>&nbsp;&nbsp;واحدهای ثانویه کالا<br>&nbsp;&nbsp;در
+ صورتی که بخواهید برای کالای فوق بیش از یک واحد، قیمت و وزن های مختلف 
+برای هر یک از واحدهای ذکر شده ثبت نمایید از این گزینه با فرمت ذکر شده 
+استفاده نمایید<br>&nbsp;&nbsp;فرمت:<br>&nbsp;&nbsp;واحد کالا|معادل در واحد اصلی|وزن خالص گرم|وزن ناخالص گرم|نوع قیمت فروش:مبلغ قیمت فروش،نوع قیمت فروش:مبلغ قیمت فروش<br>&nbsp;&nbsp;جداکننده واحدها: ##<br>&nbsp;&nbsp;مثال:<br>&nbsp;&nbsp;بسته|3|0|0|نقدی:125000،نسیه:135000##کارتن|12|0|0|نقدی:150000،نسیه:162000</li><li><b>goodStoreIds:</b><br>&nbsp;&nbsp;کد انبارهای مرتبط با کالای فوق <br>&nbsp;&nbsp;در
+ صورتی که بخواهید کالای فوق در انبارهای خاصی گردش داشته باشد می توانید 
+کد انبارها را به صورت متن و جداساز کاما ارسال کنید<br>&nbsp;&nbsp;مثال: 2,10<br>&nbsp;&nbsp;در صورت خالی بودن → کالا در همه انبارها فعال خواهد بود</li><li><b>goodPackingNames:</b><br>&nbsp;&nbsp;لیست طبقه بندی کالا با جداکننده ','<br>&nbsp;&nbsp;مثال: برند آلفا,تامین کننده الماس<br>&nbsp;&nbsp;در صورت خالی بودن → عدم اختصاص دادن به طبقه بندی خاص</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockPrintAsPdf">StockPrintAsPdf</a>
+                
+                <span>
+                  <br>چاپ برگه های بازرگانی بر اساس شماره تبدیل فایل PDF گزارش به Base64String<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>printType : نوع چاپ<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 (چاپ فاکتور)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 (چاپ ریز عوامل و چک ها)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 (چاپ فرمت دارائی)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stNo : شماره، چاپ سند متناظر با شماره فوق
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockSave">StockSave</a>
+                
+                <span>
+                  <br>ذخیره برگه های انبارداری و بازرگانی<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>actionType : نوع فعالیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insert (ایجاد)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Update (ویرایش)<br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInBuy (رسید خرید نهایی)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInStock (رسید انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleProforma (پیش فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrOutStock (حواله انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت ثبت فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stNo : شماره برگه (در صورتی که بخواهید شماره توسط سیستم اختصاص داده شود خالی یا صفر ارسال شود) <br>stFixNo : شماره ثابت برگه <br>stDate : تاریخ، مثال 13950306 <br>stTime : ساعت، مثال 142501 <br>stDeliveryDate : تاریخ، مثال 13950306 <br>stDesc : شرح برگه <br>stFlag : وضعیت برگه -&gt; 0 (تایید نشده) و 1 (تایید شده( <br>stKol : کد حساب کل <br>stMoein : کد حساب معین <br>stTafsil : کد حساب تفصیلی <br>stTafsil2 : کد حساب تفصیلی 2 <br>stTafsil3 : کد حساب تفصیلی 3 <br>stSegment : کد مرکز <br>stDetails
+ : [{"StdGsId":"کد انبار","GoodFullCode":"کد 
+کالا","StdCount":"تعداد","StdPrice":"قیمت 
+واحد","StdDesc":"شرح","Operatives": "عنوان عامل:مقدار عامل,عنوان 
+عامل:مقدارعامل, ...","QcNo":"کد کنترل کمی"}]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;فرمت ردیف های برگه به شکل بالا بوده و برای سایر ردیف ها تکرار خواهد شد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;نحوه
+ ثبت عوامل ردیفی به صورت عنوان و مقدار عامل خواهد بود، در صورت استفاده 
+بیش از یک عامل توسط کارکتر کاما از هم جدا گردد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;فرمت قیمت به صورت عدد می باشد و از جداساز مبلغ استفاده نشود، مثال 1250000 ریال<br>"operatives":[{"Title":"عنوان عامل","Value":"مقدار","Description":"توضیحات"}]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;فرمت عوامل پای فاکتور به صورت بالا بوده و برای سایر عوامل پای فاکتور تکرار خواهد شد<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=StockSaveV2">StockSaveV2</a>
+                
+                <span>
+                  <br>ذخیره برگه های انبارداری و بازرگانی<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>actionType : نوع فعالیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insert (ایجاد)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Update (ویرایش)<br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInBuy (رسید خرید نهایی)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyFactor (فاکتور خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrBuyReturnFactor (برگشت از خرید)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrInStock (رسید انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleProforma (پیش فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleOrder (سفارش فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleFactor (فاکتور فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrSaleReturnFactor (برگشت از فروش)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StrOutStock (حواله انبار متفرقه)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت ثبت فاکتور فروش مقدار ارسالی باید برابر StrSaleFactor باشد<br>stNo : شماره برگه (در صورتی که بخواهید شماره توسط سیستم اختصاص داده شود خالی یا صفر ارسال شود) <br>stFixNo : شماره ثابت برگه <br>stDate : تاریخ، مثال 13950306 <br>stTime : ساعت، مثال 142501 <br>stDeliveryDate : تاریخ، مثال 13950306 <br>stDesc : شرح برگه <br>stFlag : وضعیت برگه -&gt; 0 (تایید نشده) و 1 (تایید شده( <br>stKol : کد حساب کل <br>stMoein : کد حساب معین <br>stTafsil : کد حساب تفصیلی <br>stTafsil2 : کد حساب تفصیلی 2 <br>stTafsil3 : کد حساب تفصیلی 3 <br>stSegment : کد مرکز <br>stTypeTitle : نوع (عنوان نوع های تعریف شده برای موجودیت خواسته شده) <br>stSettleTypeTitle : نوع تسویه (عنوان نوع تسویه خواسته شده) <br>stDetails
+ : [{"StdGsId":"کد انبار","GoodFullCode":"کد 
+کالا","StdCount":"تعداد","StdPrice":"قیمت 
+واحد","StdDesc":"شرح","Operatives": "عنوان عامل:مقدار عامل,عنوان 
+عامل:مقدارعامل, ...","QcNo":"کد کنترل کمی"}]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;فرمت ردیف های برگه به شکل بالا بوده و برای سایر ردیف ها تکرار خواهد شد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;نحوه
+ ثبت عوامل ردیفی به صورت عنوان و مقدار عامل خواهد بود، در صورت استفاده 
+بیش از یک عامل توسط کارکتر کاما از هم جدا گردد<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;فرمت قیمت به صورت عدد می باشد و از جداساز مبلغ استفاده نشود، مثال 1250000 ریال<br>"operatives":[{"Title":"عنوان عامل","Value":"مقدار","Description":"توضیحات"}]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;فرمت عوامل پای فاکتور به صورت بالا بوده و برای سایر عوامل پای فاکتور تکرار خواهد شد<br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=SysPosDoPayment">SysPosDoPayment</a>
+                
+                <span>
+                  <br><b>ارسال مبلغ به پوز جهت پرداخت توسط مشتری</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "PosId": ,
+  "PaymentAmount": ,
+  "InvoiceNumber": 
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>PosId:</b>شناسه پوز موجود در لسیت پوزها گرفته شده در متد SysPosGetList</li><li><b>PaymentAmount:</b>مبلغ بدون جدا کننده و اعشار مانند 5000000</li><li><b>InvoiceNumber:</b>شماره فاکتور</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=SysPosGetList">SysPosGetList</a>
+                
+                <span>
+                  <br>گرفتن لیست پوزها جهت ارسال مبلغ و کشیدن کارت توسط مشتری<br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=TreasuryDeleteByFixNo">TreasuryDeleteByFixNo</a>
+                
+                <span>
+                  <br>حذف برگه های خزانه داری بر اساس شماره ثابت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receive (سند دریافت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment (سند پرداخت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف سند دریافت مقدار ارسالی باید برابر Receive باشد<br>mvFixNo : شماره ثابت، حذف سند متناظر با شماره ثابت فوق
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=TreasuryDeleteByNo">TreasuryDeleteByNo</a>
+                
+                <span>
+                  <br>حذف برگه های خزانه داری بر اساس شماره <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receive (سند دریافت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment (سند پرداخت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت حذف سند دریافت مقدار ارسالی باید برابر Receive باشد<br>mvFixNo : شماره ، حذف سند متناظر با شماره فوق
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=TreasuryExistByFixNo">TreasuryExistByFixNo</a>
+                
+                <span>
+                  <br>چک کردن موجود بودن برگه های خزانه داری بر اساس شماره ثابت <br>در صورت موجود بودن مقدار برگشتی True و در صورت عدم موجود بودن مقدار برگشتی برابر False خواهد بود <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>stEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receive (سند دریافت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment (سند پرداخت)<br>mvFixNo : شماره ثابت
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=TreasuryGetChecks">TreasuryGetChecks</a>
+                
+                <span>
+                  <br>گرفتن فهرست چکها دریافتی یا پرداختی<br>sessionId : شناسه فعالیت گرفته شده در متد Login<br>entityType : نوع چک <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receive (اسناد دریافتی)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment (اسناد پرداختی)<br>checkNo : شماره چک <br>checkPriceFrom : مبلغ چک از، مثال 50000000 <br>checkPriceTo : مبلغ چک تا، مثال 60000000 <br>checkDateFrom : تاریخ دریافت یا پرداخت چک از، مثال 13950306 <br>checkDateTo : تاریخ دریافت یا پرداخت چک تا، مثال 13950407 <br>checkUsanceDateFrom : تاریخ سررسید چک از، مثال 13950306 <br>checkUsanceDateTo : تاریخ سررسید چک تا، مثال 13950407 <br>checkCashDateFrom : تاریخ وصول یا نقد شدن چک از، مثال 13950306 <br>checkCashDateTo : تاریخ وصول یا نقد شدن چک تا، مثال 13950407 <br>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=TreasuryGetNewFixNo">TreasuryGetNewFixNo</a>
+                
+                <span>
+                  <br>چک کردن موجود بودن برگه های انبارداری / بازرگانی بر اساس شماره ثابت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>rpEntityType : نوع موجودیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receive (سند دریافت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment (سند پرداخت)
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=TreasurySave">TreasurySave</a>
+                
+                <span>
+                  <br>ذخیره سند دریافت / پرداخت <br>sessionId : شناسه فعالیت گرفته شده در متد Login <br>actionType : نوع فعالیت<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Insert (ایجاد)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Update (ویرایش)<br>rpEntityType : نوع موجودیت خواسته شده جهت ذخیره<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Receive (سند دریافت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Payment (سند پرداخت)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; برای مثال در صورت ثبت سند دریافت مقدار ارسالی باید برابر Receive باشد<br>rpNo : شماره - در صورتی که خالی یا صفر ارسال شود سیستم به صورت خودکار شماره جدید را انتصاب خواهد داد <br>rpFixNo : شماره ثابت <br>rpDate : تاریخ، مثال 13950306 <br>rpTime : ساعت، مثال 132504 <br>rpDesc : شرح اصلی برگه <br>rpKol : کد حساب کل دریافت کننده / پرداخت کننده <br>rpMoein : کد حساب معین دریافت کننده / پرداخت کننده <br>rpTafsil : کد حساب تفصیلی دریافت کننده / پرداخت کننده<br>rpTafsil2 : کد حساب تفصیلی 2 دریافت کننده / پرداخت کننده <br>rpTafsil3 : کد حساب تفصیلی 3 دریافت کننده / پرداخت کننده <br>rpSegment : کد مرکز هزینه یا پروژه <br>rpFlag : وضعیت -&gt; 0 (تایید نشده) و 1 (تایید شده( <br>rpDetails
+ : [{"RpdKol":"کد حساب کل دریافت کننده / پرداخت کننده","RpdMoein":"کد 
+حساب معین دریافت کننده / پرداخت کننده","RpdTafsil":"کد حساب تفصیلی 
+دریافت کننده / پرداخت کننده","RpdTafsil2":"کد حساب تفصیلی 2 دریافت کننده
+ / پرداخت کننده","RpdTafsil3":"کد حساب تفصیلی 3 دریافت کننده / پرداخت 
+کننده","RpdPrice":"مبلغ","RpdBedDesc":"شرح بدهکاری","RpdBesDesc":"شرح 
+بستانکاری","RpdTrackingNo":"شماره پیگیری"}] <br>فرمت ردیف های دریافت / پرداخت به شکل بالا بوده و برای سایر ردیف ها تکرار خواهد شد <br>فرمت مبلغ ها به صورت عدد می باشد و از جداساز مبلغ استفاده نشود، مثال 1250000 ریال
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=VisitorLocationSave">VisitorLocationSave</a>
+                
+                <span>
+                  <br><b>ذخیره موقعیت ویزیتور</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل سایر پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "userId": ,
+  "customerAccId": ,
+  "date": ,
+  "time": ,
+  "position": "",
+  "desc": "",
+  "attrib": ""
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>userId:</b> شناسه کاربر، در صورت خالی یا صفر بودن شناسه کاربر جاری ست خواهد شد</li><li><b>customerAccId:</b> شناسه حساب تفصیلی مشتری، در صورت عدم وجود خالی یا صفر ارسال گردد</li><li><b>date:</b> تاریخ، در صورت خالی یا صفر توسط سیستم ست خواهد شد</li><li><b>time:</b> ساعت، در صورت خالی یا صفر تاریخ توسط سیستم ست خواهد شد</li><li><b>position:</b> موقعیت GPS ویزیتور به فرمت Latitude, Longitude</li><li><b>desc:</b> توضیحات اختیاری</li><li><b>attrib:</b> ویژگی های سفارشی</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p><li>
+                <a href="https://www.mehrsofts.com/webservice/mehraccws.asmx?op=VisitorLocationSearch">VisitorLocationSearch</a>
+                
+                <span>
+                  <br><b>جستجوی موقعیت‌های ویزیتور</b><br><ul><li><b>sessionId:</b> شناسه فعالیت گرفته شده در متد Login</li><li><b>jsonParams:</b> رشته‌ای از نوع JSON شامل پارامترها. نمونه:</li></ul><br><div style="background-color:#f5f5dc; padding:10px; border:1px solid #ccc; font-family:monospace; direction:ltr; white-space:pre;">{
+  "userId": ,
+  "fromDate": ,
+  "toDate": ,
+  "desc": ""
+}</div><br><b>توضیحات کامل پارامترهای JSON:</b><br><ul><li><b>userId:</b> شناسه کاربر، در صورت نیاز به تمامی موقعیت های کاربران خالی یا صفر ارسال گردد </li><li><b>fromDate / toDate:</b> بازه تاریخ، در صورت خالی بودن شرط تاریخ اعمال نخواهد شد</li><li><b>desc:</b> جستجو براساس بخشی از توضیحات</li></ul>
+                </span>
+              </li>
+              <p>
+            
+              </p></ul>
+            
+      </span>
+
+      
+      
+
+    <span>
+        
+    </span>
+    
+      
+
+      
+
+    
+  
+
+</div></body></html>
