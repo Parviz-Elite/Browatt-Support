@@ -28,6 +28,16 @@ return [
         'key' => env('RESEND_KEY'),
     ],
 
+    'farazsms' => [
+        'api_key' => env('FARAZSMS_API_KEY'),
+        'base_url' => env('FARAZSMS_BASE_URL', 'https://api.iranpayamak.com'),
+        'line_number' => env('FARAZSMS_LINE_NUMBER'),
+        'otp_pattern_code' => env('FARAZSMS_OTP_PATTERN_CODE'),
+        'otp_attribute' => env('FARAZSMS_OTP_ATTRIBUTE', 'code'),
+        'number_format' => env('FARAZSMS_NUMBER_FORMAT', 'english'),
+        'timeout' => (int) env('FARAZSMS_TIMEOUT_SECONDS', 10),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

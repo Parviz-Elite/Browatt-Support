@@ -79,6 +79,19 @@ MySQL/MariaDB
 Redis for queue/cache if needed
 ```
 
+## Local Development Database
+
+The local development database is MySQL/MariaDB:
+
+```text
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=browatt
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
 ## Access Control
 
 Initial roles:
@@ -87,6 +100,13 @@ Initial roles:
 - `customer`: normal customer users.
 
 Use `spatie/laravel-permission` for role assignment and permission checks. The `App\Models\User` model uses `HasRoles`.
+
+Seed the initial roles with `Database\Seeders\RoleSeeder`. The initial `general_manager` users are:
+
+- `09144004385`: مهدی مکاریان
+- `09900940019`: پرویز الیاس زاده
+- `09148064984`: مهرداد مهردادی
+- `09146585966`: مجید نوروزی
 
 ## Frontend Direction
 
@@ -125,6 +145,10 @@ OTP implementation rules:
 - Mark OTP records as used after successful verification.
 - Rate limit by both mobile number and IP address.
 - Do not expose whether a mobile number already exists.
+
+OTP implementation lives in `App\Services\Otp\OtpService`. SMS delivery is behind `App\Contracts\SmsProvider`; the default provider is selected by `OTP_SMS_PROVIDER`, currently `farazsms`. FarazSMS delivery lives in `App\Services\Sms\FarazSmsProvider` and uses the pattern endpoint from `ForGPT/farazsms-otp.md`.
+
+When adding another SMS panel, add a new `SmsProvider` implementation and update the binding in `App\Providers\AppServiceProvider`; do not couple OTP, auth, or warranty code directly to a vendor client.
 
 ## MehrSoft Integration
 
@@ -196,8 +220,34 @@ Likely core tables:
 users
 - id
 - mobile
-- name nullable
-- national_code nullable
+- first_name nullable
+- last_name nullable
+- registered_at nullable
+- deleted_at nullable
+
+user_details
+- id
+- user_id
+- key
+- value json nullable
+- deleted_at nullable
+
+user_addresses
+- id
+- user_id
+- title nullable
+- recipient_first_name nullable
+- recipient_last_name nullable
+- mobile nullable
+- province nullable
+- city nullable
+- district nullable
+- postal_code nullable
+- address nullable
+- latitude nullable
+- longitude nullable
+- is_default
+- deleted_at nullable
 
 otp_codes
 - id
@@ -208,6 +258,7 @@ otp_codes
 - attempts
 - ip_address nullable
 - user_agent nullable
+- deleted_at nullable
 
 warranties
 - id
@@ -224,7 +275,12 @@ warranties
 - mehrsoft_document_no nullable
 - mehrsoft_fix_no nullable
 - mehrsoft_last_error nullable
+- deleted_at nullable
 ```
+
+User profile data is split into general and detailed data. General fields that are shown frequently belong on `users` (`mobile`, `first_name`, `last_name`, `registered_at`). Large or evolving profile data such as national code, province/city preferences, and other detailed attributes should live in `user_details` as key/value JSON records. User addresses are separate records in `user_addresses` because each user can define multiple addresses.
+
+Application-owned Eloquent models should use soft deletes by default. Nothing customer-facing or operational should be permanently deleted unless a future explicit requirement says otherwise.
 
 ## Open Business Questions
 
