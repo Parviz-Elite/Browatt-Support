@@ -44,10 +44,12 @@ class OtpService
         }
     }
 
-    public function verify(string $mobile, string $code): User
+    public function verify(string $mobile, string $code, ?string $ipAddress = null): User
     {
         $mobile = $this->normalizeMobile($mobile);
         $code = $this->normalizeDigits($code);
+
+        $this->ensureVerificationIsAllowed($mobile, $ipAddress);
 
         return DB::transaction(function () use ($mobile, $code) {
             /** @var OtpCode|null $otp */
@@ -137,6 +139,17 @@ class OtpService
         }
     }
 
+    private function ensureVerificationIsAllowed(string $mobile, ?string $ipAddress): void
+    {
+        foreach ($this->verificationRateLimitKeys($mobile, $ipAddress) as $key => $limit) {
+            if (RateLimiter::tooManyAttempts($key, $limit['max'])) {
+                throw OtpException::tooManyRequests();
+            }
+
+            RateLimiter::hit($key, $limit['decay']);
+        }
+    }
+
     private function ensureResendWindowHasPassed(string $mobile): void
     {
         $latestOtp = OtpCode::query()
@@ -173,6 +186,28 @@ class OtpService
             $limits['otp:ip:'.$ipAddress] = [
                 'max' => (int) config('otp.rate_limits.ip.max_attempts', 30),
                 'decay' => (int) config('otp.rate_limits.ip.decay_seconds', 3600),
+            ];
+        }
+
+        return $limits;
+    }
+
+    /**
+     * @return array<string, array{max: int, decay: int}>
+     */
+    private function verificationRateLimitKeys(string $mobile, ?string $ipAddress): array
+    {
+        $limits = [
+            'otp-verify:mobile:'.$mobile => [
+                'max' => (int) config('otp.verify_rate_limits.mobile.max_attempts', 10),
+                'decay' => (int) config('otp.verify_rate_limits.mobile.decay_seconds', 600),
+            ],
+        ];
+
+        if ($ipAddress !== null && $ipAddress !== '') {
+            $limits['otp-verify:ip:'.$ipAddress] = [
+                'max' => (int) config('otp.verify_rate_limits.ip.max_attempts', 60),
+                'decay' => (int) config('otp.verify_rate_limits.ip.decay_seconds', 3600),
             ];
         }
 

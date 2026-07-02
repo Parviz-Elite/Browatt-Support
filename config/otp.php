@@ -18,4 +18,15 @@ return [
             'decay_seconds' => (int) env('OTP_IP_DECAY_SECONDS', 3600),
         ],
     ],
+
+    'verify_rate_limits' => [
+        'mobile' => [
+            'max_attempts' => (int) env('OTP_VERIFY_MOBILE_MAX_ATTEMPTS', 10),
+            'decay_seconds' => (int) env('OTP_VERIFY_MOBILE_DECAY_SECONDS', 600),
+        ],
+        'ip' => [
+            'max_attempts' => (int) env('OTP_VERIFY_IP_MAX_ATTEMPTS', 60),
+            'decay_seconds' => (int) env('OTP_VERIFY_IP_DECAY_SECONDS', 3600),
+        ],
+    ],
 ];
