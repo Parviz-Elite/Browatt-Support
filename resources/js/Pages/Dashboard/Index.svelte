@@ -18,7 +18,7 @@
     <section class="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <Link
             href={warrantiesHref}
-            class="group min-h-40 rounded-3xl border border-white/80 bg-white p-5 shadow-[0_18px_60px_rgba(23,39,93,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_70px_rgba(23,39,93,0.12)]"
+            class="group order-2 min-h-40 rounded-3xl border border-white/80 bg-white p-5 shadow-[0_18px_60px_rgba(23,39,93,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_70px_rgba(23,39,93,0.12)] lg:order-1"
         >
             <div class="flex h-full flex-col justify-between gap-8">
                 <div class="flex items-start justify-between gap-4">
@@ -42,7 +42,7 @@
 
         <Link
             href={routeUrl('warranties.activate', '/warranties/activate')}
-            class="group relative min-h-40 overflow-hidden rounded-3xl bg-[#17275d] p-5 text-white shadow-[0_18px_60px_rgba(23,39,93,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_80px_rgba(23,39,93,0.24)]"
+            class="group relative order-1 min-h-40 overflow-hidden rounded-3xl bg-[#17275d] p-5 text-white shadow-[0_18px_60px_rgba(23,39,93,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_80px_rgba(23,39,93,0.24)] lg:order-2"
         >
             <div class="absolute -left-10 -top-12 size-40 rounded-full bg-sky-400/20"></div>
             <div class="absolute -bottom-16 right-10 size-44 rounded-full bg-red-500/20"></div>
