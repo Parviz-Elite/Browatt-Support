@@ -168,7 +168,7 @@
             type="button"
             class="fixed inset-0 z-40 bg-slate-950/28 backdrop-blur-sm xl:hidden"
             aria-label="بستن منو"
-            on:click={() => (mobileMenuOpen = false)}
+            onclick={() => (mobileMenuOpen = false)}
         ></button>
         <motion.aside
             class="fixed inset-y-0 right-0 z-50 w-[min(21rem,88vw)] bg-white px-4 py-5 shadow-2xl xl:hidden"
@@ -183,7 +183,7 @@
                     type="button"
                     class="inline-flex size-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-700"
                     aria-label="بستن منو"
-                    on:click={() => (mobileMenuOpen = false)}
+                    onclick={() => (mobileMenuOpen = false)}
                 >
                     <X size={20} />
                 </button>
@@ -196,7 +196,7 @@
                         class={`flex h-12 items-center gap-3 rounded-2xl px-4 text-sm font-black ${
                             isActive(routeUrl('dashboard', '/dashboard')) ? 'bg-slate-950 text-white' : 'bg-slate-50 text-slate-700'
                         }`}
-                        on:click={() => (mobileMenuOpen = false)}
+                        onclick={() => (mobileMenuOpen = false)}
                     >
                         <LayoutDashboard size={18} />
                         داشبورد
@@ -207,7 +207,7 @@
                     <div>
                         <div class="mb-2 px-4 text-xs font-black text-slate-400">{group.title}</div>
                         <div class="flex flex-col gap-1.5">
-                            {#each group.items as item}
+                            {#each group.items as item, i}
                                 {@const active = isActive(item.href)}
                                 <motion.div custom={i} variants={menuItemMotion} initial="rest" animate="rest" whileTap="tap">
                                     <Link
@@ -215,7 +215,7 @@
                                         class={`flex h-11 items-center gap-3 rounded-2xl px-4 text-sm font-bold ${
                                             active ? 'bg-red-50 text-slate-950' : 'text-slate-600'
                                         }`}
-                                        on:click={() => (mobileMenuOpen = false)}
+                                        onclick={() => (mobileMenuOpen = false)}
                                     >
                                         {#if item.icon === 'shield'}
                                             <ShieldCheck class={iconClass(active)} size={18} />
@@ -242,15 +242,14 @@
     <div class="min-h-screen xl:pr-72">
         <header class="sticky top-0 z-20 border-b border-slate-200/70 bg-[#f4f8fb]/86 px-4 py-4 backdrop-blur sm:px-6 xl:px-8">
             <div class="flex items-center justify-between gap-4">
-                <motion.button
+                <button
                     type="button"
-                    class="inline-flex size-11 items-center justify-center rounded-2xl bg-white text-slate-700 shadow-sm xl:hidden"
+                    class="inline-flex size-11 items-center justify-center rounded-2xl bg-white text-slate-700 shadow-sm transition active:scale-95 xl:hidden"
                     aria-label="باز کردن منو"
-                    whileTap={{ scale: 0.92 }}
-                    on:click={() => (mobileMenuOpen = true)}
+                    onclick={() => (mobileMenuOpen = true)}
                 >
                     <Menu size={22} />
-                </motion.button>
+                </button>
 
                 <div class="min-w-0 flex-1">
                     <div class="text-xs font-black text-slate-400">پنل خدمات پس از فروش</div>

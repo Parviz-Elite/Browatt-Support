@@ -3,7 +3,6 @@
     import {
         ArrowLeft,
         BadgeCheck,
-        CalendarDays,
         CircleCheck,
         ClipboardCheck,
         Hash,
@@ -13,6 +12,7 @@
         ShieldPlus,
     } from '@lucide/svelte';
     import DashboardShell from '@/Components/DashboardShell.svelte';
+    import JalaliDatePicker from '@/Components/JalaliDatePicker.svelte';
 
     export let auth = { user: null };
 
@@ -86,20 +86,7 @@
                     </span>
                 </label>
 
-                <label class="block">
-                    <span class="mb-2 block text-sm font-black text-slate-700">تاریخ خرید</span>
-                    <span class="relative block">
-                        <CalendarDays class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={19} />
-                        <input
-                            bind:value={purchaseDate}
-                            inputmode="numeric"
-                            dir="ltr"
-                            autocomplete="off"
-                            class="h-14 w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 pl-5 pr-12 text-left text-base font-black text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
-                            placeholder="1403/01/01"
-                        />
-                    </span>
-                </label>
+                <JalaliDatePicker bind:value={purchaseDate} id="warranty-purchase-date" label="تاریخ خرید" maxDate="today" />
             </div>
 
             <div class="mt-5 rounded-2xl border border-sky-100 bg-sky-50 px-4 py-3 text-sm font-bold leading-7 text-sky-800">
@@ -113,7 +100,7 @@
                 <button
                     type="button"
                     class="h-12 rounded-2xl px-4 text-sm font-black text-slate-500 transition hover:bg-slate-50 hover:text-slate-800"
-                    on:click={() => {
+                    onclick={() => {
                         serial = '';
                         warrantyCode = '';
                         purchaseDate = '';
