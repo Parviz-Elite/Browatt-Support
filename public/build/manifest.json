@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DpBv07O3.css",
+    "file": "assets/app-DmiYFCBU.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -33,12 +33,12 @@
     "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-SemiBold.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-IOt3mTde.js",
+    "file": "assets/app-Ct3QAN5K.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-DkRt3Kch.css"
+      "assets/app-BBOoTAbH.css"
     ],
     "assets": [
       "assets/YekanBakhFaNum-Light-CBwjV35v.woff2",
