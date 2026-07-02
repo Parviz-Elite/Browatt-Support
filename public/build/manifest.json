@@ -1,16 +1,53 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Xzku33pM.css",
+    "file": "assets/app-BHS0JzaE.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Black.woff2": {
+    "file": "assets/YekanBakhFaNum-Black-BrcJ4M3B.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Black.woff2"
+  },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Bold.woff2": {
+    "file": "assets/YekanBakhFaNum-Bold-D5nkx4KG.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Bold.woff2"
+  },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-ExtraBlack.woff2": {
+    "file": "assets/YekanBakhFaNum-ExtraBlack-DcpvuTPn.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-ExtraBlack.woff2"
+  },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-ExtraBold.woff2": {
+    "file": "assets/YekanBakhFaNum-ExtraBold-Bpc9NfRg.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-ExtraBold.woff2"
+  },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Light.woff2": {
+    "file": "assets/YekanBakhFaNum-Light-CBwjV35v.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Light.woff2"
+  },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Regular.woff2": {
+    "file": "assets/YekanBakhFaNum-Regular-BnPW0L28.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-Regular.woff2"
+  },
+  "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-SemiBold.woff2": {
+    "file": "assets/YekanBakhFaNum-SemiBold-CQoFIZKg.woff2",
+    "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-SemiBold.woff2"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-D33uPmdJ.js",
+    "file": "assets/app-DyWeZRas.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-Xzku33pM.css"
+      "assets/app-BHS0JzaE.css"
+    ],
+    "assets": [
+      "assets/YekanBakhFaNum-Light-CBwjV35v.woff2",
+      "assets/YekanBakhFaNum-Regular-BnPW0L28.woff2",
+      "assets/YekanBakhFaNum-SemiBold-CQoFIZKg.woff2",
+      "assets/YekanBakhFaNum-Bold-D5nkx4KG.woff2",
+      "assets/YekanBakhFaNum-ExtraBold-Bpc9NfRg.woff2",
+      "assets/YekanBakhFaNum-Black-BrcJ4M3B.woff2",
+      "assets/YekanBakhFaNum-ExtraBlack-DcpvuTPn.woff2"
     ]
   }
 }

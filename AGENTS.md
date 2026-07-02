@@ -133,6 +133,8 @@ Seed the initial roles with `Database\Seeders\RoleSeeder`. The initial `general_
 
 Most users are expected to access the system from mobile devices. Frontend work must be mobile-first, touch-friendly, RTL-friendly, and fully responsive.
 
+The application is Persian-first and RTL by default. Use `fa` locale defaults, `dir="rtl"` markup, and the bundled YekanBakh font as the default UI font.
+
 Final frontend direction:
 
 ```text
@@ -142,6 +144,8 @@ Inertia + Svelte 5 + Tailwind CSS v4 + shadcn-svelte
 Do not install Vue, React, Ionic, PrimeVue, shadcn-vue, daisyUI, Metronic, or another UI framework unless the user explicitly changes this direction.
 
 Frontend production assets are built locally and committed under `public/build` before deployment. The production server is not expected to run `npm install` or `npm run build`.
+
+Frontend structure should follow the broad folder pattern reviewed from `D:\Herd\Brandiol-Automation`: shared Svelte components live under `resources/js/Components`, Inertia pages live under `resources/js/Pages`, and page groups start with `Auth` and `Dashboard`. Use this as a structural reference only; do not copy Brandiol-specific UI code or Metronic assumptions into Browatt.
 
 ## Frontend / UI Quality
 
