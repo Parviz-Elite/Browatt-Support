@@ -100,6 +100,8 @@ Inertia + Svelte 5 + Tailwind CSS v4 + shadcn-svelte
 
 Do not install Vue, React, Ionic, PrimeVue, shadcn-vue, daisyUI, Metronic, or another UI framework unless the user explicitly changes this direction.
 
+Frontend production assets are built locally and committed under `public/build` before deployment. The production server is not expected to run `npm install` or `npm run build`.
+
 ## SMS / OTP
 
 The SMS provider is FarazSMS / IranPayamak.
