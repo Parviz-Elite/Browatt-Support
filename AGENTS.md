@@ -1,0 +1,242 @@
+# AGENTS.md
+
+## Project Context
+
+Browatt is a manufacturer of products such as evaporative coolers and electric heaters.
+
+Browatt does not sell directly to retail customers. Products are distributed through representatives/dealers, and customers buy from those channels.
+
+This project is a customer-facing after-sales service portal. The long-term scope may include:
+
+- Warranty activation
+- Active warranty lookup
+- Repairs and service requests
+- Customer questions/support
+- Integration with internal/accounting systems
+
+The first implementation phase is warranty activation only.
+
+Even though the first implementation phase is small, the system is expected to grow soon. Prefer an architecture that can absorb additional after-sales modules without broad refactors.
+
+## Current Product Scope
+
+Customers should be able to:
+
+1. Enter a mobile number.
+2. Receive an OTP by SMS.
+3. Verify the OTP and log in without a password.
+4. See a warranty menu.
+5. Use warranty activation.
+6. View active warranties.
+
+Initial menu structure:
+
+```text
+Warranty
+- Activate Warranty
+- Active Warranties
+```
+
+## Technology Decisions
+
+- The project will be PHP-based.
+- Laravel 12 is the selected backend framework for the initial project setup.
+- Use passwordless authentication with mobile OTP.
+- Use Inertia for the frontend bridge.
+- Use action-oriented application code with `lorisleiva/laravel-actions`.
+- Use `nwidart/laravel-modules` for module boundaries. Project modules live under the `Browatt/` namespace and directory.
+- Use `spatie/laravel-permission` for roles and permissions.
+- Use `spatie/laravel-medialibrary` for media/file management.
+- Use `hekmatinasser/verta` for Jalali dates.
+- Use `maatwebsite/excel` for spreadsheet import/export.
+- Use `laravel/telescope` for local/debug observability.
+- Use `tightenco/ziggy` for Laravel route access from Inertia frontend code.
+- Use Svelte 5 as the Inertia frontend adapter.
+- Use Tailwind CSS v4 for styling.
+- Use `shadcn-svelte` as the UI component base, with local/customized components rather than a heavy fixed UI kit.
+- Do not install Livewire.
+- Use MySQL or MariaDB unless a later requirement justifies another database.
+- Tests are not required for now unless the user explicitly asks for them.
+
+Suggested stack:
+
+```text
+PHP 8.3+
+Laravel 12
+Inertia
+Svelte 5
+Tailwind CSS v4
+shadcn-svelte
+Laravel Actions
+nwidart/laravel-modules
+Spatie Permission
+Spatie Media Library
+Verta
+Laravel Excel
+Telescope
+Ziggy
+MySQL/MariaDB
+Redis for queue/cache if needed
+```
+
+## Access Control
+
+Initial roles:
+
+- `general_manager`: a small number of global managers.
+- `customer`: normal customer users.
+
+Use `spatie/laravel-permission` for role assignment and permission checks. The `App\Models\User` model uses `HasRoles`.
+
+## Frontend Direction
+
+Most users are expected to access the system from mobile devices. Frontend work must be mobile-first, touch-friendly, RTL-friendly, and fully responsive.
+
+Final frontend direction:
+
+```text
+Inertia + Svelte 5 + Tailwind CSS v4 + shadcn-svelte
+```
+
+Do not install Vue, React, Ionic, PrimeVue, shadcn-vue, daisyUI, Metronic, or another UI framework unless the user explicitly changes this direction.
+
+## SMS / OTP
+
+The SMS provider is FarazSMS / IranPayamak.
+
+Reference file:
+
+- `ForGPT/farazsms-otp.md`
+
+Use the FarazSMS pattern endpoint for OTP messages:
+
+```text
+POST https://api.iranpayamak.com/ws/v1/sms/pattern
+```
+
+OTP implementation rules:
+
+- Store only hashed OTP codes.
+- Keep OTP lifetime short, for example 2 minutes.
+- Limit resend frequency.
+- Limit failed verification attempts.
+- Mark OTP records as used after successful verification.
+- Rate limit by both mobile number and IP address.
+- Do not expose whether a mobile number already exists.
+
+## MehrSoft Integration
+
+Warranty activation must integrate with MehrSoft accounting / after-sales web service.
+
+Reference file:
+
+- `ForGPT/mehrsoft-webservice.md`
+
+MehrSoft service URLs:
+
+```text
+https://www.mehrsofts.com/webservice/mehraccws.asmx
+https://www.mehrsofts.com/webservice/mehraccws.asmx?WSDL
+```
+
+MehrSoft exposes an ASP.NET ASMX web service. Treat the WSDL/SOAP contract as the source of truth.
+
+The MehrSoft integration requires PHP's `soap` extension to be enabled in the runtime that performs synchronization.
+
+Likely warranty-related methods:
+
+- `Login`
+- `Logout`
+- `AfterSales_GetProductStatusBySerial`
+- `AfterSales_GetWarrantyMonths`
+- `AfterSales_GetWarrantySettings`
+- `AfterSales_Save`
+
+The full method reference is documented in `ForGPT/mehrsoft-webservice.md`.
+
+## Integration Design Rules
+
+Keep external services behind application interfaces. Do not couple controllers, Livewire components, or domain logic directly to FarazSMS or MehrSoft implementation details.
+
+Suggested interfaces:
+
+```php
+interface SmsProvider
+{
+    public function sendOtp(string $mobile, string $code): void;
+}
+```
+
+```php
+interface MehrSoftClient
+{
+    public function getProductStatusBySerial(string $serial): array;
+
+    public function getWarrantyMonths(string $warrantyType, string $goodFullCode): ?int;
+
+    public function getWarrantySettings(): array;
+
+    public function saveAfterSales(array $payload): array;
+
+    public function logout(): void;
+}
+```
+
+The current MehrSoft integration lives in the `Browatt/MehrsoftIntegration` module. It follows the modular pattern reviewed from `D:\Herd\Brandiol-Automation`, but it must stay Browatt-specific and expose only the MehrSoft after-sales methods needed by this project.
+
+For MehrSoft failures, prefer storing the local warranty activation with a sync status such as `pending`, then retrying through a queue, unless business rules explicitly require rejecting activation when MehrSoft is unavailable.
+
+## Initial Data Model Direction
+
+Likely core tables:
+
+```text
+users
+- id
+- mobile
+- name nullable
+- national_code nullable
+
+otp_codes
+- id
+- mobile
+- code_hash
+- expires_at
+- used_at nullable
+- attempts
+- ip_address nullable
+- user_agent nullable
+
+warranties
+- id
+- user_id
+- product_serial
+- product_code nullable
+- warranty_type nullable
+- warranty_period_months nullable
+- activated_at
+- starts_at nullable
+- expires_at nullable
+- mehrsoft_sync_status
+- mehrsoft_synced_at nullable
+- mehrsoft_document_no nullable
+- mehrsoft_fix_no nullable
+- mehrsoft_last_error nullable
+```
+
+## Open Business Questions
+
+- What exact customer-entered identifier activates warranty: product serial, warranty code, QR code, or a combination?
+- Should warranty start from activation date, purchase date, installation date, or production date?
+- Should activation be rejected if MehrSoft is unavailable, or accepted locally as pending sync?
+- What should happen if MehrSoft reports the serial already has after-sales/warranty data?
+- Which MehrSoft `AfterSales_Save` fields are mandatory for Browatt?
+- What exact values should be sent for `TypeTitle`, `Flag`, account codes, warranty type, and detail rows?
+- Should customer records also be created/updated as MehrSoft tafsil accounts?
+
+## Repo Notes
+
+- Keep integration documentation in `ForGPT/`.
+- Do not keep large raw HTML service exports if a complete Markdown reference exists.
+- If any project decision, technology choice, workflow, integration detail, or implementation direction changes, update this `AGENTS.md` file in the same change so future agents follow the current project direction.
+- When replying in Persian/Farsi in Codex chat, start each Persian paragraph with an RTL mark (`‫`) so mixed Persian, English words, and numbers render correctly.

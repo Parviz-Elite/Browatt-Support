@@ -1,0 +1,15 @@
+{
+    "name": "MehrsoftIntegration",
+    "alias": "mehrsoftintegration",
+    "description": "MehrSoft after-sales integration for Browatt warranty and service workflows.",
+    "keywords": [
+        "mehrsoft",
+        "after-sales",
+        "warranty"
+    ],
+    "priority": 0,
+    "providers": [
+        "Browatt\\MehrsoftIntegration\\Providers\\MehrsoftIntegrationServiceProvider"
+    ],
+    "files": []
+}

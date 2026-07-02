@@ -1,0 +1,15 @@
+{
+    "name": "browatt/mehrsoft-integration",
+    "description": "MehrSoft after-sales integration module for Browatt.",
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Browatt\\MehrsoftIntegration\\": "src/"
+        }
+    }
+}
