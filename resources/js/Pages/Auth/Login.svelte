@@ -1,5 +1,5 @@
 <script>
-    import { onDestroy } from 'svelte';
+    import { onDestroy, tick } from 'svelte';
     import {
         AlertCircle,
         ArrowLeft,
@@ -12,6 +12,8 @@
         ShieldCheck,
     } from '@lucide/svelte';
     import BrandLogo from '@/Components/BrandLogo.svelte';
+    import * as Alert from '@/Components/ui/alert';
+    import * as InputOTP from '@/Components/ui/input-otp';
 
     export let contact = {
         site: 'https://browatt.com/',
@@ -37,8 +39,11 @@
     let expiryTimer = null;
     let normalizedMobile = '';
     let normalizedCode = '';
+    let codeLength = 6;
     let canRequestCode = false;
     let canVerifyCode = false;
+    let otpInput = null;
+    let lastSubmittedCode = '';
 
     const routeUrl = (name, fallback) => (typeof route === 'function' ? route(name) : fallback);
     const toEnglishDigits = value =>
@@ -48,12 +53,11 @@
     const normalizeMobile = value => toEnglishDigits(value).replace(/[^\d+]/g, '');
     const normalizeCode = value => toEnglishDigits(value).replace(/\D/g, '');
     const formatSeconds = seconds => `۰:${String(Math.max(seconds, 0)).padStart(2, '0')}`;
-    const codePlaceholder = () => Array(Number(otp.codeLength ?? 6)).fill('-').join('');
-
+    $: codeLength = Number(otp.codeLength ?? 6);
     $: normalizedMobile = normalizeMobile(mobile);
-    $: normalizedCode = normalizeCode(code);
+    $: normalizedCode = normalizeCode(code).slice(0, codeLength);
     $: canRequestCode = /^09\d{9}$/.test(normalizedMobile);
-    $: canVerifyCode = normalizedCode.length === Number(otp.codeLength ?? 6);
+    $: canVerifyCode = normalizedCode.length === codeLength;
     $: isBusy = isRequesting || isVerifying;
 
     onDestroy(() => {
@@ -63,11 +67,6 @@
 
     function handleMobileInput(event) {
         mobile = normalizeMobile(event.currentTarget.value).slice(0, 11);
-        notice = null;
-    }
-
-    function handleCodeInput(event) {
-        code = normalizeCode(event.currentTarget.value).slice(0, Number(otp.codeLength ?? 6));
         notice = null;
     }
 
@@ -89,6 +88,7 @@
             step = 'code';
             startResendTimer(Number(data.resend_after ?? otp.resendSeconds ?? 60));
             startExpiryTimer(Number(data.expires_in ?? 120));
+            focusOtpInput();
             notice = {
                 type: 'success',
                 text: data.message ?? 'کد تایید برای شماره موبایل شما ارسال شد.',
@@ -114,6 +114,7 @@
         }
 
         isVerifying = true;
+        lastSubmittedCode = normalizedCode;
         notice = null;
 
         try {
@@ -125,9 +126,37 @@
             window.location.assign(data.redirect ?? '/dashboard');
         } catch (error) {
             handleApiError(error, 'کد تایید نادرست یا منقضی شده است.');
+            lastSubmittedCode = '';
         } finally {
             isVerifying = false;
         }
+    }
+
+    async function handleCodeComplete(value = code) {
+        code = normalizeCode(value || code).slice(0, codeLength);
+
+        await tick();
+
+        if (normalizedCode.length === codeLength && normalizedCode !== lastSubmittedCode && !isVerifying) {
+            verifyCode();
+        }
+    }
+
+    async function focusOtpInput() {
+        await tick();
+
+        window.setTimeout(() => {
+            otpInput?.focus();
+        }, 0);
+    }
+
+    function showCodeStep() {
+        if (!hasRequestedCode) {
+            return;
+        }
+
+        step = 'code';
+        focusOtpInput();
     }
 
     function handleApiError(error, fallbackMessage) {
@@ -288,27 +317,21 @@
                                 type="button"
                                 class={`h-11 flex-1 rounded-xl transition ${step === 'code' ? 'bg-white text-slate-950 shadow-sm' : ''}`}
                                 disabled={!hasRequestedCode}
-                                on:click={() => hasRequestedCode && (step = 'code')}
+                                on:click={showCodeStep}
                             >
                                 کد تایید
                             </button>
                         </div>
 
                         {#if notice}
-                            <div
-                                class={`mb-5 flex items-start gap-2 rounded-2xl border px-4 py-3 text-sm leading-7 ${
-                                    notice.type === 'error'
-                                        ? 'border-red-100 bg-red-50 text-red-700'
-                                        : 'border-emerald-100 bg-emerald-50 text-emerald-700'
-                                }`}
-                            >
+                            <Alert.Root variant={notice.type === 'error' ? 'destructive' : 'default'} class="mb-5">
                                 {#if notice.type === 'error'}
-                                    <AlertCircle class="mt-1 shrink-0" size={17} />
+                                    <AlertCircle />
                                 {:else}
-                                    <CheckCircle2 class="mt-1 shrink-0" size={17} />
+                                    <CheckCircle2 />
                                 {/if}
-                                <span>{notice.text}</span>
-                            </div>
+                                <Alert.Description>{notice.text}</Alert.Description>
+                            </Alert.Root>
                         {/if}
 
                         {#if step === 'mobile'}
@@ -353,17 +376,36 @@
 
                                 <label class="block">
                                     <span class="mb-2 block text-sm font-bold text-slate-700">کد تایید پیامک شده</span>
-                                    <input
-                                        value={code}
-                                        on:input={handleCodeInput}
+                                    <InputOTP.Root
+                                        bind:value={code}
+                                        bind:inputRef={otpInput}
+                                        maxlength={codeLength}
                                         inputmode="numeric"
                                         autocomplete="one-time-code"
+                                        inputId="login-otp-code"
+                                        name="otp"
                                         dir="ltr"
-                                        maxlength={otp.codeLength}
+                                        textalign="left"
                                         aria-invalid={notice?.type === 'error'}
-                                        class="h-16 w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 text-center text-3xl font-black tracking-[0.34em] text-slate-950 outline-none transition placeholder:text-slate-300 focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"
-                                        placeholder={codePlaceholder()}
-                                    />
+                                        class="w-full justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 [direction:ltr] transition focus-within:border-sky-400 focus-within:bg-white focus-within:ring-4 focus-within:ring-sky-100"
+                                        oninput={() => {
+                                            notice = null;
+                                            lastSubmittedCode = '';
+                                        }}
+                                        onComplete={handleCodeComplete}
+                                        pasteTransformer={normalizeCode}
+                                    >
+                                        {#snippet children({ cells })}
+                                            <InputOTP.Group class="[direction:ltr]">
+                                                {#each cells as cell (cell)}
+                                                    <InputOTP.Slot
+                                                        {cell}
+                                                        class="size-11 rounded-xl border border-slate-200 bg-white text-2xl font-black text-slate-950 shadow-sm sm:size-12"
+                                                    />
+                                                {/each}
+                                            </InputOTP.Group>
+                                        {/snippet}
+                                    </InputOTP.Root>
                                 </label>
 
                                 <button

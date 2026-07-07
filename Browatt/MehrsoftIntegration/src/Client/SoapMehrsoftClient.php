@@ -75,6 +75,18 @@ class SoapMehrsoftClient implements MehrsoftClient
     }
 
     /**
+     * Get accounting states and cities.
+     *
+     * @return array<int|string, mixed>
+     */
+    public function getAccCities(): array
+    {
+        $response = $this->request('GetAccCities');
+
+        return is_array($response) ? $response : [];
+    }
+
+    /**
      * Save an after-sales document.
      *
      * @param array<string, mixed> $payload

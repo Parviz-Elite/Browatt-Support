@@ -24,6 +24,13 @@ interface MehrsoftClient
     public function getWarrantySettings(): array;
 
     /**
+     * Get accounting states and cities.
+     *
+     * @return array<int|string, mixed>
+     */
+    public function getAccCities(): array;
+
+    /**
      * Save an after-sales document.
      *
      * @param array<string, mixed> $payload

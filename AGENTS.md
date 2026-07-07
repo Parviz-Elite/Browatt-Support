@@ -56,7 +56,8 @@ Warranty
 - Use `shadcn-svelte` as the UI component base, with local/customized components rather than a heavy fixed UI kit.
 - Use `@humanspeak/svelte-motion` for meaningful Svelte 5 UI motion such as menu feedback, page/card entrance, hover/tap micro-interactions, and future layout transitions. Keep motion purposeful and respect usability; do not add distracting animations to operational workflows.
 - Use `@majidh1/jalalidatepicker` behind shared Svelte wrappers for Jalali date inputs. Do not couple pages directly to datepicker globals.
-- The official `shadcn/ui` agent skill is installed under `.agents/skills/shadcn` for reference when working with shadcn-style components, registries, and composition rules. This project is `shadcn-svelte`, so treat React/TSX examples from that skill as conceptual guidance only. Do not introduce React-specific APIs, `lucide-react`, Radix React assumptions, or `npx shadcn@latest` generated React components into this Svelte project. Prefer `shadcn-svelte` documentation/CLI and the local `components.json` aliases for actual implementation.
+- The official `shadcn-svelte` agent skill is installed under `.agents/skills/shadcn-svelte` for working with shadcn-style Svelte components, registries, and composition rules. Use `npx shadcn-svelte@latest` / the project package runner and the local `components.json` aliases for implementation. Do not introduce React-specific APIs, `lucide-react`, Radix React assumptions, or `npx shadcn@latest` generated React components into this Svelte project.
+- Use `https://www.shadcn-svelte.com/llms.txt` as the quick official index for current `shadcn-svelte` docs and available components when deciding whether an existing component or pattern should be used before building custom UI.
 - Do not install Livewire.
 - Use MySQL or MariaDB unless a later requirement justifies another database.
 - Tests are not required for now unless the user explicitly asks for them.
@@ -95,6 +96,7 @@ Engineering rules:
 - Use `spatie/laravel-permission` for roles and permissions. Do not implement custom role/permission systems.
 - Use `spatie/laravel-medialibrary` for media/file handling. Do not implement custom media management unless a specific requirement proves the package is insufficient.
 - Keep external integrations behind interfaces or focused service classes so domain logic does not couple directly to vendor clients.
+- Application settings stored in `app_settings.value` are plain JSON for easier operational inspection and manual edits. Do not use encrypted casts for `App\Models\AppSetting`.
 - If a project decision, workflow, technology, or implementation direction changes, update this `AGENTS.md` in the same change.
 
 ## Local Development Database
@@ -157,6 +159,7 @@ The UI should stay consistent with the existing project design, not drift into p
 Frontend rules:
 
 - UI must follow the existing project patterns. Do not give each page its own unrelated visual style.
+- Before building custom UI, first check whether the selected framework, UI library, or installed component registry already provides the needed component or behavior. For example, use `shadcn-svelte` components such as `InputOTP` for OTP entry when suitable. Build a custom component only when the existing option is unavailable, insufficient for the required UX, or would create worse integration/maintenance tradeoffs.
 - Before building a new page, find the closest existing page or component and use it as the template for structure, naming, layout, and interaction patterns.
 - Forms, actions, feedback, and navigation must be designed for operational use: clear, low-error, touch-friendly, and easy to scan.
 - Responsive behavior must be intentional and polished across mobile, tablet, and desktop, not merely non-broken.
@@ -254,7 +257,7 @@ interface MehrSoftClient
 
 The current MehrSoft integration lives in the `Browatt/MehrsoftIntegration` module. It follows the modular pattern reviewed from `D:\Herd\Brandiol-Automation`, but it must stay Browatt-specific and expose only the MehrSoft after-sales methods needed by this project.
 
-For MehrSoft failures, prefer storing the local warranty activation with a sync status such as `pending`, then retrying through a queue, unless business rules explicitly require rejecting activation when MehrSoft is unavailable.
+For final MehrSoft warranty activation failures, do not mark the warranty as activated and do not show it in active warranty lists. Keep the inquired local row available for retry, store the failed sync status/error for diagnostics, and show the customer an inline retry error. After more than two final activation failures for the same user/warranty/IP, show the support phone link `tel:02191693797`.
 
 ## Initial Data Model Direction
 
@@ -280,16 +283,9 @@ user_addresses
 - id
 - user_id
 - title nullable
-- recipient_first_name nullable
-- recipient_last_name nullable
-- mobile nullable
 - province nullable
 - city nullable
-- district nullable
-- postal_code nullable
 - address nullable
-- latitude nullable
-- longitude nullable
 - is_default
 - deleted_at nullable
 

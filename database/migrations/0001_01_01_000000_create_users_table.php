@@ -46,16 +46,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('title')->nullable();
-            $table->string('recipient_first_name')->nullable();
-            $table->string('recipient_last_name')->nullable();
-            $table->string('mobile')->nullable();
             $table->string('province')->nullable();
             $table->string('city')->nullable();
-            $table->string('district')->nullable();
-            $table->string('postal_code')->nullable();
             $table->text('address')->nullable();
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
             $table->boolean('is_default')->default(false);
             $table->timestamps();
             $table->softDeletes();

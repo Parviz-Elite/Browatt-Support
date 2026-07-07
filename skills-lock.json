@@ -1,11 +1,11 @@
 {
   "version": 1,
   "skills": {
-    "shadcn": {
-      "source": "shadcn/ui",
+    "shadcn-svelte": {
+      "source": "huntabyte/shadcn-svelte",
       "sourceType": "github",
-      "skillPath": "skills/shadcn/SKILL.md",
-      "computedHash": "4f78ff7cd3a4f637b6fe30dbbab4a80a19dd63fa62d9352bed461ccfdbcbbf43"
+      "skillPath": "skills/shadcn-svelte/SKILL.md",
+      "computedHash": "a258eddb4cff76bc2cb93d93ebca8a385e5545c3a84ff44a867358d9da5a8af6"
     }
   }
 }

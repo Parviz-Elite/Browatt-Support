@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
@@ -16,14 +17,32 @@ class RoleSeeder extends Seeder
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
+        $permissions = $this->permissions();
+
+        foreach ($permissions as $permission) {
+            Permission::query()->firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web',
+            ]);
+        }
+
         $generalManagerRole = Role::query()->firstOrCreate([
             'name' => 'general_manager',
             'guard_name' => 'web',
         ]);
+        $generalManagerRole->forceFill(['title' => 'مدیر کل'])->save();
 
-        Role::query()->firstOrCreate([
+        $customerRole = Role::query()->firstOrCreate([
             'name' => 'customer',
             'guard_name' => 'web',
+        ]);
+        $customerRole->forceFill(['title' => 'مشتری'])->save();
+
+        $generalManagerRole->syncPermissions($permissions);
+        $customerRole->syncPermissions([
+            'dashboard.view',
+            'warranties.activate',
+            'warranties.view_own',
         ]);
 
         foreach ($this->generalManagers() as $manager) {
@@ -44,6 +63,19 @@ class RoleSeeder extends Seeder
     }
 
     /**
+     * @return array<int, string>
+     */
+    private function permissions(): array
+    {
+        return collect(config('browatt_permissions.groups', []))
+            ->flatMap(fn (array $group) => $group['permissions'] ?? [])
+            ->pluck('name')
+            ->filter()
+            ->values()
+            ->all();
+    }
+
+    /**
      * @return array<int, array{mobile: string, first_name: string, last_name: string}>
      */
     private function generalManagers(): array
@@ -61,7 +93,7 @@ class RoleSeeder extends Seeder
             ],
             [
                 'mobile' => '09148064984',
-                'first_name' => 'مهرداد',
+                'first_name' => 'فرشید',
                 'last_name' => 'مهردادی',
             ],
             [

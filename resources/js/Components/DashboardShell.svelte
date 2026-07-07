@@ -1,17 +1,21 @@
 <script>
-    import { Link } from '@inertiajs/svelte';
+    import { Link, router } from '@inertiajs/svelte';
     import { motion } from '@humanspeak/svelte-motion';
     import {
         BadgeCheck,
         LayoutDashboard,
         ListChecks,
+        LogOut,
         Menu,
+        Settings,
         ShieldCheck,
         UserCog,
+        UserRound,
         Users,
         X,
     } from '@lucide/svelte';
     import BrandLogo from '@/Components/BrandLogo.svelte';
+    import FlashToaster from '@/Components/FlashToaster.svelte';
 
     export let auth = { user: null };
     export let title = 'داشبورد';
@@ -21,6 +25,7 @@
     const routeUrl = (name, fallback) => (typeof route === 'function' ? route(name) : fallback);
     const user = auth?.user ?? null;
     const isManager = Boolean(user?.is_manager);
+    const hasAccess = (permission) => Boolean(user?.roles?.includes('general_manager') || user?.permissions?.includes(permission));
     const currentPath = () => window.location.pathname.replace(/\/$/, '') || '/';
     const menuItemMotion = {
         rest: { x: 0, scale: 1 },
@@ -50,12 +55,16 @@
                 },
                 ...(isManager
                     ? [
-                          {
-                              key: 'warranty-list',
-                              title: 'لیست گارانتی ها',
-                              href: routeUrl('admin.warranties.index', '/warranties'),
-                              icon: 'list',
-                          },
+                          ...(hasAccess('warranties.view_any')
+                              ? [
+                                    {
+                                        key: 'warranty-list',
+                                        title: 'لیست گارانتی ها',
+                                        href: routeUrl('admin.warranties.index', '/warranties'),
+                                        icon: 'list',
+                                    },
+                                ]
+                              : []),
                       ]
                     : []),
             ],
@@ -65,17 +74,50 @@
                   {
                       title: 'کاربران',
                       items: [
+                          ...(hasAccess('customers.view_any')
+                              ? [
+                                    {
+                                        key: 'customers-list',
+                                        title: 'لیست مشتری ها',
+                                        href: routeUrl('admin.customers.index', '/customers'),
+                                        icon: 'users',
+                                    },
+                                ]
+                              : []),
+                          ...(hasAccess('users.view_any')
+                              ? [
+                                    {
+                                        key: 'users-list',
+                                        title: 'لیست کاربران',
+                                        href: routeUrl('admin.users.index', '/users'),
+                                        icon: 'user-cog',
+                                    },
+                                ]
+                              : []),
+                          ...(hasAccess('roles.manage')
+                              ? [
+                                    {
+                                        key: 'roles-list',
+                                        title: 'لیست نقش ها',
+                                        href: routeUrl('admin.roles.index', '/roles'),
+                                        icon: 'roles',
+                                    },
+                                ]
+                              : []),
+                      ],
+                  },
+              ]
+            : []),
+        ...(isManager && hasAccess('settings.manage')
+            ? [
+                  {
+                      title: 'مدیریت',
+                      items: [
                           {
-                              key: 'users-list',
-                              title: 'لیست کاربران',
-                              href: routeUrl('admin.users.index', '/users'),
-                              icon: 'users',
-                          },
-                          {
-                              key: 'roles-list',
-                              title: 'لیست نقش ها',
-                              href: routeUrl('admin.roles.index', '/roles'),
-                              icon: 'roles',
+                              key: 'settings',
+                              title: 'تنظیمات',
+                              href: routeUrl('admin.settings.index', '/settings'),
+                              icon: 'settings',
                           },
                       ],
                   },
@@ -94,6 +136,10 @@
     function iconClass(active) {
         return active ? 'text-[#ec2228]' : 'text-slate-400';
     }
+
+    function logout() {
+        router.post(routeUrl('logout', '/logout'));
+    }
 </script>
 
 <svelte:head>
@@ -101,6 +147,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-[#f4f8fb] text-slate-950">
+    <FlashToaster />
     <aside class="fixed inset-y-0 right-0 z-30 hidden w-72 border-l border-slate-200/80 bg-white/92 px-4 py-5 shadow-[0_24px_80px_rgba(23,39,93,0.08)] backdrop-blur xl:block">
         <div class="flex h-full flex-col">
             <BrandLogo className="mb-8 w-40" />
@@ -144,6 +191,8 @@
                                             <ListChecks class={iconClass(active)} size={18} />
                                         {:else if item.icon === 'users'}
                                             <Users class={iconClass(active)} size={18} />
+                                        {:else if item.icon === 'settings'}
+                                            <Settings class={iconClass(active)} size={18} />
                                         {:else}
                                             <UserCog class={iconClass(active)} size={18} />
                                         {/if}
@@ -156,9 +205,17 @@
                 {/each}
             </nav>
 
-            <div class="rounded-2xl bg-slate-50 px-4 py-3">
+            <div class="flex flex-col gap-3 rounded-2xl bg-slate-50 px-4 py-3">
                 <div class="text-sm font-black text-slate-950">{user?.name ?? 'کاربر برووات'}</div>
                 <div class="mt-1 text-xs font-bold text-slate-500" dir="ltr">{user?.mobile ?? ''}</div>
+                <button
+                    type="button"
+                    class="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-white text-sm font-black text-slate-600 shadow-sm transition hover:bg-red-50 hover:text-[#ec2228] active:scale-95"
+                    onclick={logout}
+                >
+                    <LogOut size={16} />
+                    &#1582;&#1585;&#1608;&#1580;
+                </button>
             </div>
         </div>
     </aside>
@@ -189,7 +246,7 @@
                 </button>
             </div>
 
-            <nav class="flex flex-col gap-6">
+            <nav class="flex min-h-[calc(100vh-6.5rem)] flex-col gap-6">
                 <motion.div variants={menuItemMotion} initial="rest" animate="rest" whileTap="tap">
                     <Link
                         href={routeUrl('dashboard', '/dashboard')}
@@ -225,6 +282,8 @@
                                             <ListChecks class={iconClass(active)} size={18} />
                                         {:else if item.icon === 'users'}
                                             <Users class={iconClass(active)} size={18} />
+                                        {:else if item.icon === 'settings'}
+                                            <Settings class={iconClass(active)} size={18} />
                                         {:else}
                                             <UserCog class={iconClass(active)} size={18} />
                                         {/if}
@@ -235,6 +294,14 @@
                         </div>
                     </div>
                 {/each}
+                <button
+                    type="button"
+                    class="mt-auto inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-slate-50 px-4 text-sm font-black text-slate-600 transition hover:bg-red-50 hover:text-[#ec2228] active:scale-95"
+                    onclick={logout}
+                >
+                    <LogOut size={17} />
+                    &#1582;&#1585;&#1608;&#1580;
+                </button>
             </nav>
         </motion.aside>
     {/if}
@@ -256,9 +323,13 @@
                     <h1 class="mt-1 truncate text-xl font-black text-slate-950 sm:text-2xl">{title}</h1>
                 </div>
 
-                <div class="hidden rounded-full bg-white px-4 py-2 text-sm font-bold text-slate-600 shadow-sm sm:block" dir="ltr">
-                    {user?.mobile ?? ''}
-                </div>
+                <Link
+                    href={routeUrl('profile.index', '/profile')}
+                    class="hidden h-10 items-center gap-2 rounded-full bg-white px-4 text-sm font-black text-slate-600 shadow-sm transition hover:bg-red-50 hover:text-[#ec2228] active:scale-95 sm:inline-flex"
+                >
+                    <UserRound size={17} />
+                    پروفایل
+                </Link>
             </div>
         </header>
 

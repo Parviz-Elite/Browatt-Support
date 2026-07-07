@@ -47,8 +47,13 @@ class HandleInertiaRequests extends Middleware
                     'last_name' => $user->last_name,
                     'name' => trim(implode(' ', array_filter([$user->first_name, $user->last_name]))) ?: $user->mobile,
                     'roles' => $user->getRoleNames()->values()->all(),
-                    'is_manager' => $user->hasRole('general_manager'),
+                    'permissions' => $user->getAllPermissions()->pluck('name')->values()->all(),
+                    'is_manager' => $user->hasRole('general_manager') || $user->can('roles.manage') || $user->can('users.view_any') || $user->can('customers.view_any') || $user->can('warranties.view_any') || $user->can('settings.manage'),
                 ] : null,
+            ],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
             ],
         ];
     }

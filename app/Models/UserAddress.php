@@ -13,16 +13,9 @@ class UserAddress extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'recipient_first_name',
-        'recipient_last_name',
-        'mobile',
         'province',
         'city',
-        'district',
-        'postal_code',
         'address',
-        'latitude',
-        'longitude',
         'is_default',
     ];
 
@@ -34,8 +27,6 @@ class UserAddress extends Model
     protected function casts(): array
     {
         return [
-            'latitude' => 'decimal:7',
-            'longitude' => 'decimal:7',
             'is_default' => 'boolean',
         ];
     }
