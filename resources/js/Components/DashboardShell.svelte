@@ -149,9 +149,9 @@
 <div class="min-h-screen bg-[#f4f8fb] text-slate-950">
     <FlashToaster />
     <aside class="fixed inset-y-0 right-0 z-30 hidden w-72 border-l border-slate-200/80 bg-white/92 px-4 py-5 shadow-[0_24px_80px_rgba(23,39,93,0.08)] backdrop-blur xl:block">
-        <div class="flex h-full flex-col">
-            <BrandLogo className="mb-8 w-40" />
-            <nav class="flex flex-1 flex-col gap-7">
+        <div class="flex h-full min-h-0 flex-col">
+            <BrandLogo className="mb-8 w-40 shrink-0" />
+            <nav class="flex min-h-0 flex-1 flex-col gap-7 overflow-y-auto pb-4 pl-1">
                 <motion.div layout variants={menuItemMotion} initial="rest" animate="rest" whileHover="hover" whileTap="tap">
                     <a
                         href={routeUrl('dashboard', '/dashboard')}
@@ -205,7 +205,7 @@
                 {/each}
             </nav>
 
-            <div class="flex flex-col gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+            <div class="shrink-0 flex flex-col gap-3 rounded-2xl bg-slate-50 px-4 py-3">
                 <div class="text-sm font-black text-slate-950">{user?.name ?? 'کاربر برووات'}</div>
                 <div class="mt-1 text-xs font-bold text-slate-500" dir="ltr">{user?.mobile ?? ''}</div>
                 <button
@@ -228,13 +228,13 @@
             onclick={() => (mobileMenuOpen = false)}
         ></button>
         <motion.aside
-            class="fixed inset-y-0 right-0 z-50 w-[min(21rem,88vw)] bg-white px-4 py-5 shadow-2xl xl:hidden"
+            class="fixed inset-y-0 right-0 z-50 flex w-[min(21rem,88vw)] flex-col bg-white px-4 py-5 shadow-2xl xl:hidden"
             variants={sidePanelMotion}
             initial="hidden"
             animate="show"
             transition={{ type: 'spring', stiffness: 420, damping: 34 }}
         >
-            <div class="mb-6 flex items-center justify-between gap-4">
+            <div class="mb-6 flex shrink-0 items-center justify-between gap-4">
                 <BrandLogo className="w-36" />
                 <button
                     type="button"
@@ -246,7 +246,7 @@
                 </button>
             </div>
 
-            <nav class="flex min-h-[calc(100vh-6.5rem)] flex-col gap-6">
+            <nav class="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto pb-2 pl-1">
                 <motion.div variants={menuItemMotion} initial="rest" animate="rest" whileTap="tap">
                     <Link
                         href={routeUrl('dashboard', '/dashboard')}

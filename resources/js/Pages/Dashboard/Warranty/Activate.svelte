@@ -6,6 +6,7 @@
     import BarcodeScanner from '@/Components/BarcodeScanner.svelte';
     import DashboardShell from '@/Components/DashboardShell.svelte';
     import { Button } from '@/Components/ui/button';
+    import * as Dialog from '@/Components/ui/dialog';
     import * as Field from '@/Components/ui/field';
     import { Input } from '@/Components/ui/input';
     import { Separator } from '@/Components/ui/separator';
@@ -38,6 +39,7 @@
     let errors = {};
     let product = null;
     let warrantyId = null;
+    let successDialogOpen = false;
 
     const defaultAddress = addresses.find((address) => address.is_default) ?? addresses[0] ?? null;
     let selectedAddressId = defaultAddress?.id ? String(defaultAddress.id) : 'new';
@@ -179,16 +181,6 @@
         return remainder < 2 ? checkDigit === remainder : checkDigit === 11 - remainder;
     }
 
-    function formatProductionDate(value) {
-        const digits = String(value ?? '').replace(/\D/g, '');
-
-        if (digits.length !== 8) {
-            return value ?? '';
-        }
-
-        return `${digits.slice(0, 4)}/${digits.slice(4, 6)}/${digits.slice(6, 8)}`;
-    }
-
     async function checkProduct() {
         if (!canCheckProduct) {
             return;
@@ -245,9 +237,13 @@
                 state_code: customerForm.state_code,
                 city_code: customerForm.city_code,
                 address: customerForm.address,
+                show_success_dialog: true,
             },
             {
                 preserveScroll: true,
+                onSuccess: () => {
+                    successDialogOpen = true;
+                },
                 onError: (pageErrors) => {
                     errors = pageErrors;
                 },
@@ -333,10 +329,6 @@
                     <div class="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-bold leading-7 text-emerald-800">
                         <div class="flex flex-col gap-1">
                             <span>عنوان کالا: {product.name || 'نام کالا ثبت نشده'}</span>
-                            <span>کد کالا: {product.good_full_code || 'نامشخص'}</span>
-                            {#if product.production_date}
-                                <span>تاریخ تولید: {formatProductionDate(product.production_date)}</span>
-                            {/if}
                         </div>
                     </div>
                 {:else}
@@ -579,4 +571,28 @@
     </section>
 
     <BarcodeScanner bind:open={barcodeScannerOpen} onScan={(value) => (serial = value)} />
+
+    <Dialog.Root bind:open={successDialogOpen}>
+        <Dialog.Content class="max-w-[calc(100%-2rem)] rounded-3xl p-6 sm:max-w-md" showCloseButton={false}>
+            <Dialog.Header>
+                <div class="mx-auto mb-2 flex size-14 items-center justify-center rounded-3xl bg-emerald-50 text-emerald-600">
+                    <CheckCircle2 size={28} />
+                </div>
+                <Dialog.Title class="text-center text-xl font-black text-slate-950">گارانتی با موفقیت فعال شد</Dialog.Title>
+                <Dialog.Description class="text-center leading-7 text-slate-600">
+                    اطلاعات گارانتی ثبت شد. برای مشاهده جزئیات، به صفحه گارانتی های من بروید.
+                </Dialog.Description>
+            </Dialog.Header>
+            <Dialog.Footer class="sm:justify-center">
+                <Button
+                    type="button"
+                    class="h-12 w-full rounded-2xl font-black sm:w-auto"
+                    onclick={() => router.visit(routeUrl('warranties.mine', '/warranties/mine'))}
+                >
+                    مشاهده گارانتی های من
+                    <ArrowLeft data-icon="inline-end" />
+                </Button>
+            </Dialog.Footer>
+        </Dialog.Content>
+    </Dialog.Root>
 </DashboardShell>

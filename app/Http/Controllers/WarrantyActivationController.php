@@ -126,6 +126,10 @@ class WarrantyActivationController extends Controller
 
         Cache::forget($this->activationFailureCacheKey($request, $warranty->id));
 
+        if ($request->boolean('show_success_dialog')) {
+            return back()->with('success', 'گارانتی با موفقیت فعال شد.');
+        }
+
         return redirect()->route('warranties.mine')->with('success', 'گارانتی با موفقیت فعال شد.');
     }
 

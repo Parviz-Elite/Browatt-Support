@@ -254,7 +254,7 @@
                 <div class="max-w-xl">
                     <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/85 backdrop-blur">
                         <ShieldCheck size={17} strokeWidth={2.2} />
-                        خدمات پس از فروش رسمی برووات
+                        خدمات پس از فروش مرکزی برووات
                     </div>
                     <h1 class="text-4xl font-black leading-[1.45] xl:text-5xl">
                         فعال‌سازی گارانتی، پیگیری خدمات و پشتیبانی در یک حساب امن
