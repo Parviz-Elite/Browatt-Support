@@ -2,7 +2,6 @@
     import { router } from '@inertiajs/svelte';
     import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Search, ShieldCheck } from '@lucide/svelte';
     import DashboardShell from '@/Components/DashboardShell.svelte';
-    import { Badge } from '@/Components/ui/badge';
     import { Button } from '@/Components/ui/button';
     import * as Empty from '@/Components/ui/empty';
     import * as Field from '@/Components/ui/field';
@@ -30,13 +29,6 @@
     let perPage = String(filters.per_page ?? 25);
 
     const routeUrl = (name, fallback) => (typeof route === 'function' ? route(name) : fallback);
-    const syncLabels = {
-        not_sent: 'ناموفق',
-        pending: 'در انتظار',
-        synced: 'همگام شده',
-        failed: 'ناموفق',
-    };
-
     function formatDate(value) {
         if (!value) {
             return 'ثبت نشده';
@@ -46,14 +38,6 @@
             dateStyle: 'medium',
             timeStyle: 'short',
         }).format(new Date(value));
-    }
-
-    function syncLabel(status) {
-        return syncLabels[status] ?? status ?? 'نامشخص';
-    }
-
-    function syncVariant(status) {
-        return status === 'synced' ? 'secondary' : 'outline';
     }
 
     function visit(overrides = {}) {
@@ -109,7 +93,7 @@
                     <Field.Field>
                         <Field.Label for="warranty-search" class="sr-only">جست و جو</Field.Label>
                         <div class="relative">
-                            <Input id="warranty-search" bind:value={search} placeholder="جست و جو سریال، مشتری یا وضعیت" class="h-10 pr-9" />
+                            <Input id="warranty-search" bind:value={search} placeholder="جست و جو سریال، مشتری یا شناسه پیگیری" class="h-10 pr-9" />
                             <Search class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         </div>
                     </Field.Field>
@@ -149,7 +133,7 @@
                             </Table.Head>
                             <Table.Head class="text-right">
                                 <Button variant="ghost" size="sm" class="font-black" onclick={() => sortBy('product_serial')}>
-                                    سریال
+                                    محصول
                                     {#if filters.sort === 'product_serial'}
                                         {#if filters.direction === 'asc'}<ChevronUp data-icon="inline-end" />{:else}<ChevronDown data-icon="inline-end" />{/if}
                                     {/if}
@@ -165,14 +149,7 @@
                             </Table.Head>
                             <Table.Head class="text-right">نوع</Table.Head>
                             <Table.Head class="text-right">دوره</Table.Head>
-                            <Table.Head class="text-right">
-                                <Button variant="ghost" size="sm" class="font-black" onclick={() => sortBy('mehrsoft_sync_status')}>
-                                    وضعیت
-                                    {#if filters.sort === 'mehrsoft_sync_status'}
-                                        {#if filters.direction === 'asc'}<ChevronUp data-icon="inline-end" />{:else}<ChevronDown data-icon="inline-end" />{/if}
-                                    {/if}
-                                </Button>
-                            </Table.Head>
+                            <Table.Head class="text-right">شناسه پیگیری</Table.Head>
                             <Table.Head class="text-right">
                                 <Button variant="ghost" size="sm" class="font-black" onclick={() => sortBy('activated_at')}>
                                     فعال سازی
@@ -195,7 +172,10 @@
                         {#each warranties.data as warranty}
                             <Table.Row>
                                 <Table.Cell class="font-bold text-slate-500">#{warranty.id}</Table.Cell>
-                                <Table.Cell class="font-black text-slate-950" dir="ltr">{warranty.product_serial}</Table.Cell>
+                                <Table.Cell>
+                                    <div class="font-black text-slate-950">{warranty.product_name || 'عنوان محصول ثبت نشده'}</div>
+                                    <div class="mt-1 text-xs font-bold text-slate-500">سریال محصول: <span dir="ltr">{warranty.product_serial}</span></div>
+                                </Table.Cell>
                                 <Table.Cell>
                                     <div class="font-black text-slate-950">{warranty.customer_name}</div>
                                     <div class="mt-1 text-xs font-bold text-slate-500" dir="ltr">{warranty.customer_mobile ?? ''}</div>
@@ -203,7 +183,9 @@
                                 <Table.Cell class="font-bold text-slate-600">{warranty.warranty_type ?? 'ثبت نشده'}</Table.Cell>
                                 <Table.Cell class="font-bold text-slate-600">{warranty.warranty_period_months ?? 'نامشخص'} ماه</Table.Cell>
                                 <Table.Cell>
-                                    <Badge variant={syncVariant(warranty.mehrsoft_sync_status)}>{syncLabel(warranty.mehrsoft_sync_status)}</Badge>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        {warranty.mehrsoft_fix_no ?? 'ثبت نشده'}
+                                    </div>
                                 </Table.Cell>
                                 <Table.Cell class="font-medium text-slate-500">{formatDate(warranty.activated_at)}</Table.Cell>
                                 <Table.Cell class="font-medium text-slate-500">{formatDate(warranty.expires_at)}</Table.Cell>

@@ -1,0 +1,74 @@
+---
+deployment:
+  tasks:
+    - |
+      set -e
+
+      APP_ROOT="/home/browattc/support.browatt.com"
+      PHP_BIN="/usr/local/bin/ea-php84"
+      COMPOSER_BIN="/usr/local/bin/composer"
+
+      # Set MIGRATE=0 for a deployment that must skip database migrations.
+      MIGRATE="${MIGRATE:-1}"
+      APP_WAS_PUT_DOWN=0
+
+      bring_application_up() {
+        if [ "$APP_WAS_PUT_DOWN" = "1" ]; then
+          "$PHP_BIN" artisan up || true
+        fi
+      }
+
+      trap bring_application_up EXIT
+
+      cd "$APP_ROOT"
+
+      # Keep the deployment checkout aligned with the configured remote branch.
+      CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+      git fetch origin "$CURRENT_BRANCH"
+      git reset --hard "origin/$CURRENT_BRANCH"
+
+      # Local/dev package manifests must not survive into a production install.
+      rm -f bootstrap/cache/*.php
+
+      test -f .env
+      grep -Eq '^APP_KEY=.+$' .env
+      test -f artisan
+      test -f composer.json
+      test -f composer.lock
+      test -f public/build/manifest.json
+      test -x "$PHP_BIN"
+      test -x "$COMPOSER_BIN"
+      "$PHP_BIN" -m | grep -qi '^pdo_mysql$'
+      "$PHP_BIN" -m | grep -qi '^soap$'
+
+      "$PHP_BIN" artisan down || true
+      APP_WAS_PUT_DOWN=1
+
+      # PHP dependencies only; frontend assets are built locally and committed.
+      "$PHP_BIN" "$COMPOSER_BIN" install \
+        --no-dev \
+        --prefer-dist \
+        --no-interaction \
+        --optimize-autoloader \
+        --no-scripts
+
+      "$PHP_BIN" artisan package:discover --ansi
+
+      chmod -R 775 storage bootstrap/cache || true
+      "$PHP_BIN" artisan storage:link || true
+
+      "$PHP_BIN" artisan optimize:clear
+
+      if [ "$MIGRATE" = "1" ]; then
+        "$PHP_BIN" artisan migrate --force
+      fi
+
+      "$PHP_BIN" artisan config:cache
+      "$PHP_BIN" artisan view:cache
+      "$PHP_BIN" artisan event:cache || true
+
+      "$PHP_BIN" artisan queue:restart || true
+
+      "$PHP_BIN" artisan up
+      APP_WAS_PUT_DOWN=0
+      trap - EXIT

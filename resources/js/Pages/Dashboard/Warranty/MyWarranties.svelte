@@ -11,13 +11,6 @@
     export let warranties = [];
 
     const routeUrl = (name, fallback) => (typeof route === 'function' ? route(name) : fallback);
-    const syncLabels = {
-        not_sent: 'ناموفق',
-        pending: 'در انتظار همگام سازی',
-        synced: 'همگام شده',
-        failed: 'ناموفق',
-    };
-
     function formatDate(value) {
         if (!value) {
             return 'ثبت نشده';
@@ -28,13 +21,6 @@
         }).format(new Date(value));
     }
 
-    function syncLabel(status) {
-        return syncLabels[status] ?? status ?? 'نامشخص';
-    }
-
-    function syncVariant(status) {
-        return status === 'synced' ? 'secondary' : 'outline';
-    }
 </script>
 
 <DashboardShell title="گارانتی های من" {auth}>
@@ -66,14 +52,13 @@
                             <Item.Content class="min-w-0 gap-2">
                                 <div class="flex flex-wrap items-center gap-2">
                                     <Item.Title class="text-base font-black text-slate-950">
-                                        سریال <span dir="ltr">{warranty.product_serial}</span>
+                                        {warranty.product_name || 'عنوان محصول ثبت نشده'}
                                     </Item.Title>
-                                    <Badge variant={syncVariant(warranty.mehrsoft_sync_status)}>{syncLabel(warranty.mehrsoft_sync_status)}</Badge>
                                 </div>
 
                                 <Item.Description class="flex flex-wrap items-center gap-2 text-sm font-medium text-slate-500">
-                                    {#if warranty.product_code}
-                                        <span>کد محصول: <span dir="ltr">{warranty.product_code}</span></span>
+                                    {#if warranty.product_serial}
+                                        <span>سریال محصول: <span dir="ltr">{warranty.product_serial}</span></span>
                                         <span>•</span>
                                     {/if}
                                     <span>نوع: {warranty.warranty_type ?? 'ثبت نشده'}</span>
@@ -83,12 +68,11 @@
 
                                 <div class="mt-1 grid gap-2 text-xs font-bold text-slate-500 sm:grid-cols-3">
                                     <div class="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2">
-                                        <CalendarClock />
-                                        فعال سازی: {formatDate(warranty.activated_at)}
+                                        شناسه پیگیری: {warranty.mehrsoft_fix_no ?? 'ثبت نشده'}
                                     </div>
                                     <div class="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2">
                                         <CalendarClock />
-                                        شروع: {formatDate(warranty.starts_at)}
+                                        فعال سازی: {formatDate(warranty.activated_at)}
                                     </div>
                                     <div class="flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2">
                                         <CalendarClock />
@@ -96,14 +80,9 @@
                                     </div>
                                 </div>
 
-                                {#if warranty.mehrsoft_document_no || warranty.mehrsoft_fix_no}
+                                {#if warranty.mehrsoft_document_no}
                                     <div class="mt-1 flex flex-wrap gap-2">
-                                        {#if warranty.mehrsoft_document_no}
-                                            <Badge variant="outline">سند: {warranty.mehrsoft_document_no}</Badge>
-                                        {/if}
-                                        {#if warranty.mehrsoft_fix_no}
-                                            <Badge variant="outline">شناسه پیگیری: {warranty.mehrsoft_fix_no}</Badge>
-                                        {/if}
+                                        <Badge variant="outline">سند: {warranty.mehrsoft_document_no}</Badge>
                                     </div>
                                 {/if}
                             </Item.Content>

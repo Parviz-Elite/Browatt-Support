@@ -146,6 +146,7 @@ Route::middleware('auth')->group(function () {
                         'id' => $warranty->id,
                         'product_serial' => $warranty->product_serial,
                         'product_code' => $warranty->product_code,
+                        'product_name' => $warranty->product_name,
                         'warranty_type' => $warranty->warranty_type,
                         'warranty_period_months' => $warranty->warranty_period_months,
                         'activated_at' => $formatDate($warranty->activated_at),
@@ -328,6 +329,7 @@ Route::middleware('auth')->group(function () {
                         'warranties.id',
                         'warranties.product_serial',
                         'warranties.product_code',
+                        'warranties.product_name',
                         'warranties.warranty_type',
                         'warranties.warranty_period_months',
                         'warranties.activated_at',
@@ -346,8 +348,10 @@ Route::middleware('auth')->group(function () {
                         $query
                             ->where('warranties.product_serial', 'like', "%{$search}%")
                             ->orWhere('warranties.product_code', 'like', "%{$search}%")
+                            ->orWhere('warranties.product_name', 'like', "%{$search}%")
                             ->orWhere('warranties.warranty_type', 'like', "%{$search}%")
                             ->orWhere('warranties.mehrsoft_sync_status', 'like', "%{$search}%")
+                            ->orWhere('warranties.mehrsoft_fix_no', 'like', "%{$search}%")
                             ->orWhere('users.mobile', 'like', "%{$search}%")
                             ->orWhere('users.first_name', 'like', "%{$search}%")
                             ->orWhere('users.last_name', 'like', "%{$search}%");
@@ -370,6 +374,7 @@ Route::middleware('auth')->group(function () {
                         'id' => $warranty->id,
                         'product_serial' => $warranty->product_serial,
                         'product_code' => $warranty->product_code,
+                        'product_name' => $warranty->product_name,
                         'warranty_type' => $warranty->warranty_type,
                         'warranty_period_months' => $warranty->warranty_period_months,
                         'activated_at' => $formatDate($warranty->activated_at),

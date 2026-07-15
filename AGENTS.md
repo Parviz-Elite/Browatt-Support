@@ -118,6 +118,29 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
+## Production Deployment
+
+Production is hosted on cPanel with the following deployment contract:
+
+- Production URL: `https://support.browatt.com`
+- cPanel user: `browattc`
+- Laravel application root: `/home/browattc/support.browatt.com`
+- Subdomain document root: `/home/browattc/support.browatt.com/public`
+- The main Joomla site remains separate under `/home/browattc/public_html`.
+- PHP 8.4 binary: `/usr/local/bin/ea-php84`
+- Composer binary: `/usr/local/bin/composer`
+- `.cpanel.yml` is the source of truth for cPanel deployment tasks.
+- Production migrations run automatically with `artisan migrate --force` unless the deployment environment explicitly sets `MIGRATE=0`.
+- `Database\Seeders\RoleSeeder` is run manually during the initial installation, not on every deployment.
+- Frontend assets must be built locally and committed under `public/build`. Never run `npm install`, `npm ci`, or `npm run build` on the production server.
+- A missing `public/build/manifest.json` is a deployment error and must be fixed by building and committing assets locally.
+- Route caching is intentionally skipped while `routes/web.php` contains Closure-based routes; `artisan optimize:clear` still clears any stale route cache during deployment.
+- Never use destructive database commands such as `migrate:fresh`, `db:wipe`, or reset-style seeding during production deployment.
+- Production requires PHP's `soap` extension for MehrSoft synchronization.
+- The production `.env` must exist at `/home/browattc/support.browatt.com/.env` before the first cPanel deployment and must never be committed.
+
+The deployment order is maintenance mode, production Composer install, package discovery, writable directory and storage-link setup, cache clearing, non-destructive migrations, production cache rebuild, queue restart, and maintenance mode off. The deployment script uses an exit trap so the application is brought back online if a later deployment task fails after maintenance mode starts.
+
 ## Access Control
 
 Initial roles:
