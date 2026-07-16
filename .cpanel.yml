@@ -40,7 +40,6 @@ deployment:
       test -x "$COMPOSER_BIN"
       "$PHP_BIN" -m | grep -qi '^pdo_mysql$'
       "$PHP_BIN" -m | grep -qi '^soap$'
-      "$PHP_BIN" -m | grep -qi '^exif$'
 
       # On the first deployment Composer has not created vendor/autoload.php yet,
       # so Artisan cannot run. Only enable maintenance mode for an existing install.

@@ -15,7 +15,6 @@
         "lorisleiva/laravel-actions": "^2.10",
         "maatwebsite/excel": "^3.1",
         "nwidart/laravel-modules": "^13.0",
-        "spatie/laravel-medialibrary": "^11.23",
         "spatie/laravel-permission": "^8.1",
         "tightenco/ziggy": "^2.6"
     },
@@ -31,6 +30,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Browatt\\MehrsoftIntegration\\": "Browatt/MehrsoftIntegration/src/",
             "Browatt\\": "Browatt/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
