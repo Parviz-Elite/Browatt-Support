@@ -40,6 +40,7 @@ deployment:
       test -x "$COMPOSER_BIN"
       "$PHP_BIN" -m | grep -qi '^pdo_mysql$'
       "$PHP_BIN" -m | grep -qi '^soap$'
+      "$PHP_BIN" -m | grep -qi '^exif$'
 
       "$PHP_BIN" artisan down || true
       APP_WAS_PUT_DOWN=1
