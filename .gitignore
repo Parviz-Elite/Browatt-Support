@@ -8,6 +8,7 @@
 /storage/pail
 /vendor
 /error_log
+/FETCH_HEAD
 .env
 .env.backup
 .env.production
