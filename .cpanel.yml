@@ -61,11 +61,13 @@ deployment:
       chmod -R 775 storage bootstrap/cache || true
       "$PHP_BIN" artisan storage:link || true
 
-      "$PHP_BIN" artisan optimize:clear
-
+      # Run migrations before clearing the database cache on an initial install,
+      # because the cache table does not exist until its migration has run.
       if [ "$MIGRATE" = "1" ]; then
         "$PHP_BIN" artisan migrate --force
       fi
+
+      "$PHP_BIN" artisan optimize:clear
 
       "$PHP_BIN" artisan config:cache
       "$PHP_BIN" artisan view:cache
