@@ -58,7 +58,10 @@ deployment:
 
       "$PHP_BIN" artisan package:discover --ansi
 
-      chmod -R 775 storage bootstrap/cache || true
+      # Directories need traversal; files must not be marked executable because
+      # that makes the tracked .gitignore placeholders dirty in Git.
+      find storage bootstrap/cache -type d -exec chmod 775 {} +
+      find storage bootstrap/cache -type f -exec chmod 664 {} +
       "$PHP_BIN" artisan storage:link || true
 
       # Run migrations before clearing the database cache on an initial install,
