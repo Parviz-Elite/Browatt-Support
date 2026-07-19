@@ -525,8 +525,12 @@ class MehrsoftWarrantyService
             ->map(fn (array $item) => [
                 'code' => (string) ($item['code'] ?? ''),
                 'name' => (string) ($item['name'] ?? ''),
-                'parent_code' => $item['parent_code'] ?? null,
-                'parent_name' => $item['parent_name'] ?? null,
+                'parent_code' => filled($item['parent_code'] ?? null)
+                    ? (string) $item['parent_code']
+                    : null,
+                'parent_name' => filled($item['parent_name'] ?? null)
+                    ? (string) $item['parent_name']
+                    : null,
             ])
             ->filter(fn (array $item) => $item['code'] !== '' && $item['name'] !== '')
             ->values();
@@ -572,10 +576,8 @@ class MehrsoftWarrantyService
     private function isStateCityItem(array $item): bool
     {
         $code = (string) ($item['code'] ?? '');
-        $name = (string) ($item['name'] ?? '');
 
-        return preg_match('/^\d{2}00000$/', $code) === 1
-            && str_starts_with($name, 'استان ');
+        return preg_match('/^\d{2}00000$/', $code) === 1;
     }
 
     /**
