@@ -122,6 +122,7 @@ DB_PASSWORD=root
 Production is hosted on cPanel with the following deployment contract:
 
 - Production URL: `https://support.browatt.com`
+- `public/.htaccess` redirects production HTTP and `www.support.browatt.com` requests to the canonical HTTPS URL so secure session/CSRF cookies stay on one origin.
 - cPanel user: `browattc`
 - Laravel application root: `/home/browattc/support.browatt.com`
 - Subdomain document root: `/home/browattc/support.browatt.com/public`

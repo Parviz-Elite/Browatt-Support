@@ -5,6 +5,13 @@
 
     RewriteEngine On
 
+    # Keep production requests on the canonical HTTPS origin so secure session
+    # cookies and generated Ziggy URLs always use the same scheme and host.
+    RewriteCond %{HTTP_HOST} ^(?:www\.)?support\.browatt\.com$ [NC]
+    RewriteCond %{HTTPS} !=on [OR]
+    RewriteCond %{HTTP_HOST} !^support\.browatt\.com$ [NC]
+    RewriteRule ^ https://support.browatt.com%{REQUEST_URI} [L,R=301]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
