@@ -41,6 +41,11 @@
         line_number: '',
         otp_pattern_code: '',
         otp_attribute: 'code',
+        warranty_activation_enabled: false,
+        warranty_activation_pattern_code: '',
+        warranty_activation_product_title_attribute: 'ptitle',
+        warranty_activation_product_serial_attribute: 'pserial',
+        warranty_activation_expires_at_attribute: 'wdate',
         number_format: 'english',
         timeout_seconds: 10,
         has_api_key: false,
@@ -89,6 +94,11 @@
         line_number: sms.line_number ?? '',
         otp_pattern_code: sms.otp_pattern_code ?? '',
         otp_attribute: sms.otp_attribute ?? 'code',
+        warranty_activation_enabled: Boolean(sms.warranty_activation_enabled),
+        warranty_activation_pattern_code: sms.warranty_activation_pattern_code ?? '',
+        warranty_activation_product_title_attribute: sms.warranty_activation_product_title_attribute ?? 'ptitle',
+        warranty_activation_product_serial_attribute: sms.warranty_activation_product_serial_attribute ?? 'pserial',
+        warranty_activation_expires_at_attribute: sms.warranty_activation_expires_at_attribute ?? 'wdate',
         number_format: sms.number_format ?? 'english',
         timeout_seconds: sms.timeout_seconds ?? 10,
     };
@@ -492,6 +502,48 @@
                                         {#if smsErrors.timeout_seconds}<Field.Error>{smsErrors.timeout_seconds}</Field.Error>{/if}
                                     </Field.Field>
                                 </div>
+
+                                <Field.Set>
+                                    <Field.Legend>پیامک فعال‌سازی گارانتی</Field.Legend>
+                                    <Field.Description>این پیامک فقط پس از ثبت موفق گارانتی در MehrSoft ارسال می‌شود.</Field.Description>
+
+                                    <Field.Field orientation="horizontal" data-invalid={Boolean(smsErrors.warranty_activation_enabled)}>
+                                        <Checkbox bind:checked={smsForm.warranty_activation_enabled} id="sms-warranty-activation-enabled" aria-invalid={Boolean(smsErrors.warranty_activation_enabled)} />
+                                        <div class="flex flex-col gap-1">
+                                            <Field.Label for="sms-warranty-activation-enabled">ارسال پیامک فعال باشد</Field.Label>
+                                            <Field.Description>تا قبل از ساخت و تأیید پترن در پنل فراز اس ام اس، این گزینه را خاموش نگه دارید.</Field.Description>
+                                        </div>
+                                        {#if smsErrors.warranty_activation_enabled}<Field.Error>{smsErrors.warranty_activation_enabled}</Field.Error>{/if}
+                                    </Field.Field>
+
+                                    <div class="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                        <Field.Field data-invalid={Boolean(smsErrors.warranty_activation_pattern_code)} data-disabled={!smsForm.warranty_activation_enabled}>
+                                            <Field.Label for="sms-warranty-pattern-code">کد پترن فعال‌سازی</Field.Label>
+                                            <Input id="sms-warranty-pattern-code" bind:value={smsForm.warranty_activation_pattern_code} dir="ltr" disabled={!smsForm.warranty_activation_enabled} aria-invalid={Boolean(smsErrors.warranty_activation_pattern_code)} />
+                                            {#if smsErrors.warranty_activation_pattern_code}<Field.Error>{smsErrors.warranty_activation_pattern_code}</Field.Error>{/if}
+                                        </Field.Field>
+
+                                        <Field.Field data-invalid={Boolean(smsErrors.warranty_activation_product_title_attribute)} data-disabled={!smsForm.warranty_activation_enabled}>
+                                            <Field.Label for="sms-warranty-product-title-attribute">نام متغیر عنوان محصول</Field.Label>
+                                            <Input id="sms-warranty-product-title-attribute" bind:value={smsForm.warranty_activation_product_title_attribute} dir="ltr" placeholder="ptitle" disabled={!smsForm.warranty_activation_enabled} aria-invalid={Boolean(smsErrors.warranty_activation_product_title_attribute)} />
+                                            {#if smsErrors.warranty_activation_product_title_attribute}<Field.Error>{smsErrors.warranty_activation_product_title_attribute}</Field.Error>{/if}
+                                        </Field.Field>
+
+                                        <Field.Field data-invalid={Boolean(smsErrors.warranty_activation_product_serial_attribute)} data-disabled={!smsForm.warranty_activation_enabled}>
+                                            <Field.Label for="sms-warranty-product-serial-attribute">نام متغیر سریال محصول</Field.Label>
+                                            <Input id="sms-warranty-product-serial-attribute" bind:value={smsForm.warranty_activation_product_serial_attribute} dir="ltr" placeholder="pserial" disabled={!smsForm.warranty_activation_enabled} aria-invalid={Boolean(smsErrors.warranty_activation_product_serial_attribute)} />
+                                            {#if smsErrors.warranty_activation_product_serial_attribute}<Field.Error>{smsErrors.warranty_activation_product_serial_attribute}</Field.Error>{/if}
+                                        </Field.Field>
+
+                                        <Field.Field data-invalid={Boolean(smsErrors.warranty_activation_expires_at_attribute)} data-disabled={!smsForm.warranty_activation_enabled}>
+                                            <Field.Label for="sms-warranty-expires-at-attribute">نام متغیر تاریخ اعتبار</Field.Label>
+                                            <Input id="sms-warranty-expires-at-attribute" bind:value={smsForm.warranty_activation_expires_at_attribute} dir="ltr" placeholder="wdate" disabled={!smsForm.warranty_activation_enabled} aria-invalid={Boolean(smsErrors.warranty_activation_expires_at_attribute)} />
+                                            {#if smsErrors.warranty_activation_expires_at_attribute}<Field.Error>{smsErrors.warranty_activation_expires_at_attribute}</Field.Error>{/if}
+                                        </Field.Field>
+                                    </div>
+
+                                    <Field.Description dir="rtl">متن پترن: بروات سرویس<br /><br />مشتری گرامی، ضمن تشکر از انتخابتان، گارانتی محصول ptitle با شماره سریال pserial فعال گردید و تا تاریخ wdate اعتبار دارد.</Field.Description>
+                                </Field.Set>
 
                                 <Field.Set>
                                     <Field.Legend>فرمت عدد در پیامک</Field.Legend>

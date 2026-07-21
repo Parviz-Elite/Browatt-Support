@@ -68,12 +68,37 @@ FARAZSMS_BASE_URL=https://api.iranpayamak.com
 FARAZSMS_LINE_NUMBER=
 FARAZSMS_OTP_PATTERN_CODE=
 FARAZSMS_OTP_ATTRIBUTE=code
+WARRANTY_ACTIVATION_SMS_ENABLED=false
+FARAZSMS_WARRANTY_ACTIVATION_PATTERN_CODE=
+FARAZSMS_WARRANTY_ACTIVATION_PRODUCT_TITLE_ATTRIBUTE=ptitle
+FARAZSMS_WARRANTY_ACTIVATION_PRODUCT_SERIAL_ATTRIBUTE=pserial
+FARAZSMS_WARRANTY_ACTIVATION_EXPIRES_AT_ATTRIBUTE=wdate
 FARAZSMS_NUMBER_FORMAT=english
 
 OTP_TTL_MINUTES=2
 OTP_MAX_ATTEMPTS=5
 OTP_RESEND_SECONDS=60
 ```
+
+## Warranty activation pattern
+
+Warranty activation uses the same FarazSMS pattern endpoint, but has its own pattern code and attributes. It is registered with Laravel's `defer` helper only after MehrSoft synchronization succeeds, so it is sent immediately after the HTTP response without a queue or extra customer wait time.
+
+Suggested pattern text:
+
+```text
+بروات سرویس
+
+مشتری گرامی، ضمن تشکر از انتخابتان، گارانتی محصول ptitle با شماره سریال pserial فعال گردید و تا تاریخ wdate اعتبار دارد.
+```
+
+The application supplies these values:
+
+- `ptitle`: the product title received from MehrSoft, falling back to `محصول بروات`.
+- `pserial`: the product serial entered by the customer.
+- `wdate`: the warranty expiry date formatted as Jalali `Y/m/d`.
+
+The attribute names are configurable because they must exactly match the approved FarazSMS pattern. Keep `WARRANTY_ACTIVATION_SMS_ENABLED=false` until the pattern code and both attribute names are ready. The same settings can also be managed from the admin SMS settings page.
 
 ## Suggested Laravel abstraction
 
@@ -146,4 +171,3 @@ otp_codes
 - `GET /ws/v1/lines/accessible`: list available sender lines.
 - `GET /ws/v1/patterns`: list account patterns and find pattern `code`.
 - `GET /ws/v1/patterns/{code}`: inspect a pattern and its variables.
-

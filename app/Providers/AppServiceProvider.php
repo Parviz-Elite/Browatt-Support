@@ -67,6 +67,11 @@ class AppServiceProvider extends ServiceProvider
                     'services.farazsms.line_number' => $sms['line_number'] ?? config('services.farazsms.line_number'),
                     'services.farazsms.otp_pattern_code' => $sms['otp_pattern_code'] ?? config('services.farazsms.otp_pattern_code'),
                     'services.farazsms.otp_attribute' => $sms['otp_attribute'] ?? config('services.farazsms.otp_attribute'),
+                    'services.farazsms.warranty_activation.enabled' => (bool) ($sms['warranty_activation_enabled'] ?? config('services.farazsms.warranty_activation.enabled', false)),
+                    'services.farazsms.warranty_activation.pattern_code' => $sms['warranty_activation_pattern_code'] ?? config('services.farazsms.warranty_activation.pattern_code'),
+                    'services.farazsms.warranty_activation.product_title_attribute' => $sms['warranty_activation_product_title_attribute'] ?? config('services.farazsms.warranty_activation.product_title_attribute', 'ptitle'),
+                    'services.farazsms.warranty_activation.product_serial_attribute' => $sms['warranty_activation_product_serial_attribute'] ?? config('services.farazsms.warranty_activation.product_serial_attribute', 'pserial'),
+                    'services.farazsms.warranty_activation.expires_at_attribute' => $sms['warranty_activation_expires_at_attribute'] ?? config('services.farazsms.warranty_activation.expires_at_attribute', 'wdate'),
                     'services.farazsms.number_format' => $sms['number_format'] ?? config('services.farazsms.number_format'),
                     'services.farazsms.timeout' => (int) ($sms['timeout_seconds'] ?? config('services.farazsms.timeout', 10)),
                 ]);

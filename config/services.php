@@ -34,6 +34,13 @@ return [
         'line_number' => env('FARAZSMS_LINE_NUMBER'),
         'otp_pattern_code' => env('FARAZSMS_OTP_PATTERN_CODE'),
         'otp_attribute' => env('FARAZSMS_OTP_ATTRIBUTE', 'code'),
+        'warranty_activation' => [
+            'enabled' => filter_var(env('WARRANTY_ACTIVATION_SMS_ENABLED', false), FILTER_VALIDATE_BOOL),
+            'pattern_code' => env('FARAZSMS_WARRANTY_ACTIVATION_PATTERN_CODE'),
+            'product_title_attribute' => env('FARAZSMS_WARRANTY_ACTIVATION_PRODUCT_TITLE_ATTRIBUTE', 'ptitle'),
+            'product_serial_attribute' => env('FARAZSMS_WARRANTY_ACTIVATION_PRODUCT_SERIAL_ATTRIBUTE', 'pserial'),
+            'expires_at_attribute' => env('FARAZSMS_WARRANTY_ACTIVATION_EXPIRES_AT_ATTRIBUTE', 'wdate'),
+        ],
         'number_format' => env('FARAZSMS_NUMBER_FORMAT', 'english'),
         'timeout' => (int) env('FARAZSMS_TIMEOUT_SECONDS', 10),
     ],

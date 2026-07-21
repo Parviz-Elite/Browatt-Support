@@ -5,17 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Warranty;
 use App\Services\Warranty\MehrsoftWarrantyService;
 use App\Services\Warranty\NationalCodeValidator;
+use App\Services\Warranty\WarrantyActivationSmsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Throwable;
+
+use function Illuminate\Support\defer;
 
 class WarrantyActivationController extends Controller
 {
     public function __construct(
         private readonly MehrsoftWarrantyService $warranties,
         private readonly NationalCodeValidator $nationalCodes,
+        private readonly WarrantyActivationSmsService $activationSms,
     ) {}
 
     public function productInquiry(Request $request): JsonResponse
@@ -125,6 +131,25 @@ class WarrantyActivationController extends Controller
         }
 
         Cache::forget($this->activationFailureCacheKey($request, $warranty->id));
+
+        if (config('services.farazsms.warranty_activation.enabled', false)) {
+            $warrantyId = $warranty->id;
+
+            defer(function () use ($warrantyId): void {
+                try {
+                    $warranty = Warranty::query()->find($warrantyId);
+
+                    if ($warranty !== null) {
+                        $this->activationSms->send($warranty);
+                    }
+                } catch (Throwable $exception) {
+                    Log::error('Warranty was activated, but its deferred SMS could not be delivered.', [
+                        'warranty_id' => $warrantyId,
+                        'error' => $exception->getMessage(),
+                    ]);
+                }
+            });
+        }
 
         if ($request->boolean('show_success_dialog')) {
             return back()->with('success', 'گارانتی با موفقیت فعال شد.');

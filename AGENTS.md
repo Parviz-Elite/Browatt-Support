@@ -223,6 +223,8 @@ OTP implementation rules:
 
 OTP implementation lives in `App\Services\Otp\OtpService`. SMS delivery is behind `App\Contracts\SmsProvider`; the default provider is selected by `OTP_SMS_PROVIDER`, currently `farazsms`. FarazSMS delivery lives in `App\Services\Sms\FarazSmsProvider` and uses the pattern endpoint from `ForGPT/farazsms-otp.md`.
 
+After a warranty is successfully activated and MehrSoft synchronization is marked `synced`, send the transactional activation pattern through `App\Services\Warranty\WarrantyActivationSmsService` and the shared `SmsProvider`. Register the send with Laravel's `defer` helper so it runs immediately after the HTTP response without a queued job and the customer does not wait for the SMS provider. SMS delivery failure must never roll back or change an already successful warranty activation. Configure the activation pattern attributes independently from the OTP pattern: `ptitle` is the product title, `pserial` is the product serial, and `wdate` is the Jalali warranty expiry date in `Y/m/d` format. Keep the feature disabled until the pattern is approved and configured.
+
 When adding another SMS panel, add a new `SmsProvider` implementation and update the binding in `App\Providers\AppServiceProvider`; do not couple OTP, auth, or warranty code directly to a vendor client.
 
 ## MehrSoft Integration
@@ -265,6 +267,8 @@ Suggested interfaces:
 interface SmsProvider
 {
     public function sendOtp(string $mobile, string $code): void;
+
+    public function sendPattern(string $mobile, string $patternCode, array $attributes): void;
 }
 ```
 
