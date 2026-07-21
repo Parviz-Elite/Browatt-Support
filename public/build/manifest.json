@@ -6,7 +6,7 @@
     "isDynamicEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-jcnYYysz.css",
+    "file": "assets/app-BgDXTaDa.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -39,7 +39,7 @@
     "src": "resources/fonts/YekanBakh/2.0/fonts/woff2/YekanBakhFaNum-SemiBold.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DnDNwFGh.js",
+    "file": "assets/app-K2h-YCCV.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -47,7 +47,7 @@
       "node_modules/barcode-detector/dist/es/ponyfill.js"
     ],
     "css": [
-      "assets/app-C9qLeDE0.css"
+      "assets/app-wZGvShQb.css"
     ],
     "assets": [
       "assets/YekanBakhFaNum-Light-CBwjV35v.woff2",

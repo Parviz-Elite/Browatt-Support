@@ -28,6 +28,7 @@ Customers should be able to:
 4. See a warranty menu.
 5. Use warranty activation.
 6. View active warranties.
+7. Open the installation training videos for 24,000, 28,000, and 32,000 evaporative cooler models from the dashboard in a new browser tab.
 
 Initial menu structure:
 

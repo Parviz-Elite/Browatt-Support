@@ -1,7 +1,9 @@
 <script>
     import { Link } from '@inertiajs/svelte';
-    import { ArrowLeft, BadgeCheck, ShieldPlus } from '@lucide/svelte';
+    import { ArrowLeft, BadgeCheck, CirclePlay, ExternalLink, ShieldPlus } from '@lucide/svelte';
     import DashboardShell from '@/Components/DashboardShell.svelte';
+    import { Button } from '@/Components/ui/button';
+    import * as Card from '@/Components/ui/card';
 
     export let auth = { user: null };
     export let stats = {
@@ -9,6 +11,12 @@
     };
 
     const routeUrl = (name, fallback) => (typeof route === 'function' ? route(name) : fallback);
+    const installationVideos = [
+        { title: 'نصب کولر ۲۴۰۰۰', href: 'https://www.aparat.com/v/gwpx2d3' },
+        { title: 'نصب کولر ۲۸۰۰۰', href: 'https://www.aparat.com/v/mktff94' },
+        { title: 'نصب کولر ۳۲۰۰۰', href: 'https://www.aparat.com/v/hgn87nx' },
+    ];
+
     $: warrantiesHref = auth?.user?.is_manager
         ? routeUrl('admin.warranties.index', '/warranties')
         : routeUrl('warranties.mine', '/warranties/mine');
@@ -65,4 +73,33 @@
             </div>
         </Link>
     </section>
+
+    <Card.Root class="mt-5 rounded-3xl shadow-sm">
+        <Card.Header>
+            <Card.Title>فیلم‌های آموزشی نصب</Card.Title>
+            <Card.Description>برای مشاهده راهنمای نصب، مدل کولر را انتخاب کنید.</Card.Description>
+        </Card.Header>
+
+        <Card.Content>
+            <div class="grid gap-3 md:grid-cols-3">
+                {#each installationVideos as video (video.href)}
+                    <Button
+                        href={video.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="outline"
+                        size="lg"
+                        class="min-h-14 w-full justify-between rounded-2xl px-4"
+                        aria-label={`${video.title} در پنجره جدید`}
+                    >
+                        <span class="inline-flex items-center gap-2">
+                            <CirclePlay data-icon="inline-start" />
+                            {video.title}
+                        </span>
+                        <ExternalLink data-icon="inline-end" />
+                    </Button>
+                {/each}
+            </div>
+        </Card.Content>
+    </Card.Root>
 </DashboardShell>
