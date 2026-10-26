@@ -15,6 +15,8 @@
         { title: 'نصب کولر ۲۴۰۰۰', href: 'https://www.aparat.com/v/gwpx2d3' },
         { title: 'نصب کولر ۲۸۰۰۰', href: 'https://www.aparat.com/v/mktff94' },
         { title: 'نصب کولر ۳۲۰۰۰', href: 'https://www.aparat.com/v/hgn87nx' },
+        { title: 'راهنمای نصب بخاری برقی بروات مدل BR-2600', href: 'https://www.picofile.com/f/Q04PPj6dcs/نصب-بخاری-برقی-2600.mp4' },
+        { title: 'راهنمای نصب بخاری برقی بروات مدل BR-3000', href: 'https://www.picofile.com/f/n5KDcMqkkW/نصب-بخاری-برقی-3000.mp4' },
     ];
 
     $: warrantiesHref = auth?.user?.is_manager
@@ -77,7 +79,7 @@
     <Card.Root class="mt-5 rounded-3xl shadow-sm">
         <Card.Header>
             <Card.Title>فیلم‌های آموزشی نصب</Card.Title>
-            <Card.Description>برای مشاهده راهنمای نصب، مدل کولر را انتخاب کنید.</Card.Description>
+            <Card.Description>برای مشاهده راهنمای نصب، مدل کولر یا بخاری برقی را انتخاب کنید.</Card.Description>
         </Card.Header>
 
         <Card.Content>
@@ -89,10 +91,10 @@
                         rel="noopener noreferrer"
                         variant="outline"
                         size="lg"
-                        class="min-h-14 w-full justify-between rounded-2xl px-4"
+                        class="h-auto min-h-14 w-full justify-between rounded-2xl px-4 py-3 whitespace-normal"
                         aria-label={`${video.title} در پنجره جدید`}
                     >
-                        <span class="inline-flex items-center gap-2">
+                        <span class="inline-flex min-w-0 items-center gap-2 text-right leading-6">
                             <CirclePlay data-icon="inline-start" />
                             {video.title}
                         </span>

@@ -105,7 +105,7 @@ class OtpService
                 'guard_name' => 'web',
             ]);
 
-            if (! $user->hasAnyRole(['general_manager', $customerRole->name])) {
+            if ($user->roles()->doesntExist()) {
                 $user->assignRole($customerRole);
             }
 

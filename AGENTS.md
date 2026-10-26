@@ -28,7 +28,7 @@ Customers should be able to:
 4. See a warranty menu.
 5. Use warranty activation.
 6. View active warranties.
-7. Open the installation training videos for 24,000, 28,000, and 32,000 evaporative cooler models from the dashboard in a new browser tab.
+7. Open the installation training videos for 24,000, 28,000, and 32,000 evaporative cooler models and BR-2600 / BR-3000 electric heaters from the dashboard in a new browser tab.
 
 Initial menu structure:
 
@@ -162,6 +162,8 @@ Seed the initial roles with `Database\Seeders\RoleSeeder`. The initial `general_
 - `09900940019`: پرویز الیاس زاده
 - `09148064984`: مهرداد مهردادی
 - `09146585966`: مجید نوروزی
+
+Internal users can be added from `/users` by a `general_manager`, or by an operator with both `users.view_any` and `roles.manage`. Creation uses `App\Actions\Users\CreateUser`, requires a unique normalized Iranian mobile and at least one non-customer web role, and saves the user and roles atomically. Only general managers can assign the `general_manager` role during creation. Users log in through the existing mobile OTP flow; do not generate passwords or send an invitation SMS. OTP login assigns the customer role only when a user has no existing roles, preserving internal users with custom roles.
 
 ## Frontend Direction
 

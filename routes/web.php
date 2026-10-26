@@ -2,6 +2,7 @@
 
 use App\Actions\Auth\RequestLoginOtp;
 use App\Actions\Auth\VerifyLoginOtp;
+use App\Actions\Users\CreateUser;
 use App\Exports\CustomersExport;
 use App\Http\Controllers\AdminWarrantySettingsController;
 use App\Http\Controllers\WarrantyActivationController;
@@ -655,6 +656,10 @@ Route::middleware('auth')->group(function () {
                 'roles' => $roles,
             ]);
         })->name('admin.users.index');
+
+        Route::post('/users', CreateUser::class)
+            ->middleware('role_or_permission:general_manager|roles.manage')
+            ->name('admin.users.store');
 
         Route::put('/users/{user}', function (Request $request, User $user) {
             $validated = $request->validate([
