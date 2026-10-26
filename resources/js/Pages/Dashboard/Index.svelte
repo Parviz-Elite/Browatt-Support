@@ -15,8 +15,8 @@
         { title: 'نصب کولر ۲۴۰۰۰', href: 'https://www.aparat.com/v/gwpx2d3' },
         { title: 'نصب کولر ۲۸۰۰۰', href: 'https://www.aparat.com/v/mktff94' },
         { title: 'نصب کولر ۳۲۰۰۰', href: 'https://www.aparat.com/v/hgn87nx' },
-        { title: 'نصب بخاری ۲۶۰۰', href: 'https://www.picofile.com/f/Q04PPj6dcs/نصب-بخاری-برقی-2600.mp4' },
-        { title: 'نصب بخاری ۳۰۰۰', href: 'https://www.picofile.com/f/n5KDcMqkkW/نصب-بخاری-برقی-3000.mp4' },
+        { title: 'نصب بخاری ۲۶۰۰', href: 'https://www.aparat.com/v/fukue7q' },
+        { title: 'نصب بخاری ۳۰۰۰', href: 'https://www.aparat.com/v/skl8bkx' },
     ];
 
     $: warrantiesHref = auth?.user?.is_manager
