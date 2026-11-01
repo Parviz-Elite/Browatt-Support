@@ -2,7 +2,7 @@
     import axios from 'axios';
     import { router } from '@inertiajs/svelte';
     import { motion } from '@humanspeak/svelte-motion';
-    import { ArrowLeft, CheckCircle2, ClipboardCheck, Hash, Info, PackageSearch, ScanLine, ShieldPlus } from '@lucide/svelte';
+    import { ArrowLeft, CheckCircle2, ClipboardCheck, Copy, Hash, Info, PackageSearch, Phone, ScanLine, ShieldPlus } from '@lucide/svelte';
     import BarcodeScanner from '@/Components/BarcodeScanner.svelte';
     import DashboardShell from '@/Components/DashboardShell.svelte';
     import { Button } from '@/Components/ui/button';
@@ -28,6 +28,7 @@
     export let cities = [];
     export let addresses = [];
     export let activationSupport = { phone: null, href: null };
+    export let warrantyRestriction = null;
 
     let serial = '';
     let barcodeScannerOpen = false;
@@ -40,6 +41,33 @@
     let product = null;
     let warrantyId = null;
     let successDialogOpen = false;
+    let restrictionDialogOpen = false;
+    let restrictedProduct = null;
+    let rubikaNumberCopied = false;
+    let rubikaCopyFailed = false;
+
+    $: if (warrantyRestriction) {
+        showWarrantyRestriction(warrantyRestriction);
+    }
+
+    function showWarrantyRestriction(details) {
+        resetInquiry();
+        restrictedProduct = details;
+        inquiryError = details.message;
+        rubikaNumberCopied = false;
+        rubikaCopyFailed = false;
+        restrictionDialogOpen = true;
+    }
+
+    async function copyRubikaNumber() {
+        try {
+            await navigator.clipboard.writeText(restrictedProduct.rubika_phone);
+            rubikaNumberCopied = true;
+            rubikaCopyFailed = false;
+        } catch {
+            rubikaCopyFailed = true;
+        }
+    }
 
     const defaultAddress = addresses.find((address) => address.is_default) ?? addresses[0] ?? null;
     let selectedAddressId = defaultAddress?.id ? String(defaultAddress.id) : 'new';
@@ -193,6 +221,7 @@
         errors = {};
         product = null;
         warrantyId = null;
+        restrictionDialogOpen = false;
 
         try {
             const response = await axios.post(routeUrl('warranties.product_inquiry', '/warranties/product-inquiry'), {
@@ -209,6 +238,10 @@
             inquiryError = message;
             inquiryPhone = data.phone_href ? { href: data.phone_href, label: data.phone ?? '02191693797' } : null;
             errors = { serial: message };
+
+            if (data.reason === 'warranty_product_restricted') {
+                showWarrantyRestriction(data);
+            }
         } finally {
             productChecking = false;
         }
@@ -596,3 +629,35 @@
         </Dialog.Content>
     </Dialog.Root>
 </DashboardShell>
+
+<Dialog.Root bind:open={restrictionDialogOpen}>
+    <Dialog.Content class="max-h-[92dvh] overflow-y-auto sm:max-w-lg" dir="rtl">
+        <Dialog.Header>
+            <Dialog.Title>راهنمای ثبت گارانتی این محصول</Dialog.Title>
+            <Dialog.Description class="leading-8">{restrictedProduct?.message}</Dialog.Description>
+        </Dialog.Header>
+
+        {#if restrictedProduct}
+            <div class="flex flex-col gap-3">
+                <Button variant="outline" size="lg" class="h-auto min-h-11 flex-wrap whitespace-normal py-3" onclick={copyRubikaNumber}>
+                    <Copy data-icon="inline-start" />
+                    {rubikaNumberCopied ? 'شماره روبیکا کپی شد' : 'کپی شماره روبیکا'}
+                    <span class="whitespace-nowrap" dir="ltr">{restrictedProduct.rubika_phone}</span>
+                </Button>
+                <Button href={restrictedProduct.phone_href} size="lg" class="h-auto min-h-11 flex-wrap whitespace-normal py-3">
+                    <Phone data-icon="inline-start" />
+                    تماس با واحد مرکزی خدمات
+                    <span class="whitespace-nowrap" dir="ltr">{restrictedProduct.phone}</span>
+                </Button>
+                {#if rubikaCopyFailed}
+                    <p class="text-sm text-muted-foreground" role="status">کپی خودکار انجام نشد؛ شماره روبیکا را از متن بالا انتخاب و کپی کنید.</p>
+                {/if}
+                <p class="text-sm text-muted-foreground" aria-live="polite">{rubikaNumberCopied ? 'شماره را در نرم‌افزار روبیکا وارد کنید و پیام بفرستید.' : 'گروه خدمات برووات'}</p>
+            </div>
+        {/if}
+
+        <Dialog.Footer>
+            <Button variant="outline" onclick={() => (restrictionDialogOpen = false)}>متوجه شدم</Button>
+        </Dialog.Footer>
+    </Dialog.Content>
+</Dialog.Root>

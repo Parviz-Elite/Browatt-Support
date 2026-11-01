@@ -2,6 +2,7 @@
 
 namespace App\Services\Warranty;
 
+use App\Exceptions\WarrantyProductRestrictedException;
 use App\Models\AppSetting;
 use App\Models\User;
 use App\Models\UserAddress;
@@ -26,6 +27,11 @@ class MehrsoftWarrantyService
     public function inquire(User $user, string $serial): array
     {
         $serial = trim($serial);
+
+        foreach (Warranty::query()->where('product_serial', $serial)->pluck('product_code') as $productCode) {
+            $this->ensureProductCanBeActivated($productCode);
+        }
+
         try {
             $payload = $this->mehrsoft->getProductStatusBySerial($serial);
         } finally {
@@ -41,6 +47,7 @@ class MehrsoftWarrantyService
         }
 
         $product = $this->extractProduct($payload);
+        $this->ensureProductCanBeActivated($product['good_full_code']);
 
         $warranty = Warranty::query()->updateOrCreate(
             [
@@ -76,6 +83,8 @@ class MehrsoftWarrantyService
             ->whereKey($validated['warranty_id'])
             ->where('activation_status', 'inquired')
             ->firstOrFail();
+
+        $this->ensureProductCanBeActivated($warranty->product_code);
 
         $state = $this->findCity((string) $validated['state_code']);
         $city = $this->findCity((string) $validated['city_code']);
@@ -137,6 +146,20 @@ class MehrsoftWarrantyService
 
             return $warranty->refresh();
         });
+    }
+
+    private function ensureProductCanBeActivated(?string $productCode): void
+    {
+        $normalizedCode = strtr(trim((string) $productCode), [
+            '۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4',
+            '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9',
+            '٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4',
+            '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9',
+        ]);
+
+        if ($normalizedCode === '300101014') {
+            throw new WarrantyProductRestrictedException;
+        }
     }
 
     /**

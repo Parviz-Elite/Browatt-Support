@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\WarrantyProductRestrictedException;
 use App\Models\Warranty;
 use App\Services\Warranty\MehrsoftWarrantyService;
 use App\Services\Warranty\NationalCodeValidator;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 use function Illuminate\Support\defer;
@@ -40,7 +42,12 @@ class WarrantyActivationController extends Controller
                 'warranty_id' => $result['warranty']->id,
                 'product' => $result['product'],
             ]);
-        } catch (\Symfony\Component\HttpKernel\Exception\HttpException $exception) {
+        } catch (WarrantyProductRestrictedException $exception) {
+            return response()->json([
+                ...$exception->supportDetails(),
+                'errors' => ['serial' => [$exception->getMessage()]],
+            ], 422);
+        } catch (HttpException $exception) {
             if ($exception->getMessage() !== 'invalid_serial') {
                 throw $exception;
             }
@@ -111,7 +118,14 @@ class WarrantyActivationController extends Controller
 
         abort_unless($warranty->activation_status === 'inquired', 404);
 
-        $warranty = $this->warranties->activate($request->user(), $validated);
+        try {
+            $warranty = $this->warranties->activate($request->user(), $validated);
+        } catch (WarrantyProductRestrictedException $exception) {
+            return back()
+                ->withErrors(['activation' => $exception->getMessage()])
+                ->with('warranty_restriction', $exception->supportDetails())
+                ->withInput();
+        }
 
         if ($warranty->mehrsoft_sync_status !== 'synced') {
             $cacheKey = $this->activationFailureCacheKey($request, $warranty->id);

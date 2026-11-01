@@ -120,6 +120,7 @@ Route::middleware('auth')->group(function () {
                     'phone' => session('activation_phone'),
                     'href' => session('activation_phone_href'),
                 ],
+                'warrantyRestriction' => session('warranty_restriction'),
             ]);
         })->name('activate');
 
