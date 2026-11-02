@@ -633,7 +633,7 @@
 <Dialog.Root bind:open={restrictionDialogOpen}>
     <Dialog.Content class="max-h-[92dvh] overflow-y-auto sm:max-w-lg" dir="rtl">
         <Dialog.Header>
-            <Dialog.Title>راهنمای ثبت گارانتی این محصول</Dialog.Title>
+            <Dialog.Title>توجه!</Dialog.Title>
             <Dialog.Description class="leading-8">{restrictedProduct?.message}</Dialog.Description>
         </Dialog.Header>
 
@@ -646,13 +646,16 @@
                 </Button>
                 <Button href={restrictedProduct.phone_href} size="lg" class="h-auto min-h-11 flex-wrap whitespace-normal py-3">
                     <Phone data-icon="inline-start" />
-                    تماس با واحد مرکزی خدمات
+                    تماس با واحد خدمات مرکزی بروات
                     <span class="whitespace-nowrap" dir="ltr">{restrictedProduct.phone}</span>
                 </Button>
                 {#if rubikaCopyFailed}
                     <p class="text-sm text-muted-foreground" role="status">کپی خودکار انجام نشد؛ شماره روبیکا را از متن بالا انتخاب و کپی کنید.</p>
                 {/if}
-                <p class="text-sm text-muted-foreground" aria-live="polite">{rubikaNumberCopied ? 'شماره را در نرم‌افزار روبیکا وارد کنید و پیام بفرستید.' : 'گروه خدمات برووات'}</p>
+                {#if rubikaNumberCopied}
+                    <p class="text-sm text-muted-foreground" aria-live="polite">شماره را در نرم‌افزار روبیکا وارد کنید و پیام بفرستید.</p>
+                {/if}
+                <p class="text-sm text-muted-foreground">بروات سرویس</p>
             </div>
         {/if}
 
