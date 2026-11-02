@@ -296,6 +296,8 @@ For final MehrSoft warranty activation failures, do not mark the warranty as act
 
 Online warranty activation is prohibited for product code `300101014`. Check any locally known product codes for the serial before calling MehrSoft, then check the authoritative MehrSoft product code during inquiry before creating/updating a local warranty. Check the stored product code again at final activation before profile/address writes or `AfterSales_Save`. Match this exact code after normalizing Persian/Arabic digits; do not infer it from the serial or block related prefixes. Return `WarrantyProductRestrictedException` as a dedicated restriction response, not as an invalid serial or integration failure. The customer must see an RTL dialog titled `توجه!`, explaining that installation by a Browatt service technician is mandatory and directing them to request free installation through `09337039438` in Rubika or central services at `02191693797`, signed `بروات سرویس`, including for a previously inquired row submitted after the restriction was introduced. Existing activated warranties are not modified.
 
+The accounting city catalog is read and normalized once per `MehrsoftWarrantyService` instance; `cities()` and `citiesMeta()` share that snapshot, and `syncCities()` invalidates it. Deduplicate city codes with an indexed lookup that preserves the first occurrence and original order, avoiding quadratic collection scans. Opening warranty activation reads the stored catalog without calling MehrSoft.
+
 ## Initial Data Model Direction
 
 Likely core tables:

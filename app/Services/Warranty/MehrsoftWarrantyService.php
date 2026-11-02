@@ -12,11 +12,14 @@ use Browatt\MehrsoftIntegration\Contracts\MehrsoftClient;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class MehrsoftWarrantyService
 {
+    private ?array $cityData = null;
+
     public function __construct(
         private readonly MehrsoftClient $mehrsoft,
     ) {}
@@ -167,6 +170,8 @@ class MehrsoftWarrantyService
      */
     public function syncCities(): array
     {
+        $this->cityData = null;
+
         try {
             $response = $this->mehrsoft->getAccCities();
             $items = $this->normalizeCities($response);
@@ -204,7 +209,7 @@ class MehrsoftWarrantyService
      */
     public function cities(): array
     {
-        return $this->normalizeCityHierarchy($this->citiesSetting()['items'] ?? []);
+        return $this->cityData()['items'];
     }
 
     /**
@@ -212,14 +217,14 @@ class MehrsoftWarrantyService
      */
     public function citiesMeta(): array
     {
-        $setting = $this->citiesSetting();
+        $setting = $this->cityData();
         $syncedAt = $setting['synced_at'] ?? null;
 
         return [
             'synced_at' => $syncedAt,
             'synced_at_label' => $this->formatJalaliDateTime($syncedAt),
             'last_error' => $setting['last_error'] ?? null,
-            'count' => count($this->normalizeCityHierarchy($setting['items'] ?? [])),
+            'count' => count($setting['items']),
         ];
     }
 
@@ -258,6 +263,24 @@ class MehrsoftWarrantyService
             ->where('group', 'accounting')
             ->where('key', 'cities')
             ->first()?->value ?? ['items' => []];
+    }
+
+    /**
+     * @return array{items: array<int, array<string, mixed>>, synced_at: string|null, last_error: string|null}
+     */
+    private function cityData(): array
+    {
+        if ($this->cityData === null) {
+            $setting = $this->citiesSetting();
+
+            $this->cityData = [
+                'items' => $this->normalizeCityHierarchy($setting['items'] ?? []),
+                'synced_at' => $setting['synced_at'] ?? null,
+                'last_error' => $setting['last_error'] ?? null,
+            ];
+        }
+
+        return $this->cityData;
     }
 
     private function formatJalaliDateTime(?string $value): ?string
@@ -532,7 +555,7 @@ class MehrsoftWarrantyService
 
         return collect($items)
             ->filter(fn (array $item) => ($item['code'] ?? '') !== '' && ($item['name'] ?? '') !== '')
-            ->unique('code')
+            ->pipe(fn (Collection $items) => $this->uniqueCitiesByCode($items))
             ->values()
             ->pipe(fn ($items) => $this->normalizeCityHierarchy($items->all()));
     }
@@ -566,7 +589,7 @@ class MehrsoftWarrantyService
                 'parent_code' => null,
                 'parent_name' => null,
             ])
-            ->unique('code')
+            ->pipe(fn (Collection $items) => $this->uniqueCitiesByCode($items))
             ->values();
 
         $statesByPrefix = $states->keyBy(fn (array $item) => substr($item['code'], 0, 2));
@@ -587,10 +610,32 @@ class MehrsoftWarrantyService
                 ];
             })
             ->filter(fn (array $item) => ($item['parent_code'] ?? null) !== null)
-            ->unique('code')
+            ->pipe(fn (Collection $items) => $this->uniqueCitiesByCode($items))
             ->values();
 
         return $states->concat($cities)->values()->all();
+    }
+
+    /**
+     * @param  Collection<array-key, array<string, mixed>>  $items
+     *
+     * @return Collection<array-key, array<string, mixed>>
+     */
+    private function uniqueCitiesByCode(Collection $items): Collection
+    {
+        $seen = [];
+
+        return $items->filter(function (array $item) use (&$seen) {
+            $key = 'code:'.$item['code'];
+
+            if (isset($seen[$key])) {
+                return false;
+            }
+
+            $seen[$key] = true;
+
+            return true;
+        });
     }
 
     /**
