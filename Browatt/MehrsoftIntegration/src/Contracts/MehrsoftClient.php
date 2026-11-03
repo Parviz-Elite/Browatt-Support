@@ -4,6 +4,7 @@ namespace Browatt\MehrsoftIntegration\Contracts;
 
 interface MehrsoftClient
 {
+    /** @return list<array<string, mixed>> */
     public function getGoods(): array;
 
     /**

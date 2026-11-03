@@ -23,21 +23,20 @@ class SoapMehrsoftClient implements MehrsoftClient
 
     public function getGoods(): array
     {
-        $response = $this->request('StockGetGoods', [
-            'hasRemCount' => false,
-            'goodFullCodeStartWith' => '',
-            'withGoodPackingPrice' => false,
-            'goodCreateDateFrom' => '',
-            'goodCreateDateTo' => '',
-            'goodUpdateDateFrom' => '',
-            'goodUpdateDateTo' => '',
+        $response = $this->request('StockGetBasicInfo', [
+            'containGoods' => true,
+            'containGoodGroups' => false,
+            'containStores' => false,
+            'containPriceTitles' => false,
+            'containFactorOperatives' => false,
+            'containGoodPackingPrice' => false,
         ]);
 
-        if (!is_array($response)) {
+        if (!is_array($response['Goods'] ?? null)) {
             throw new MehrsoftException('Invalid MehrSoft goods response.');
         }
 
-        return $response;
+        return $response['Goods'];
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -10,6 +11,11 @@ class Product extends Model
     use SoftDeletes;
 
     public const DEFAULT_WARRANTY_MONTHS = 18;
+
+    public function scopeFinishedGoods(Builder $query): Builder
+    {
+        return $query->where('mehrsoft_good_type', 4);
+    }
 
     public function effectiveWarrantyMonths(): int
     {

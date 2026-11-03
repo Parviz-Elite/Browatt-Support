@@ -14,26 +14,32 @@ use Throwable;
 
 class AdminProductController extends Controller
 {
-    public function index(Request $request): Response
+    public function index(Request $request): Response|RedirectResponse
     {
         $search = trim($request->string('search')->limit(100, '')->toString());
         $status = $request->string('status')->toString();
         $sort = $request->string('sort')->toString() === 'name' ? 'name' : 'code';
         $direction = $request->string('direction')->toString() === 'desc' ? 'desc' : 'asc';
-        $catalog = Product::query();
-        $lastSync = (clone $catalog)->max('catalog_synced_at');
+        $catalog = Product::query()->finishedGoods();
+        $lastSync = Product::query()->whereNotNull('mehrsoft_good_type')->max('catalog_synced_at');
+
+        $products = (clone $catalog)
+            ->when($search !== '', fn ($query) => $query->where(fn ($query) => $query
+                ->where('code', 'like', '%'.Product::normalizeCode($search).'%')
+                ->orWhere('name', 'like', '%'.$search.'%')))
+            ->when(in_array($status, ['enabled', 'disabled'], true), fn ($query) => $query
+                ->where('online_activation_enabled', $status === 'enabled'))
+            ->orderBy($sort, $direction)
+            ->orderBy('id')
+            ->paginate(25, ['id', 'code', 'name', 'warranty_months', 'warranty_checked_at', 'online_activation_enabled'])
+            ->withQueryString();
+
+        if ($products->currentPage() > $products->lastPage()) {
+            return redirect()->to($products->url($products->lastPage()));
+        }
 
         return Inertia::render('Dashboard/Products/Index', [
-            'products' => (clone $catalog)
-                ->when($search !== '', fn ($query) => $query->where(fn ($query) => $query
-                    ->where('code', 'like', '%'.Product::normalizeCode($search).'%')
-                    ->orWhere('name', 'like', '%'.$search.'%')))
-                ->when(in_array($status, ['enabled', 'disabled'], true), fn ($query) => $query
-                    ->where('online_activation_enabled', $status === 'enabled'))
-                ->orderBy($sort, $direction)
-                ->orderBy('id')
-                ->paginate(25, ['id', 'code', 'name', 'warranty_months', 'warranty_checked_at', 'online_activation_enabled'])
-                ->withQueryString(),
+            'products' => $products,
             'filters' => compact('search', 'status', 'sort', 'direction'),
             'summary' => [
                 'total' => (clone $catalog)->count(),
@@ -54,7 +60,7 @@ class AdminProductController extends Controller
             return response()->json(['message' => 'دریافت فهرست کالاها از مهرپلاس انجام نشد.'], 502);
         }
 
-        return response()->json(['total' => Product::query()->whereNotNull('catalog_synced_at')->count()]);
+        return response()->json(['total' => Product::query()->finishedGoods()->whereNotNull('catalog_synced_at')->count()]);
     }
 
     public function syncWarranty(Request $request, MehrsoftProductCatalog $catalog): JsonResponse

@@ -14,16 +14,15 @@ class MehrsoftProductCatalog
     public function syncGoods(): void
     {
         try {
-            $payload = $this->mehrsoft->getGoods();
+            $rows = $this->mehrsoft->getGoods();
         } finally {
             $this->mehrsoft->logout();
         }
 
-        $rows = $payload['Goods'] ?? $payload['StockGoods'] ?? $payload['Table'] ?? $payload;
         $now = now();
         $products = [];
 
-        if (! is_array($rows) || ! array_is_list($rows) || $rows === []) {
+        if (! array_is_list($rows) || $rows === []) {
             throw new UnexpectedValueException('MehrSoft did not return a recognizable goods list.');
         }
 
@@ -31,30 +30,38 @@ class MehrsoftProductCatalog
             $fields = array_change_key_case(is_array($row) ? $row : []);
             $rawCode = $fields['goodfullcode'] ?? $fields['fullcode'] ?? null;
             $rawName = $fields['goodname'] ?? $fields['name'] ?? null;
+            $type = filter_var($fields['goodtype'] ?? null, FILTER_VALIDATE_INT, [
+                'options' => ['min_range' => 0, 'max_range' => 255],
+            ]);
             $code = is_scalar($rawCode) ? Product::normalizeCode((string) $rawCode) : '';
             $name = is_string($rawName) ? trim($rawName) : '';
 
-            if ($code === '' || strlen($code) > 80 || $name === '' || mb_strlen($name) > 255) {
+            if ($code === '' || strlen($code) > 80 || $name === '' || mb_strlen($name) > 255 || $type === false) {
                 throw new UnexpectedValueException('MehrSoft returned an invalid goods record.');
             }
 
             $products[$code] = [
                 'code' => $code,
                 'name' => $name,
+                'mehrsoft_good_type' => $type,
                 'catalog_synced_at' => $now,
             ];
         }
 
         DB::transaction(function () use ($products) {
             foreach (array_chunk($products, 500) as $chunk) {
-                Product::query()->upsert($chunk, ['code'], ['name', 'catalog_synced_at']);
+                Product::query()->upsert($chunk, ['code'], ['name', 'mehrsoft_good_type', 'catalog_synced_at']);
             }
+
+            Product::query()->finishedGoods()
+                ->whereNotIn('code', array_column($products, 'code'))
+                ->update(['mehrsoft_good_type' => null]);
         });
     }
 
     public function syncWarrantyBatch(int $after): array
     {
-        $products = Product::query()
+        $products = Product::query()->finishedGoods()
             ->whereNotNull('catalog_synced_at')
             ->where('id', '>', $after)
             ->orderBy('id')
