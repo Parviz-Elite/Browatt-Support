@@ -21,6 +21,25 @@ class SoapMehrsoftClient implements MehrsoftClient
         $this->client = $client;
     }
 
+    public function getGoods(): array
+    {
+        $response = $this->request('StockGetGoods', [
+            'hasRemCount' => false,
+            'goodFullCodeStartWith' => '',
+            'withGoodPackingPrice' => false,
+            'goodCreateDateFrom' => '',
+            'goodCreateDateTo' => '',
+            'goodUpdateDateFrom' => '',
+            'goodUpdateDateTo' => '',
+        ]);
+
+        if (!is_array($response)) {
+            throw new MehrsoftException('Invalid MehrSoft goods response.');
+        }
+
+        return $response;
+    }
+
     /**
      * Get MehrSoft product status by product serial.
      *

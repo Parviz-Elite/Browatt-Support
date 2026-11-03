@@ -4,6 +4,7 @@ namespace App\Services\Warranty;
 
 use App\Exceptions\WarrantyProductRestrictedException;
 use App\Models\AppSetting;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\UserDetail;
@@ -32,7 +33,7 @@ class MehrsoftWarrantyService
         $serial = trim($serial);
 
         foreach (Warranty::query()->where('product_serial', $serial)->pluck('product_code') as $productCode) {
-            $this->ensureProductCanBeActivated($productCode);
+            $this->activationProduct($productCode);
         }
 
         try {
@@ -50,7 +51,7 @@ class MehrsoftWarrantyService
         }
 
         $product = $this->extractProduct($payload);
-        $this->ensureProductCanBeActivated($product['good_full_code']);
+        $catalogProduct = $this->activationProduct($product['good_full_code']);
 
         $warranty = Warranty::query()->updateOrCreate(
             [
@@ -62,7 +63,7 @@ class MehrsoftWarrantyService
                 'product_name' => $product['name'],
                 'production_date' => $product['production_date'],
                 'warranty_type' => '1',
-                'warranty_period_months' => 18,
+                'warranty_period_months' => $catalogProduct?->effectiveWarrantyMonths() ?? Product::DEFAULT_WARRANTY_MONTHS,
                 'activation_status' => 'inquired',
                 'mehrsoft_sync_status' => 'not_sent',
                 'mehrsoft_last_error' => null,
@@ -87,7 +88,9 @@ class MehrsoftWarrantyService
             ->where('activation_status', 'inquired')
             ->firstOrFail();
 
-        $this->ensureProductCanBeActivated($warranty->product_code);
+        $product = $this->activationProduct($warranty->product_code);
+        $months = $product?->effectiveWarrantyMonths() ?? Product::DEFAULT_WARRANTY_MONTHS;
+        $warranty->warranty_period_months = $months;
 
         $state = $this->findCity((string) $validated['state_code']);
         $city = $this->findCity((string) $validated['city_code']);
@@ -100,7 +103,7 @@ class MehrsoftWarrantyService
         $description = trim($validated['first_name'].' '.$validated['last_name']).' - ثبت گارانتی از سایت';
         $payload = $this->buildSavePayload($warranty, $user, $validated, $state, $city, $description, $now);
 
-        return DB::transaction(function () use ($user, $validated, $warranty, $payload, $state, $city, $description, $now) {
+        return DB::transaction(function () use ($user, $validated, $warranty, $payload, $state, $city, $description, $now, $months) {
             $this->storeCustomerProfile($user, $validated);
             $this->storeAddress($user, $validated, $state, $city);
 
@@ -129,7 +132,7 @@ class MehrsoftWarrantyService
                 $warranty->forceFill([
                     'activated_at' => $now,
                     'starts_at' => $now,
-                    'expires_at' => $now->copy()->addMonths(18),
+                    'expires_at' => $now->copy()->addMonths($months),
                     'activation_status' => 'activated',
                     'mehrsoft_sync_status' => 'synced',
                     'mehrsoft_synced_at' => now(),
@@ -151,18 +154,16 @@ class MehrsoftWarrantyService
         });
     }
 
-    private function ensureProductCanBeActivated(?string $productCode): void
+    private function activationProduct(?string $productCode): ?Product
     {
-        $normalizedCode = strtr(trim((string) $productCode), [
-            '۰' => '0', '۱' => '1', '۲' => '2', '۳' => '3', '۴' => '4',
-            '۵' => '5', '۶' => '6', '۷' => '7', '۸' => '8', '۹' => '9',
-            '٠' => '0', '١' => '1', '٢' => '2', '٣' => '3', '٤' => '4',
-            '٥' => '5', '٦' => '6', '٧' => '7', '٨' => '8', '٩' => '9',
-        ]);
+        $code = Product::normalizeCode($productCode);
+        $product = $code === '' ? null : Product::query()->where('code', $code)->first();
 
-        if ($normalizedCode === '300101014') {
-            throw new WarrantyProductRestrictedException;
+        if ($product?->online_activation_enabled === false) {
+            throw new WarrantyProductRestrictedException($code === '300101014');
         }
+
+        return $product;
     }
 
     /**
@@ -415,7 +416,7 @@ class MehrsoftWarrantyService
                 'GoodFullCode' => $warranty->product_code,
                 'ProductionDate' => $productionDate,
                 'WarrantyType' => 1,
-                'WarrantyPeriodMonth' => 18,
+                'WarrantyPeriodMonth' => (int) $warranty->warranty_period_months,
                 'CustType' => (string) $validated['cust_type'],
                 'CustSex' => (string) $validated['cust_sex'],
                 'CustFirstName' => $validated['first_name'],

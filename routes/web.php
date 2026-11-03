@@ -4,6 +4,7 @@ use App\Actions\Auth\RequestLoginOtp;
 use App\Actions\Auth\VerifyLoginOtp;
 use App\Actions\Users\CreateUser;
 use App\Exports\CustomersExport;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminWarrantySettingsController;
 use App\Http\Controllers\WarrantyActivationController;
 use App\Models\AppSetting;
@@ -403,6 +404,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role_or_permission:general_manager|settings.manage')->group(function () {
+        Route::get('/products', [AdminProductController::class, 'index'])->name('admin.products.index');
+        Route::post('/products/sync', [AdminProductController::class, 'sync'])->name('admin.products.sync');
+        Route::post('/products/sync-warranty', [AdminProductController::class, 'syncWarranty'])->name('admin.products.sync-warranty');
+        Route::patch('/products/{product}', [AdminProductController::class, 'update'])->name('admin.products.update');
+
         Route::get('/settings', function (MehrsoftWarrantyService $warrantyService) {
             $setting = fn (string $group, string $key): array => Schema::hasTable('app_settings')
                 ? (AppSetting::query()->where('group', $group)->where('key', $key)->first()?->value ?? [])

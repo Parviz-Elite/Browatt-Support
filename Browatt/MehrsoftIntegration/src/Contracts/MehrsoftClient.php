@@ -4,6 +4,8 @@ namespace Browatt\MehrsoftIntegration\Contracts;
 
 interface MehrsoftClient
 {
+    public function getGoods(): array;
+
     /**
      * Get MehrSoft product status by product serial.
      *

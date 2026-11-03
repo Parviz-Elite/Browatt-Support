@@ -8,6 +8,7 @@ Current client methods:
 
 - `getProductStatusBySerial`
 - `getWarrantyMonths`
+- `getGoods`
 - `getWarrantySettings`
 - `saveAfterSales`
 - `logout`

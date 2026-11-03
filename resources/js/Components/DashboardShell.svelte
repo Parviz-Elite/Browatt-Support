@@ -7,6 +7,7 @@
         ListChecks,
         LogOut,
         Menu,
+        Package,
         Settings,
         ShieldCheck,
         UserCog,
@@ -114,6 +115,12 @@
                       title: 'مدیریت',
                       items: [
                           {
+                              key: 'products',
+                              title: 'کالاها',
+                              href: routeUrl('admin.products.index', '/products'),
+                              icon: 'package',
+                          },
+                          {
                               key: 'settings',
                               title: 'تنظیمات',
                               href: routeUrl('admin.settings.index', '/settings'),
@@ -191,6 +198,8 @@
                                             <ListChecks class={iconClass(active)} size={18} />
                                         {:else if item.icon === 'users'}
                                             <Users class={iconClass(active)} size={18} />
+                                        {:else if item.icon === 'package'}
+                                            <Package class={iconClass(active)} size={18} />
                                         {:else if item.icon === 'settings'}
                                             <Settings class={iconClass(active)} size={18} />
                                         {:else}
@@ -282,6 +291,8 @@
                                             <ListChecks class={iconClass(active)} size={18} />
                                         {:else if item.icon === 'users'}
                                             <Users class={iconClass(active)} size={18} />
+                                        {:else if item.icon === 'package'}
+                                            <Package class={iconClass(active)} size={18} />
                                         {:else if item.icon === 'settings'}
                                             <Settings class={iconClass(active)} size={18} />
                                         {:else}
